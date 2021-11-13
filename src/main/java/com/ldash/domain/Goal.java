@@ -2,8 +2,8 @@ package com.ldash.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,14 +11,13 @@ import java.util.Objects;
 public class Goal {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private ImportanceLables importance;
     private int progressPercentage;
     private MeterLables activityMeter;
-    private List<Task> tasks;
 
     public Goal() {}
 
@@ -27,7 +26,6 @@ public class Goal {
         this.importance = importance;
         this.progressPercentage = progressPercentage;
         this.activityMeter = activityMeter;
-        this.tasks = new ArrayList<>();
     }
 
     public String getName() {
@@ -62,20 +60,9 @@ public class Goal {
         this.activityMeter = activityMeter;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
-
     @Override
     public String toString() {
-        return name + "\n" +
-                "- " + importance + " importance" + "\n" +
-                "- Progress: " + progressPercentage + "%" + "\n" +
-                "- Activity: " + activityMeter;
+        return "Goal{" + "id= " + id + ", name= " + name + ", importance= " + importance + ", progress= " + progressPercentage + ", activity= " + activityMeter;
     }
 
     @Override
@@ -83,11 +70,11 @@ public class Goal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Goal goal = (Goal) o;
-        return progressPercentage == goal.progressPercentage && Objects.equals(name, goal.name) && importance == goal.importance && activityMeter == goal.activityMeter && Objects.equals(tasks, goal.tasks);
+        return progressPercentage == goal.progressPercentage && Objects.equals(name, goal.name) && importance == goal.importance && activityMeter == goal.activityMeter;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, importance, progressPercentage, activityMeter, tasks);
+        return Objects.hash(name, importance, progressPercentage, activityMeter);
     }
 }
