@@ -14,7 +14,7 @@ public class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(GoalRepository repository) {
         return args -> {
-            repository.save(new Goal("Learn Swedish", ImportanceLables.HIGH, 10, MeterLables.LOW));
+            repository.save(new Goal("Develop my own WebApp", ImportanceLables.EXTREME, 10, MeterLables.MID));
         };
     }
 }

@@ -1,8 +1,6 @@
 package com.ldash.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -16,7 +14,10 @@ public class Task {
     private String name;
     private LocalDate dueDate;
 
-    public Task() {}
+    @ManyToOne(targetEntity=Goal.class)
+    private Goal goal;
+
+    private Task() {}
 
     public Task(String name, LocalDate dueDate) {
         this.name = name;
@@ -37,6 +38,10 @@ public class Task {
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public Goal getGoal() {
+        return goal;
     }
 
     @Override

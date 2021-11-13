@@ -1,9 +1,8 @@
 package com.ldash.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,17 +14,22 @@ public class Goal {
     private Long id;
 
     private String name;
+    private final LocalDate createdAt = LocalDate.now();
     private ImportanceLables importance;
     private int progressPercentage;
     private MeterLables activityMeter;
 
-    public Goal() {}
+    @OneToMany(targetEntity=Task.class)
+    private List<Task> tasks;
+
+    private Goal() {}
 
     public Goal(String name, ImportanceLables importance, int progressPercentage, MeterLables activityMeter) {
         this.name = name;
         this.importance = importance;
         this.progressPercentage = progressPercentage;
         this.activityMeter = activityMeter;
+        this.tasks = new ArrayList<>();
     }
 
     public String getName() {
@@ -34,6 +38,10 @@ public class Goal {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
     }
 
     public ImportanceLables getImportance() {
