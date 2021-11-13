@@ -1,6 +1,7 @@
 package com.ldash.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -8,10 +9,12 @@ import java.util.Objects;
 public class Task {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String name;
+
     private LocalDate dueDate;
 
     @ManyToOne(targetEntity=Goal.class)
@@ -19,9 +22,17 @@ public class Task {
 
     private Task() {}
 
+    public Task(String name) {
+        this.name = name;
+    }
+
     public Task(String name, LocalDate dueDate) {
         this.name = name;
         this.dueDate = dueDate;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

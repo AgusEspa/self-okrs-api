@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LoadDatabase {
 
-    @Bean
-    CommandLineRunner initDatabase(GoalRepository repository) {
-        return args -> {
-            repository.save(new Goal("Develop my own WebApp", ImportanceLables.EXTREME, 10, MeterLables.MID));
-        };
-    }
+//    @Bean
+//    CommandLineRunner initDatabase(GoalRepository repository) {
+//        return args -> {
+//            repository.save(new Goal("Develop my own WebApp", ImportanceLables.EXTREME, 10, MeterLables.MID));
+//        };
+//    }
 }

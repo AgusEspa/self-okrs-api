@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Goal {
@@ -13,10 +15,16 @@ public class Goal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String name;
+
     private final LocalDate createdAt = LocalDate.now();
+
     private ImportanceLables importance;
+
+    @Size(min = 0, max = 100)
     private int progressPercentage;
+    
     private MeterLables activityMeter;
 
     @OneToMany(targetEntity=Task.class)
@@ -30,6 +38,10 @@ public class Goal {
         this.progressPercentage = progressPercentage;
         this.activityMeter = activityMeter;
         this.tasks = new ArrayList<>();
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
