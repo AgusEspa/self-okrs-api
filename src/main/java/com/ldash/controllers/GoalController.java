@@ -17,6 +17,7 @@ public class GoalController {
     public GoalController(GoalRepository repository) {
         this.repository = repository;
     }
+
     @GetMapping
     List<Goal> all() {
         return repository.findAll();

@@ -22,8 +22,9 @@ public class Task {
 
     private Task() {}
 
-    public Task(String name) {
+    public Task(String name, Goal goal) {
         this.name = name;
+        this.goal = goal;
     }
 
     public Task(String name, LocalDate dueDate) {
