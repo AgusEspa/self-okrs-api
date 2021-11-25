@@ -20,12 +20,14 @@ public class Goal {
 
     private final LocalDate createdAt = LocalDate.now();
 
-    private ImportanceLables importance;
+    //@Size(min = 1, max = 5)
+    private int importance;
 
     //@Size(min = 1, max = 100)
-    private Integer progressPercentage;
+    private int progressPercentage;
 
-    private MeterLables activityMeter;
+    //@Size(min = 1, max = 100)
+    private int activityMeter;
 
     @OneToMany(targetEntity=Task.class)
     private List<Task> tasks;
@@ -38,7 +40,7 @@ public class Goal {
         this.tasks = new ArrayList<>();
     }
 
-    public Goal(String name, ImportanceLables importance, Integer progressPercentage, MeterLables activityMeter) {
+    public Goal(String name, int importance, int progressPercentage, int activityMeter) {
         this.name = name;
         this.importance = importance;
         this.progressPercentage = progressPercentage;
@@ -62,27 +64,27 @@ public class Goal {
         return createdAt;
     }
 
-    public ImportanceLables getImportance() {
+    public int getImportance() {
         return importance;
     }
 
-    public void setImportance(ImportanceLables importance) {
+    public void setImportance(int importance) {
         this.importance = importance;
     }
 
-    public Integer getProgressPercentage() {
+    public int getProgressPercentage() {
         return progressPercentage;
     }
 
-    public void setProgressPercentage(Integer progressPercentage) {
+    public void setProgressPercentage(int progressPercentage) {
         this.progressPercentage = progressPercentage;
     }
 
-    public MeterLables getActivityMeter() {
+    public int getActivityMeter() {
         return activityMeter;
     }
 
-    public void setActivityMeter(MeterLables activityMeter) {
+    public void setActivityMeter(int activityMeter) {
         this.activityMeter = activityMeter;
     }
 
