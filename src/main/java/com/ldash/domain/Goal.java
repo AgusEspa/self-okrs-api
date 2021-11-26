@@ -20,13 +20,13 @@ public class Goal {
 
     private final LocalDate createdAt = LocalDate.now();
 
-    //@Size(min = 1, max = 5)
+    @Size(min = 1, max = 5)
     private int importance;
 
-    //@Size(min = 1, max = 100)
+    @Size(min = 1, max = 100)
     private int progressPercentage;
 
-    //@Size(min = 1, max = 100)
+    @Size(min = 1, max = 100)
     private int activityMeter;
 
     @OneToMany(targetEntity=Task.class)
