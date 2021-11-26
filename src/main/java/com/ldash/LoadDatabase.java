@@ -12,10 +12,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LoadDatabase {
 
-//    @Bean
-//    CommandLineRunner initDatabaseWithGoals(TaskRepository repositoryT, GoalRepository repositoryG) {
-//        return args -> {
-//            repositoryT.save(new Task("Complete online course", (repositoryG.save(new Goal("Learn Sweedish", 10)))));
-//        };
-//    }
+    @Bean
+    CommandLineRunner initDatabaseWithGoals(TaskRepository repositoryT, GoalRepository repositoryG) {
+        return args -> {
+            repositoryT.save(new Task("Complete online course", (repositoryG.save(new Goal("Learn Sweedish", 10)))));
+        };
+    }
 }
