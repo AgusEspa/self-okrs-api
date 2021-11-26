@@ -18,7 +18,7 @@ public class Goal {
 
     @NotNull
     private String name;
-    
+
     private final LocalDate createdAt = LocalDate.now();
 
     @Min(1)
