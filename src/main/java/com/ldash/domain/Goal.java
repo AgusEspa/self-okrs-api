@@ -5,8 +5,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Goal {
@@ -20,13 +21,16 @@ public class Goal {
 
     private final LocalDate createdAt = LocalDate.now();
 
-    @Size(min = 1, max = 5)
+    @Min(1)
+    @Max(5)
     private int importance;
 
-    @Size(min = 1, max = 100)
+    @Min(1)
+    @Max(100)
     private int progressPercentage;
 
-    @Size(min = 1, max = 100)
+    @Min(1)
+    @Max(100)
     private int activityMeter;
 
     @OneToMany(targetEntity=Task.class)
