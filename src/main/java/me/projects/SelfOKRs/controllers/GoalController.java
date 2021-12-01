@@ -9,7 +9,7 @@ import me.projects.SelfOKRs.domain.Goal;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 
 @RestController
-@RequestMapping("/goals")
+@RequestMapping("/api/goals")
 public class GoalController {
 
     private final GoalRepository repository;

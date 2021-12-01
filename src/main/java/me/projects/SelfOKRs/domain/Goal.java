@@ -2,8 +2,6 @@ package me.projects.SelfOKRs.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -29,27 +27,12 @@ public class Goal {
     @Max(100)
     private int progressPercentage;
 
-    @Min(1)
-    @Max(100)
-    private int activityMeter;
-
-    @OneToMany(targetEntity=Task.class)
-    private List<Task> tasks;
-
     private Goal() {}
 
-    public Goal(String name, int progressPercentage) {
-        this.name = name;
-        this.progressPercentage = progressPercentage;
-        this.tasks = new ArrayList<>();
-    }
-
-    public Goal(String name, int importance, int progressPercentage, int activityMeter) {
+    public Goal(String name, int importance, int progressPercentage) {
         this.name = name;
         this.importance = importance;
         this.progressPercentage = progressPercentage;
-        this.activityMeter = activityMeter;
-        this.tasks = new ArrayList<>();
     }
 
     public Long getId() {
@@ -84,21 +67,10 @@ public class Goal {
         this.progressPercentage = progressPercentage;
     }
 
-    public int getActivityMeter() {
-        return activityMeter;
-    }
-
-    public void setActivityMeter(int activityMeter) {
-        this.activityMeter = activityMeter;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
 
     @Override
     public String toString() {
-        return "Goal{" + "id= " + id + ", name= " + name + ", importance= " + importance + ", progress= " + progressPercentage + ", activity= " + activityMeter;
+        return "Goal{" + "id= " + id + ", name= " + name + ", importance= " + importance + ", progress= " + progressPercentage;
     }
 
     @Override
@@ -106,11 +78,11 @@ public class Goal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Goal goal = (Goal) o;
-        return progressPercentage == goal.progressPercentage && Objects.equals(name, goal.name) && importance == goal.importance && activityMeter == goal.activityMeter;
+        return progressPercentage == goal.progressPercentage && Objects.equals(name, goal.name) && importance == goal.importance;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, importance, progressPercentage, activityMeter);
+        return Objects.hash(name, importance, progressPercentage);
     }
 }
