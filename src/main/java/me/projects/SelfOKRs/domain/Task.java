@@ -1,7 +1,7 @@
 package me.projects.SelfOKRs.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -12,7 +12,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotEmpty
     private String name;
 
     private LocalDate dueDate;

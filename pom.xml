@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>me.projects</groupId>
-	<artifactId>Self.OKRs</artifactId>
+	<artifactId>SelfOKRs</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Self.OKRs</name>
 	<description>Demo project</description>
