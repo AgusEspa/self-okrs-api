@@ -1,9 +1,9 @@
-package com.ldash;
+package me.projects.SelfOKRs;
 
-import com.ldash.domain.Goal;
-import com.ldash.domain.Task;
-import com.ldash.repositories.GoalRepository;
-import com.ldash.repositories.TaskRepository;
+import me.projects.SelfOKRs.domain.Goal;
+import me.projects.SelfOKRs.domain.Task;
+import me.projects.SelfOKRs.repositories.GoalRepository;
+import me.projects.SelfOKRs.repositories.TaskRepository;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

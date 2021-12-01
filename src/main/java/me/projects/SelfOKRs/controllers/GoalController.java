@@ -1,4 +1,4 @@
-package com.ldash.controllers;
+package me.projects.SelfOKRs.controllers;
 
 import com.ldash.repositories.GoalRepository;
 import org.springframework.web.bind.annotation.*;

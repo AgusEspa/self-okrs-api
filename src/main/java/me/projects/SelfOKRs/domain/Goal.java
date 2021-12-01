@@ -1,4 +1,4 @@
-package com.ldash.domain;
+package me.projects.SelfOKRs.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;

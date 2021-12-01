@@ -1,10 +1,10 @@
-package com.ldash.ldash;
+package me.projects.Self.OKRs;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LdashApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {

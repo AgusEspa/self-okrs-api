@@ -1,4 +1,4 @@
-package com.ldash.exceptions;
+package me.projects.SelfOKRs.exceptions;
 
 public class GoalNotFoundException extends RuntimeException {
 

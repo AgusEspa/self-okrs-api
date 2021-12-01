@@ -1,4 +1,4 @@
-package com.ldash.controllers;
+package me.projects.SelfOKRs.controllers;
 
 import com.ldash.domain.Task;
 import com.ldash.exceptions.GoalNotFoundException;
