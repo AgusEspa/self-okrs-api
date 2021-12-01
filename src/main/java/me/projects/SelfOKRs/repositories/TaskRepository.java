@@ -1,6 +1,6 @@
-package com.ldash.repositories;
+package me.projects.SelfOKRs.repositories;
 
-import com.ldash.domain.Task;
+import me.projects.SelfOKRs.domain.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {

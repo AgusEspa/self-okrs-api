@@ -1,12 +1,12 @@
 package me.projects.SelfOKRs.controllers;
 
-import com.ldash.repositories.GoalRepository;
+import me.projects.SelfOKRs.repositories.GoalRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import com.ldash.domain.Goal;
-import com.ldash.exceptions.GoalNotFoundException;
+import me.projects.SelfOKRs.domain.Goal;
+import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 
 @RestController
 @RequestMapping("/goals")

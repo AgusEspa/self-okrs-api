@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Goal {
@@ -16,7 +16,7 @@ public class Goal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotEmpty
     private String name;
 
     private final LocalDate createdAt = LocalDate.now();

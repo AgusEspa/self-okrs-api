@@ -1,6 +1,6 @@
-package com.ldash.repositories;
+package me.projects.SelfOKRs.repositories;
 
-import com.ldash.domain.Goal;
+import me.projects.SelfOKRs.domain.Goal;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GoalRepository extends JpaRepository<Goal, Long> {
