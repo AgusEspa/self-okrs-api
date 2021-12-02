@@ -32,6 +32,11 @@ public class Goal {
     @OneToMany(targetEntity = Task.class)
     private List<Task> tasks = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
+    private User user;
+
+
     private Goal() {}
 
     public Goal(String name, int importance, int progressPercentage) {
