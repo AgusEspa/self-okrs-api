@@ -6,10 +6,12 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
+@Table(name = "task")
 public class Task {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", updatable = false, nullable = false)
     private Long id;
 
     @NotEmpty

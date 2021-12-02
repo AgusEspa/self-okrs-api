@@ -10,10 +10,12 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
+@Table(name = "goal")
 public class Goal {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", updatable = false, nullable = false)
     private Long id;
 
     @NotEmpty
@@ -29,12 +31,16 @@ public class Goal {
     @Max(100)
     private int progressPercentage;
 
-    @OneToMany(targetEntity = Task.class)
-    private List<Task> tasks = new ArrayList<>();
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
+
+    @JoinTable(
+            name = "GOAL_TASK",
+            joinColumns = @JoinColumn(name = "GOAL_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TASK_ID")
+    )
+    private List<Task> tasks = new ArrayList<>();
 
 
     private Goal() {}
@@ -79,6 +85,14 @@ public class Goal {
 
     public void setProgressPercentage(int progressPercentage) {
         this.progressPercentage = progressPercentage;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Task> getTasks() {
