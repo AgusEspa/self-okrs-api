@@ -2,6 +2,8 @@ package me.projects.SelfOKRs.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -27,6 +29,9 @@ public class Goal {
     @Max(100)
     private int progressPercentage;
 
+    @OneToMany(targetEntity = Task.class)
+    private List<Task> tasks = new ArrayList<>();
+
     private Goal() {}
 
     public Goal(String name, int importance, int progressPercentage) {
@@ -37,6 +42,10 @@ public class Goal {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -67,6 +76,13 @@ public class Goal {
         this.progressPercentage = progressPercentage;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
 
     @Override
     public String toString() {

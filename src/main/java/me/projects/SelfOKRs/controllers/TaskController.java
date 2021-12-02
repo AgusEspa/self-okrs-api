@@ -30,7 +30,7 @@ public class TaskController {
 
     @PostMapping
     Task newTask(@RequestBody Task newTask) {
-        return repository.save(newTask);
+        return newTask;
     }
 
     @DeleteMapping("/{id}")
