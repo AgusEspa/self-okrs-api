@@ -1,4 +1,4 @@
-package me.projects.SelfOKRs.domain;
+package me.projects.SelfOKRs.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,7 +10,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "goal")
+@Table(name = "GOAL")
 public class Goal {
 
     @Id

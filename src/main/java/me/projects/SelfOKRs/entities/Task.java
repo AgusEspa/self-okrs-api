@@ -1,4 +1,4 @@
-package me.projects.SelfOKRs.domain;
+package me.projects.SelfOKRs.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "task")
+@Table(name = "TASK")
 public class Task {
 
     @Id
@@ -19,7 +19,7 @@ public class Task {
 
     private LocalDate dueDate;
 
-    @ManyToOne(targetEntity=Goal.class)
+    @ManyToOne
     private Goal goal;
 
     private Task() {}

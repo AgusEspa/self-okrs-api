@@ -1,6 +1,6 @@
 package me.projects.SelfOKRs.controllers;
 
-import me.projects.SelfOKRs.domain.Task;
+import me.projects.SelfOKRs.entities.Task;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 import me.projects.SelfOKRs.repositories.TaskRepository;
 import org.springframework.web.bind.annotation.*;

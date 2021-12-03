@@ -1,9 +1,5 @@
 package me.projects.SelfOKRs;
 
-import me.projects.SelfOKRs.domain.Goal;
-import me.projects.SelfOKRs.repositories.GoalRepository;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration

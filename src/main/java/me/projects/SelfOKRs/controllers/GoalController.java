@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import me.projects.SelfOKRs.domain.Goal;
+import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 
 @RestController

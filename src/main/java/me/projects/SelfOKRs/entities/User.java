@@ -1,4 +1,4 @@
-package me.projects.SelfOKRs.domain;
+package me.projects.SelfOKRs.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static javax.persistence.CascadeType.ALL;
+
 @Entity
-@Table(name = "user")
+@Table(name = "USER")
 public class User {
 
     @Id
@@ -24,7 +26,7 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = ALL, mappedBy = "user")
     private List<Goal> goals = new ArrayList<>();
 
     private User() {}
