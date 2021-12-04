@@ -1,12 +1,12 @@
 package me.projects.SelfOKRs.controllers;
 
+import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.repositories.GoalRepository;
+import me.projects.SelfOKRs.services.GoalService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import me.projects.SelfOKRs.entities.Goal;
-import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 
 @RestController
 @RequestMapping("/api/goals")
@@ -14,30 +14,30 @@ public class GoalController {
 
     private final GoalRepository repository;
 
+    @Autowired
+    GoalService goalService;
+
     public GoalController(GoalRepository repository) {
         this.repository = repository;
     }
 
     @GetMapping
-    List<Goal> all() {
-        return repository.findAll();
+    List<Goal> getGoals() {
+        return goalService.all();
     }
 
     @GetMapping("/{id}")
-    Goal one(@PathVariable Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new GoalNotFoundException(id));
+    Goal getGoal(@PathVariable Long id) {
+        return goalService.one(id);
     }
 
     @PostMapping
-    Goal newGoal(@RequestBody Goal newGoal) {
-        return repository.save(newGoal);
+    Goal createGoal(@RequestBody Goal newGoal) {
+        return goalService.newGoal(newGoal);
     }
-
 
     @DeleteMapping("/{id}")
     void deleteGoal(@PathVariable Long id) {
-        repository.deleteById(id);
+        goalService.deleteOne(id);
     }
-    
 }

@@ -7,15 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static javax.persistence.CascadeType.ALL;
-
 @Entity
-@Table(name = "USER")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", updatable = false, nullable = false)
     private Long id;
 
     @NotEmpty
@@ -26,7 +22,7 @@ public class User {
 
     private String password;
 
-    @OneToMany(cascade = ALL, mappedBy = "user")
+    @OneToMany
     private List<Goal> goals = new ArrayList<>();
 
     private User() {}
