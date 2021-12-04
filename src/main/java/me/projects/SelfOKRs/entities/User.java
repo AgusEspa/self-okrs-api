@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     @NotEmpty
@@ -22,8 +24,9 @@ public class User {
 
     private String password;
 
-    @OneToMany
-    private List<Goal> goals = new ArrayList<>();
+//    @OneToMany
+//    @JoinColumn(name = "user_id")
+//    private List<Goal> goals = new ArrayList<>();
 
     private User() {}
 

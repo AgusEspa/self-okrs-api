@@ -6,18 +6,19 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
+@Table(name = "tasks")
 public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "task_id")
     private Long id;
 
     @NotEmpty
     private String name;
 
-    private LocalDate dueDate;
-
     @ManyToOne
+    @JoinColumn(name = "goal_id")
     private Goal goal;
 
     private Task() {}
@@ -27,13 +28,12 @@ public class Task {
         this.goal = goal;
     }
 
-    public Task(String name, LocalDate dueDate) {
-        this.name = name;
-        this.dueDate = dueDate;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -44,21 +44,17 @@ public class Task {
         this.name = name;
     }
 
-    public LocalDate getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
-    }
-
     public Goal getGoal() {
         return goal;
     }
 
+    public void setGoal(Goal goal) {
+        this.goal = goal;
+    }
+
     @Override
     public String toString() {
-        return name + ", due on " + dueDate;
+        return name;
     }
 
     @Override
@@ -66,11 +62,11 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(name, task.name) && Objects.equals(dueDate, task.dueDate);
+        return Objects.equals(name, task.name) && Objects.equals(id, task.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, dueDate);
+        return Objects.hash(name, id);
     }
 }

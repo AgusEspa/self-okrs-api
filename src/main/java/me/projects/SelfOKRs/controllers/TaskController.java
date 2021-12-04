@@ -3,6 +3,8 @@ package me.projects.SelfOKRs.controllers;
 import me.projects.SelfOKRs.entities.Task;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 import me.projects.SelfOKRs.repositories.TaskRepository;
+import me.projects.SelfOKRs.services.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,28 +15,30 @@ public class TaskController {
 
     private final TaskRepository repository;
 
+    @Autowired
+    TaskService taskService;
+
     public TaskController(TaskRepository repository) {
         this.repository = repository;
     }
 
     @GetMapping
-    List<Task> all() {
-        return repository.findAll();
+    List<Task> getTasks() {
+        return taskService.all();
     }
 
     @GetMapping("/{id}")
-    Task one(@PathVariable Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new GoalNotFoundException(id));
+    Task getTask(@PathVariable Long id) {
+        return taskService.one(id);
     }
 
     @PostMapping
-    Task newTask(@RequestBody Task newTask) {
-        return newTask;
+    Task addTask(@RequestBody Task newTask) {
+        return taskService.newTask(newTask);
     }
 
     @DeleteMapping("/{id}")
     void deleteTask(@PathVariable Long id) {
-        repository.deleteById(id);
+        taskService.deleteOne(id);
     }
 }
