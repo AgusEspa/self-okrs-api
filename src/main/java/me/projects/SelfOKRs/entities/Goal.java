@@ -35,7 +35,7 @@ public class Goal {
 //    @JoinColumn(name = "user_id")
 //    private User user;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "goal", orphanRemoval = true)
     @JoinColumn(name = "goal_id")
     private List<Task> tasks = new ArrayList<>();
 
