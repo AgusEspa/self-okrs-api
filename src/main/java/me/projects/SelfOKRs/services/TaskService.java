@@ -35,7 +35,7 @@ public class TaskService {
 
     public Task newTask(TaskRequest taskRequest) {
         Goal goal = goalRepository.findById(taskRequest.getGoalId())
-                .orElseThrow(() -> new GoalNotFoundException(taskRequest.getGoalId()));;
+                .orElseThrow(() -> new GoalNotFoundException(taskRequest.getGoalId()));
         return repository.save(new Task(taskRequest.getName(), goal));
     }
 
