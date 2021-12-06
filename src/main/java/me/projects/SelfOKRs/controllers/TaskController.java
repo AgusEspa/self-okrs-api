@@ -1,7 +1,7 @@
 package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.entities.Task;
-import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
+import me.projects.SelfOKRs.pojos.TaskRequest;
 import me.projects.SelfOKRs.repositories.TaskRepository;
 import me.projects.SelfOKRs.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +33,8 @@ public class TaskController {
     }
 
     @PostMapping
-    Task addTask(@RequestBody Task newTask) {
-        return taskService.newTask(newTask);
+    Task addTask(@RequestBody TaskRequest taskRequest) {
+        return taskService.newTask(taskRequest);
     }
 
     @DeleteMapping("/{id}")
