@@ -1,5 +1,9 @@
 package me.projects.SelfOKRs.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
@@ -7,6 +11,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tasks")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Task {
 
     @Id
@@ -17,14 +24,23 @@ public class Task {
     @NotEmpty
     private String name;
 
+    private LocalDate dueDate;
+
     @ManyToOne
     @JoinColumn(name = "goal_id")
+    @JsonBackReference
     private Goal goal;
 
     private Task() {}
 
     public Task(String name, Goal goal) {
         this.name = name;
+        this.goal = goal;
+    }
+
+    public Task(String name, LocalDate dueDate, Goal goal) {
+        this.name = name;
+        this.dueDate = dueDate;
         this.goal = goal;
     }
 
@@ -42,6 +58,14 @@ public class Task {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
     }
 
     public Goal getGoal() {
