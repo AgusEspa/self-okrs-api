@@ -3,9 +3,7 @@ package me.projects.SelfOKRs.entities;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -24,9 +22,8 @@ public class User {
 
     private String password;
 
-//    @OneToMany
-//    @JoinColumn(name = "user_id")
-//    private List<Goal> goals = new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Goal> goals = new HashSet<>();
 
     private User() {}
 

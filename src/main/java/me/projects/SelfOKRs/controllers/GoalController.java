@@ -1,6 +1,7 @@
 package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.entities.Goal;
+import me.projects.SelfOKRs.pojos.GoalRequest;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.services.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,8 @@ public class GoalController {
     }
 
     @PostMapping
-    Goal createGoal(@RequestBody Goal newGoal) {
-        return goalService.newGoal(newGoal);
+    Goal createGoal(@RequestBody GoalRequest goalRequest) {
+        return goalService.newGoal(goalRequest);
     }
 
     @DeleteMapping("/{id}")

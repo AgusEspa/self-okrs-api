@@ -35,19 +35,19 @@ public class Goal {
     @Max(100)
     private int progressPercentage;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @ManyToOne
+    private User user;
 
     @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Task> tasks = new HashSet<>();
 
     private Goal() {}
 
-    public Goal(String name, int importance, int progressPercentage) {
+    public Goal(String name, int importance, int progressPercentage, User user) {
         this.name = name;
         this.importance = importance;
         this.progressPercentage = progressPercentage;
+        this.user = user;
     }
 
     public Long getId() {
