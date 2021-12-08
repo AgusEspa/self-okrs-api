@@ -1,6 +1,5 @@
 package me.projects.SelfOKRs.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -27,8 +26,6 @@ public class Task {
     private LocalDate dueDate;
 
     @ManyToOne
-    @JoinColumn(name = "goal_id")
-    @JsonBackReference
     private Goal goal;
 
     private Task() {}
