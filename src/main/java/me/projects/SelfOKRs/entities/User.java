@@ -14,7 +14,7 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "Username is required")
     private String username;
 
     @Email
