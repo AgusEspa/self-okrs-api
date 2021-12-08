@@ -4,9 +4,11 @@ import me.projects.SelfOKRs.entities.User;
 import me.projects.SelfOKRs.exceptions.UserNotFoundException;
 import me.projects.SelfOKRs.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserService {
 
     @Autowired
