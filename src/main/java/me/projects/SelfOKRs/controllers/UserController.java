@@ -4,6 +4,7 @@ import me.projects.SelfOKRs.entities.User;
 import me.projects.SelfOKRs.repositories.UserRepository;
 import me.projects.SelfOKRs.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,12 +14,14 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     UserService userService;
 
-    public UserController(UserRepository repository) {
+    public UserController(UserRepository repository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = repository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @GetMapping
