@@ -14,14 +14,12 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     UserService userService;
 
-    public UserController(UserRepository repository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserController(UserRepository repository) {
         this.userRepository = repository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @GetMapping
