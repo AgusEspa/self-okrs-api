@@ -2,7 +2,6 @@ package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.pojos.GoalRequest;
-import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.services.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +12,11 @@ import java.util.List;
 @RequestMapping("/api/goals")
 public class GoalController {
 
-    private final GoalRepository repository;
+    private final GoalService goalService;
 
     @Autowired
-    GoalService goalService;
-
-    public GoalController(GoalRepository repository) {
-        this.repository = repository;
+    public GoalController(GoalService goalService) {
+        this.goalService = goalService;
     }
 
     @GetMapping

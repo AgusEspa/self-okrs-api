@@ -11,18 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskService {
 
     @Autowired
-    TaskRepository repository;
+    private final TaskRepository repository;
+
+    private final GoalRepository goalRepository;
 
     @Autowired
-    GoalRepository goalRepository;
-
-    public TaskService() {}
+    public TaskService(TaskRepository repository, GoalRepository goalRepository) {
+        this.repository = repository;
+        this.goalRepository = goalRepository;
+    }
 
     public List<Task> all() {
         return repository.findAll();

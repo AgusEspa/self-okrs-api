@@ -15,13 +15,15 @@ import java.util.List;
 @Service
 public class GoalService {
 
-    @Autowired
-    GoalRepository goalRepository;
+    private final GoalRepository goalRepository;
+
+    private final UserRepository userRepository;
 
     @Autowired
-    UserRepository userRepository;
-
-    public GoalService() {}
+    public GoalService(GoalRepository goalRepository, UserRepository userRepository) {
+        this.goalRepository = goalRepository;
+        this.userRepository = userRepository;
+    }
 
     public List<Goal> all() {
         return goalRepository.findAll();

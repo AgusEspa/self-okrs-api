@@ -18,7 +18,7 @@ class LoadUserDatabase implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        userRepository.save(new User("Coco Chanel", "cocoto@gmail.com", "jshfkdsjhfksjdf"));
+//        userRepository.save(new User("Mike Langdon", "penisxl@gmail.com", "5345jg84hgsdfg=M"));
     }
 
 }

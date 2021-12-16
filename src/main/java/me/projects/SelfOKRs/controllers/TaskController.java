@@ -13,13 +13,11 @@ import java.util.List;
 @RequestMapping("/api/tasks")
 public class TaskController {
 
-    private final TaskRepository repository;
+    private final TaskService taskService;
 
     @Autowired
-    TaskService taskService;
-
-    public TaskController(TaskRepository repository) {
-        this.repository = repository;
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     @GetMapping

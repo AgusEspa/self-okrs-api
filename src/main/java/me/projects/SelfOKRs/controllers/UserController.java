@@ -1,10 +1,8 @@
 package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.entities.User;
-import me.projects.SelfOKRs.repositories.UserRepository;
 import me.projects.SelfOKRs.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,13 +11,11 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    UserService userService;
-
-    public UserController(UserRepository repository) {
-        this.userRepository = repository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
