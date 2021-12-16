@@ -11,14 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class LoadDatabase {
-
-//    @Bean
-//    CommandLineRunner initUserDatabase(UserRepository userRepository) {
-//        return args -> {
-//            userRepository.save(new User("Agustin Espana", "agusespa@me.com", "jshfkdsjhfksjdf"));
-//        };
-//    }
+class ProjectConfig {
 
 //    @Bean
 //    CommandLineRunner initGoalsDatabase(GoalRepository goalRepository) {
