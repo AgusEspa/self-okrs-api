@@ -3,8 +3,6 @@ package me.projects.SelfOKRs.controllers;
 import me.projects.SelfOKRs.entities.User;
 import me.projects.SelfOKRs.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,16 +23,9 @@ public class UserController {
         return userService.all();
     }
 
-//    @GetMapping("/{id}")
-//    User getUser(@PathVariable Long id) {
-//        return userService.one(id);
-//    }
-
     @GetMapping("/{id}")
-    ResponseEntity<User> getUser(@PathVariable Long id) {
-        return ResponseEntity
-                .status(HttpStatus.ACCEPTED)
-                .body(userService.one(id));
+    User getUser(@PathVariable Long id) {
+        return userService.one(id);
     }
 
     @PostMapping
