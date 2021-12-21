@@ -34,6 +34,11 @@ public class GoalController {
         return goalService.newGoal(goalRequest);
     }
 
+    @PutMapping("/{id}")
+    Goal updateGoal(@PathVariable Long id, @RequestBody Goal goal) {
+        return goalService.editGoal(id, goal);
+    }
+
     @DeleteMapping("/{id}")
     void deleteGoal(@PathVariable Long id) {
         goalService.deleteOne(id);

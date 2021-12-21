@@ -46,4 +46,15 @@ public class GoalService {
     public void deleteOne(Long id) {
         goalRepository.deleteById(id);
     }
+
+    public Goal editGoal(Long id, Goal editedGoal) {
+        return goalRepository.findById(id)
+                .map(goal -> {
+                    goal.setName(editedGoal.getName());
+                    goal.setImportance(editedGoal.getImportance());
+                    goal.setProgressPercentage(editedGoal.getProgressPercentage());
+                    return goalRepository.save(goal);
+                })
+                .orElseThrow(() -> new GoalNotFoundException(id));
+    }
 }
