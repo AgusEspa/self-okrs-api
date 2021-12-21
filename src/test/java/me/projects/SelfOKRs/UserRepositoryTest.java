@@ -39,8 +39,8 @@ public class UserRepositoryTest {
     @Test
     public void shouldReturnListOfAllUsers() {
         List<User> userList = userRepository.findAll();
-        assertEquals(user1.getId(), userList.get(0).getId());
-        assertEquals(user2.getId(), userList.get(1).getId());
+        assertEquals(user1.getId(), userList.get(userList.size()-2).getId());
+        assertEquals(user2.getId(), userList.get(userList.size()-1).getId());
     }
 
     @Test
