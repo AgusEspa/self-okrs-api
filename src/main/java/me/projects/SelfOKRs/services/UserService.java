@@ -31,6 +31,16 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
+    public User editUser(Long id, User editedUser) {
+        return userRepository.findById(id)
+                .map(user -> {
+                    user.setUsername(editedUser.getUsername());
+                    user.setPassword(editedUser.getPassword());
+                    return userRepository.save(user);
+                })
+                .orElseThrow(() -> new UserNotFoundException(id));
+    }
+
     public void deleteOne(Long id) {
         userRepository.deleteById(id);
     }

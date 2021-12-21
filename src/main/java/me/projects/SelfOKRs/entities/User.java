@@ -18,7 +18,7 @@ public class User {
     private String username;
 
     @Email
-    private String emailAddress;
+    private final String emailAddress;
 
     @NotEmpty
     private String password;
@@ -26,7 +26,9 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Goal> goals = new HashSet<>();
 
-    private User() {}
+    private User(String username, String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 
     public User(String username, String emailAddress, String password) {
         this.username = username;
@@ -50,9 +52,6 @@ public class User {
         return emailAddress;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
 
     public String getPassword() {
         return password;

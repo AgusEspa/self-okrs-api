@@ -16,32 +16,42 @@ import java.util.List;
 public class TaskService {
 
     @Autowired
-    private final TaskRepository repository;
+    private final TaskRepository taskRepository;
 
     private final GoalRepository goalRepository;
 
     @Autowired
     public TaskService(TaskRepository repository, GoalRepository goalRepository) {
-        this.repository = repository;
+        this.taskRepository = repository;
         this.goalRepository = goalRepository;
     }
 
     public List<Task> all() {
-        return repository.findAll();
+        return taskRepository.findAll();
     }
 
     public Task one(Long id) {
-        return repository.findById(id)
+        return taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
     public Task newTask(TaskRequest taskRequest) {
         Goal goal = goalRepository.findById(taskRequest.getGoalId())
                 .orElseThrow(() -> new GoalNotFoundException(taskRequest.getGoalId()));
-        return repository.save(new Task(taskRequest.getName(), goal));
+        return taskRepository.save(new Task(taskRequest.getName(), goal));
     }
 
     public void deleteOne(Long id) {
-        repository.deleteById(id);
+        taskRepository.deleteById(id);
+    }
+
+    public Task editTask(Long id, Task editedTask) {
+        return taskRepository.findById(id)
+                .map(task -> {
+                    task.setName(editedTask.getName());
+                    task.setDueDate(editedTask.getDueDate());
+                    return taskRepository.save(task);
+                })
+                .orElseThrow(() -> new TaskNotFoundException(id));
     }
 }
