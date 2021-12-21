@@ -1,5 +1,7 @@
 package me.projects.SelfOKRs.entities;
 
+import org.hibernate.annotations.Immutable;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -18,7 +20,7 @@ public class User {
     private String username;
 
     @Email
-    private final String emailAddress;
+    private String emailAddress;
 
     @NotEmpty
     private String password;
@@ -26,8 +28,7 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Goal> goals = new HashSet<>();
 
-    private User(String username, String emailAddress) {
-        this.emailAddress = emailAddress;
+    private User() {
     }
 
     public User(String username, String emailAddress, String password) {
