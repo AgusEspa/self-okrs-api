@@ -2,9 +2,7 @@ package me.projects.SelfOKRs;
 
 import me.projects.SelfOKRs.entities.User;
 import me.projects.SelfOKRs.repositories.UserRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -14,6 +12,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserRepositoryTest {
 
     @Autowired
@@ -21,19 +20,17 @@ public class UserRepositoryTest {
     User user1;
     User user2;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
         user1 = new User("test1","test1@t.com","fs9fds9fds09jf!0");
         user2 = new User("test2","test2@t.com","fs9fds9fds09jf!0");
         userRepository.save(user1);
         userRepository.save(user2);
     }
-    @AfterEach
+    @AfterAll
     public void tearDown() {
         userRepository.deleteById(user1.getId());
-        user1 = null;
         userRepository.deleteById(user2.getId());
-        user2 = null;
     }
 
     @Test
