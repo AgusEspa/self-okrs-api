@@ -51,6 +51,4 @@ public class UserRepositoryTest {
         assertEquals(user2.getEmailAddress(), fetchedUser2.get().getEmailAddress());
     }
 
-
-
 }
