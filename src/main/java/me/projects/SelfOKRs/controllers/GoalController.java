@@ -20,12 +20,12 @@ public class GoalController {
     }
 
     @GetMapping
-    List<Goal> getGoals() {
+    List<Goal> getAllGoals() {
         return goalService.all();
     }
 
     @GetMapping("/{id}")
-    Goal getGoal(@PathVariable Long id) {
+    Goal getOneGoal(@PathVariable Long id) {
         return goalService.one(id);
     }
 

@@ -19,12 +19,12 @@ public class UserController {
     }
 
     @GetMapping
-    List<User> getUsers() {
+    List<User> getAllUsers() {
         return userService.all();
     }
 
     @GetMapping("/{id}")
-    User getUser(@PathVariable Long id) {
+    User getOneUser(@PathVariable Long id) {
         return userService.one(id);
     }
 
