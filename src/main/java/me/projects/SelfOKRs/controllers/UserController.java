@@ -3,6 +3,7 @@ package me.projects.SelfOKRs.controllers;
 import me.projects.SelfOKRs.entities.User;
 import me.projects.SelfOKRs.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class UserController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     User createUser(@RequestBody User newUser) {
         return userService.newUser(newUser);
     }

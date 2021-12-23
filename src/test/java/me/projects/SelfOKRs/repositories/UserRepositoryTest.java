@@ -1,4 +1,4 @@
-package me.projects.SelfOKRs;
+package me.projects.SelfOKRs.repositories;
 
 import me.projects.SelfOKRs.entities.User;
 import me.projects.SelfOKRs.repositories.UserRepository;
