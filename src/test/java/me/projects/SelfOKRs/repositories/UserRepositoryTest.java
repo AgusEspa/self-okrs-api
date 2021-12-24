@@ -1,17 +1,17 @@
 package me.projects.SelfOKRs.repositories;
 
 import me.projects.SelfOKRs.entities.User;
-import me.projects.SelfOKRs.repositories.UserRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
+@DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserRepositoryTest {
 
@@ -29,15 +29,21 @@ public class UserRepositoryTest {
     }
     @AfterAll
     public void tearDown() {
-        userRepository.deleteById(user1.getId());
-        userRepository.deleteById(user2.getId());
+        userRepository.deleteAll();
+    }
+
+    @Test
+    public void shouldSaveUser() {
+        User user = new User("newTest", "newTest@mail.com", "fasfd8sf8a8sdf");
+        User savedUser = userRepository.save(user);
+        assertThat(savedUser).usingRecursiveComparison().ignoringFields("id").isEqualTo(user);
     }
 
     @Test
     public void shouldReturnListOfAllUsers() {
         List<User> userList = userRepository.findAll();
-        assertEquals(user1.getId(), userList.get(userList.size()-2).getId());
-        assertEquals(user2.getId(), userList.get(userList.size()-1).getId());
+        assertEquals(user1.getId(), userList.get(0).getId());
+        assertEquals(user2.getId(), userList.get(1).getId());
     }
 
     @Test
