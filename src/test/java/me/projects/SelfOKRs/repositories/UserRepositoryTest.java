@@ -32,6 +32,7 @@ public class UserRepositoryTest {
         userRepository.deleteAll();
     }
 
+    // Test Create operation
     @Test
     public void shouldSaveUser() {
         User user = new User("newTest", "newTest@mail.com", "fasfd8sf8a8sdf");
@@ -39,6 +40,7 @@ public class UserRepositoryTest {
         assertThat(savedUser).usingRecursiveComparison().ignoringFields("id").isEqualTo(user);
     }
 
+    // Test Read operation for All
     @Test
     public void shouldReturnListOfAllUsers() {
         List<User> userList = userRepository.findAll();
@@ -46,6 +48,7 @@ public class UserRepositoryTest {
         assertEquals(user2.getId(), userList.get(1).getId());
     }
 
+    // Test Read operation for One
     @Test
     public void givenIdShouldReturnSameUserEmailWithThatId() {
         Optional<User> fetchedUser1 = userRepository.findById(user1.getId());
@@ -53,5 +56,8 @@ public class UserRepositoryTest {
         Optional<User> fetchedUser2 = userRepository.findById(user2.getId());
         assertEquals(user2.getEmailAddress(), fetchedUser2.get().getEmailAddress());
     }
+
+    // Test Update operation
+    // Test Delete operation
 
 }

@@ -46,15 +46,15 @@ public class UserControllerTest {
                 );
     }
 
-//    @Test
-//    public void shouldAllowCreationForUnauthenticatedUsers() throws Exception {
-//        this.mockMvc
-//                .perform(post("/api/users")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("{\"username\": \"Testing\", \"email\":\"test@mail.com\", \"password\":\"testing_pass1\"}")
-//                )
-//                .andExpect(status().isCreated());
-//
-//        verify(userService).newUser(any(User.class));
-//    }
+    @Test
+    public void shouldAllowCreationForUnauthenticatedUsers() throws Exception {
+        this.mockMvc
+                .perform(post("/api/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"username\": \"Testing\", \"email\":\"test@mail.com\", \"password\":\"testing_pass1\"}")
+                )
+                .andExpect(status().isCreated());
+
+        verify(userService).newUser(any(User.class));
+    }
 }

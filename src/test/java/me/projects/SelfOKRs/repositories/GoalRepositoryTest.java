@@ -34,6 +34,7 @@ public class GoalRepositoryTest {
         goalRepository.deleteAll();
     }
 
+    // Test Create operation
     @Test
     public void shouldSaveGoal() {
         Goal goal = new Goal("Testing goal 3",3,50, null);
@@ -41,12 +42,15 @@ public class GoalRepositoryTest {
         assertEquals(savedGoal, goal);
     }
 
+    // Test Read operation for All
     @Test
     public void shouldReturnListOfAllGoals() {
         List<Goal> goalList = goalRepository.findAll();
         assertEquals(goal1, goalList.get(0));
-        assertEquals(goal1.getId(), goalList.get(0).getId());
         assertEquals(goal2, goalList.get(1));
     }
+
+    // Test Update operation
+    // Test Delete operation
 
 }
