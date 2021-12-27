@@ -58,6 +58,25 @@ public class UserRepositoryTest {
     }
 
     // Test Update operation
-    // Test Delete operation
+    @Test
+    public void givenIdShouldUpdateUser () {
+        Optional<User> fetchedUser = userRepository.findById(user1.getId());
+        User updatedUser = fetchedUser.get();
+        updatedUser.setEmailAddress("newtestingmail@mail.com");
+        userRepository.save(updatedUser);
+        fetchedUser = userRepository.findById(user1.getId());
+        assertEquals(updatedUser.getEmailAddress(), fetchedUser.get().getEmailAddress());
+    }
 
+
+    // Test Delete operation
+    @Test
+    public void givenIdShouldDeleteUser() {
+        List<User> fullUserList = userRepository.findAll();
+        userRepository.deleteById(user2.getId());
+        Optional<User> fetchDeletedUser = userRepository.findById(user2.getId());
+        assertEquals(true, fetchDeletedUser.isEmpty());
+        List<User> updatedUserList = userRepository.findAll();
+        assertEquals((fullUserList.size() - 1), updatedUserList.size());
+    }
 }

@@ -53,6 +53,9 @@ public class User {
         return emailAddress;
     }
 
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 
     public String getPassword() {
         return password;
