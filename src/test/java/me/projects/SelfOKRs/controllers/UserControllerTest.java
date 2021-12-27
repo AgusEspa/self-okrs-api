@@ -35,7 +35,6 @@ public class UserControllerTest {
 
     // Test GET request for all
     @Test
-    @DisplayName("Should return all users")
     public void shouldReturnAllUsers() throws Exception {
         when(userService.all())
                 .thenReturn(List.of(
@@ -67,7 +66,7 @@ public class UserControllerTest {
 
     // Test POST request
     @Test
-    public void shouldAllowCreationForUnauthenticatedUsers() throws Exception {
+    public void shouldCreateNewUser() throws Exception {
         this.mockMvc
                 .perform(post("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)
