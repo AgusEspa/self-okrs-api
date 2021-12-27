@@ -13,13 +13,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -65,14 +62,18 @@ public class UserControllerTest {
     // Test POST request
     @Test
     public void shouldCreateNewUser() throws Exception {
+        User testUser = new User("test1", "test1@mail.com", "testing_pass1");
+        when(userService.newUser(testUser)).thenReturn(testUser);
+
         this.mockMvc
                 .perform(post("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"username\":\"Testing\",\"email\":\"test@mail.com\",\"password\":\"testing_pass1\"}")
+                        .content("{\"username\":\"test1\",\"emailAddress\":\"test1@mail.com\",\"password\":\"testing_pass1\"}")
                 )
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.emailAddress").value(testUser.getEmailAddress())
+                );
 
-        verify(userService).newUser(any(User.class));
     }
 
     // Test PUT request
