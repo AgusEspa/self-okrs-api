@@ -5,7 +5,9 @@ import me.projects.SelfOKRs.services.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,7 +23,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(UserController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class UserControllerTest {
 
     @Autowired
@@ -30,6 +33,7 @@ public class UserControllerTest {
     @MockBean
     private UserService userService;
 
+    // Test GET request for all
     @Test
     @DisplayName("Should return all users")
     public void shouldReturnAllUsers() throws Exception {
@@ -40,21 +44,41 @@ public class UserControllerTest {
                 ));
 
         this.mockMvc
-                .perform(get("/api/users"))
+                .perform(get("/api/users").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("[{\"username\":\"test1\",\"emailAddress\":\"test1@mail.com\",\"password\":\"testing_pass1\"},{\"username\":\"test2\",\"emailAddress\":\"test2@mail.com\",\"password\":\"testing_pass2\"}]")
                 );
     }
 
+    // Test GET request for one
+    @Test
+    public void givenIdShouldReturnUserWithId() throws Exception {
+        User testUserWithId = new User("test1", "test1@mail.com", "testing_pass1");
+        testUserWithId.setId(5L);
+        when(userService.one(testUserWithId.getId()))
+                .thenReturn(testUserWithId);
+
+        this.mockMvc
+                .perform(get("/api/users/5"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"id\":5,\"username\":\"test1\",\"emailAddress\":\"test1@mail.com\",\"password\":\"testing_pass1\"}")
+                );
+    }
+
+    // Test POST request
     @Test
     public void shouldAllowCreationForUnauthenticatedUsers() throws Exception {
         this.mockMvc
                 .perform(post("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"username\": \"Testing\", \"email\":\"test@mail.com\", \"password\":\"testing_pass1\"}")
+                        .content("{\"username\":\"Testing\",\"email\":\"test@mail.com\",\"password\":\"testing_pass1\"}")
                 )
                 .andExpect(status().isCreated());
 
         verify(userService).newUser(any(User.class));
     }
+
+    // Test PUT request
+
+    // Test DELETE request
 }
