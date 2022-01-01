@@ -1,6 +1,7 @@
 package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.entities.User;
+import me.projects.SelfOKRs.exceptions.UserNotFoundException;
 import me.projects.SelfOKRs.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -42,11 +42,13 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("[{\"username\":\"test1\",\"emailAddress\":\"test1@mail.com\",\"password\":\"testing_pass1\"},{\"username\":\"test2\",\"emailAddress\":\"test2@mail.com\",\"password\":\"testing_pass2\"}]")
                 );
+
+        verify(userService, atLeastOnce()).all();
     }
 
     // Test GET request for one
     @Test
-    public void givenIdShouldReturnUserWithId() throws Exception {
+    public void givenIdShouldReturnUser() throws Exception {
         User testUserWithId = new User("test1", "test1@mail.com", "testing_pass1");
         testUserWithId.setId(5L);
         when(userService.one(testUserWithId.getId()))
@@ -57,6 +59,8 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"id\":5,\"username\":\"test1\",\"emailAddress\":\"test1@mail.com\",\"password\":\"testing_pass1\"}")
                 );
+
+        verify(userService, atLeastOnce()).one(5L);
     }
 
     // Test POST request
@@ -74,9 +78,51 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.emailAddress").value(testUser.getEmailAddress())
                 );
 
+        verify(userService, times(1)).newUser(any());
+
     }
 
     // Test PUT request
+    @Test
+    public void shouldUpdateExistingUser() throws Exception {
+        User testUser = new User("test1", "newtest@mail.com", "testing_pass1");
+        when(userService.editUser(1L, testUser)).thenReturn(testUser);
+
+        this.mockMvc
+                .perform(put("/api/users/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":\"test1\",\"emailAddress\":\"newtest@mail.com\",\"password\":\"testing_pass1\"}")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.emailAddress").value(testUser.getEmailAddress())
+                );
+
+        verify(userService, times(1)).editUser(1L, testUser);
+    }
+
+    // Test PUT request exception
+//    @Test
+//    public void shouldReturnExceptionForNonExistentUser() throws Exception {
+//        User testUser = new User("test1", "newtest@mail.com", "testing_pass1");
+//        when(userService.editUser(1L, testUser)).thenReturn(new UserNotFoundException(testUser.getId()));
+//
+//        mockMvc.perform(put("/api/users/1")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content("{\"username\":\"test1\",\"emailAddress\":\"newtest@mail.com\",\"password\":\"testing_pass1\"}")
+//                )
+//                .andExpect(status().isBadRequest());
+//
+//        verify(userService, times(1)).checkAnswer(anyInt());
+//    }
 
     // Test DELETE request
+    @Test
+    public void shouldDeleteUser() throws Exception {
+
+        this.mockMvc
+                .perform(delete("/api/users/1"))
+                .andExpect(status().isOk());
+
+        verify(userService, times(1)).deleteOne(1L);
+    }
 }
