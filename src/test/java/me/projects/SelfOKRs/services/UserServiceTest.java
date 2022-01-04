@@ -20,7 +20,7 @@ public class UserServiceTest {
     UserService userService;
 
     // Test GET request for all
-    
+
     // Test GET request for one
 
     // Test POST request
