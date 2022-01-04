@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails agus = User.builder()
                 .username("agus")
                 .password(pwEncoder.encode("p"))
-                .roles("ADMIn")
+                .roles("ADMIN")
                 .build();
 
         return agus;
