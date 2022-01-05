@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         UserDetails agus = User
                 .withUsername("agus")
-                .password("apassword")
+                .password(pwEncoder.encode("apassword"))
                 .roles("ADMIN")
                 .build();
 
@@ -34,13 +34,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.httpBasic();
         http.authorizeRequests()
                 .mvcMatchers("/api")
                 .hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .and()
-                .httpBasic();
+                .anyRequest().authenticated();
     }
 }
