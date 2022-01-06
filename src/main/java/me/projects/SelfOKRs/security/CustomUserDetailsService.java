@@ -2,9 +2,7 @@ package me.projects.SelfOKRs.security;
 
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
-import me.projects.SelfOKRs.security.SecurityUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,11 +29,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         final SecurityUser securityUser = new SecurityUser(fetchedUser);
 
-        UserDetails user = User.withUsername(securityUser.getUsername())
-                .password(securityUser.getPassword())
-                .authorities("USER")
-                .build();
-
-        return user;
+        return securityUser;
     }
 }

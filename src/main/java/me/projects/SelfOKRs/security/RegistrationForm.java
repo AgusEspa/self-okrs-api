@@ -1,6 +1,7 @@
 package me.projects.SelfOKRs.security;
 
 import me.projects.SelfOKRs.entities.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class RegistrationForm {
@@ -9,8 +10,12 @@ public class RegistrationForm {
     private String emailAddress;
     private String password;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public RegistrationForm() {}
 
+    @Autowired
     public RegistrationForm(String username, String emailAddress, String password) {
         this.username = username;
         this.emailAddress = emailAddress;
@@ -41,7 +46,7 @@ public class RegistrationForm {
         this.password = password;
     }
 
-    public UserEntity toUser(PasswordEncoder passwordEncoder) {
+    public UserEntity toUser() {
         return new UserEntity(username, emailAddress, passwordEncoder.encode(password));
     }
 }

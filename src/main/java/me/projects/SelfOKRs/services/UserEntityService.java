@@ -5,6 +5,7 @@ import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.security.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +15,12 @@ import java.util.List;
 public class UserEntityService {
 
     private final UserEntityRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
-    public UserEntityService(UserEntityRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserEntityService(UserEntityRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UserEntity> all() {
@@ -32,7 +33,7 @@ public class UserEntityService {
     }
 
     public UserEntity newUser(RegistrationForm newUser) {
-        return userRepository.save(newUser.toUser(passwordEncoder));
+        return userRepository.save(newUser.toUser());
     }
 
     public UserEntity editUser(Long id, UserEntity editedUser) {
