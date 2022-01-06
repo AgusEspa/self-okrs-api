@@ -1,6 +1,7 @@
 package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.entities.UserEntity;
+import me.projects.SelfOKRs.security.RegistrationForm;
 import me.projects.SelfOKRs.services.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class UserEntityController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    UserEntity createUser(@RequestBody UserEntity newUser) {
+    UserEntity createUser(@RequestBody RegistrationForm newUser) {
         return userService.newUser(newUser);
     }
 
