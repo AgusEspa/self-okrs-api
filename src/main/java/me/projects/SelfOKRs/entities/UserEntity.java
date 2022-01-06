@@ -1,6 +1,5 @@
 package me.projects.SelfOKRs.entities;
 
-import org.hibernate.annotations.Immutable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -11,7 +10,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,15 +26,15 @@ public class User {
     @NotEmpty
     private String password;
 
-    private GrantedAuthority authority = new SimpleGrantedAuthority("WRITE");
+    private GrantedAuthority authority = new SimpleGrantedAuthority("USER");
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Goal> goals = new HashSet<>();
 
-    private User() {
+    private UserEntity() {
     }
 
-    public User(String username, String emailAddress, String password) {
+    public UserEntity(String username, String emailAddress, String password) {
         this.username = username;
         this.emailAddress = emailAddress;
         this.password = password;
@@ -103,7 +102,7 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
+        UserEntity user = (UserEntity) o;
         return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(emailAddress, user.emailAddress) && Objects.equals(password, user.password);
     }
 

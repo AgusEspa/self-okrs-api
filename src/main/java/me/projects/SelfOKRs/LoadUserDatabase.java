@@ -1,7 +1,6 @@
 package me.projects.SelfOKRs;
 
-import me.projects.SelfOKRs.entities.User;
-import me.projects.SelfOKRs.repositories.UserRepository;
+import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -9,10 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 class LoadUserDatabase implements CommandLineRunner {
 
-    private final UserRepository userRepository;
+    private final UserEntityRepository userRepository;
 
     @Autowired
-    public LoadUserDatabase(UserRepository userRepository) {
+    public LoadUserDatabase(UserEntityRepository userRepository) {
         this.userRepository = userRepository;
     }
 

@@ -36,14 +36,14 @@ public class Goal {
     private int progressPercentage;
 
     @ManyToOne
-    private User user;
+    private UserEntity user;
 
     @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Task> tasks = new HashSet<>();
 
     private Goal() {}
 
-    public Goal(String name, int importance, int progressPercentage, User user) {
+    public Goal(String name, int importance, int progressPercentage, UserEntity user) {
         this.name = name;
         this.importance = importance;
         this.progressPercentage = progressPercentage;

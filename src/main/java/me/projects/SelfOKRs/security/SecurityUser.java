@@ -1,6 +1,6 @@
 package me.projects.SelfOKRs.security;
 
-import me.projects.SelfOKRs.entities.User;
+import me.projects.SelfOKRs.entities.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,15 +9,15 @@ import java.util.List;
 
 public class SecurityUser implements UserDetails {
 
-    private final User user;
+    private final UserEntity user;
 
-    public SecurityUser(User user) {
+    public SecurityUser(UserEntity user) {
         this.user = user;
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getEmailAddress();
     }
 
     @Override

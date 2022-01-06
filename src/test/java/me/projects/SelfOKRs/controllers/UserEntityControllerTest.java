@@ -1,8 +1,7 @@
 package me.projects.SelfOKRs.controllers;
 
-import me.projects.SelfOKRs.entities.User;
-import me.projects.SelfOKRs.exceptions.UserNotFoundException;
-import me.projects.SelfOKRs.services.UserService;
+import me.projects.SelfOKRs.entities.UserEntity;
+import me.projects.SelfOKRs.services.UserEntityService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,21 +19,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class UserEntityControllerTest {
 
     @Autowired
     protected MockMvc mockMvc;
 
     @MockBean
-    private UserService userService;
+    private UserEntityService userService;
 
     // Test GET request for all
     @Test
     public void shouldReturnAllUsers() throws Exception {
         when(userService.all())
                 .thenReturn(List.of(
-                        new User("test1", "test1@mail.com", "testing_pass1"),
-                        new User("test2", "test2@mail.com", "testing_pass2")
+                        new UserEntity("test1", "test1@mail.com", "testing_pass1"),
+                        new UserEntity("test2", "test2@mail.com", "testing_pass2")
                 ));
 
         this.mockMvc
@@ -49,7 +48,7 @@ public class UserControllerTest {
     // Test GET request for one
     @Test
     public void givenIdShouldReturnUser() throws Exception {
-        User testUserWithId = new User("test1", "test1@mail.com", "testing_pass1");
+        UserEntity testUserWithId = new UserEntity("test1", "test1@mail.com", "testing_pass1");
         testUserWithId.setId(5L);
         when(userService.one(testUserWithId.getId()))
                 .thenReturn(testUserWithId);
@@ -66,7 +65,7 @@ public class UserControllerTest {
     // Test POST request
     @Test
     public void shouldCreateNewUser() throws Exception {
-        User testUser = new User("test1", "test1@mail.com", "testing_pass1");
+        UserEntity testUser = new UserEntity("test1", "test1@mail.com", "testing_pass1");
         when(userService.newUser(testUser)).thenReturn(testUser);
 
         this.mockMvc
@@ -85,7 +84,7 @@ public class UserControllerTest {
     // Test PUT request
     @Test
     public void shouldUpdateExistingUser() throws Exception {
-        User testUser = new User("test1", "newtest@mail.com", "testing_pass1");
+        UserEntity testUser = new UserEntity("test1", "newtest@mail.com", "testing_pass1");
         when(userService.editUser(1L, testUser)).thenReturn(testUser);
 
         this.mockMvc

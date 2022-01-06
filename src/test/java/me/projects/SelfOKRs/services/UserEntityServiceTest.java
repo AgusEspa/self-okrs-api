@@ -1,7 +1,7 @@
 package me.projects.SelfOKRs.services;
 
-import me.projects.SelfOKRs.entities.User;
-import me.projects.SelfOKRs.repositories.UserRepository;
+import me.projects.SelfOKRs.entities.UserEntity;
+import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class UserServiceTest {
+public class UserEntityServiceTest {
 
     @Mock
-    UserRepository userRepository;
+    UserEntityRepository userRepository;
 
     @InjectMocks
-    UserService userService;
+    UserEntityService userService;
 
     // Test GET request for all
 
@@ -26,11 +26,11 @@ public class UserServiceTest {
     // Test POST request
     @Test
     public void shouldCreateNewUser() {
-        User newUser = new User("test1", "test1@mail.com", "testing_pass1");
+        UserEntity newUser = new UserEntity("test1", "test1@mail.com", "testing_pass1");
 
         when(userRepository.save(newUser)).thenReturn(newUser);
 
-        User created = userService.newUser(newUser);
+        UserEntity created = userService.newUser(newUser);
 
         assertEquals(created.getUsername(), newUser.getUsername());
     }
