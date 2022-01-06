@@ -2,6 +2,7 @@ package me.projects.SelfOKRs.services;
 
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
+import me.projects.SelfOKRs.security.SecurityUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,8 +29,10 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }
 
-        UserDetails user = User.withUsername(fetchedUser.getEmailAddress())
-                .password(fetchedUser.getPassword())
+        final SecurityUser securityUser = new SecurityUser(fetchedUser);
+
+        UserDetails user = User.withUsername(securityUser.getUsername())
+                .password(securityUser.getPassword())
                 .authorities("USER")
                 .build();
 
