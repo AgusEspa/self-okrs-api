@@ -22,9 +22,9 @@ class LoadUserDatabase implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        RegistrationForm registrationForm = new RegistrationForm("Admin", "admin@mail.com", "5345jg84hgsdfg=M");
-        UserEntity user = registrationForm.toUser(passwordEncoder);
-        userRepository.save(user);
+//        RegistrationForm registrationForm = new RegistrationForm("Admin", "admin@mail.com", "5345jg84hgsdfg=M");
+//        UserEntity user = registrationForm.toUser(passwordEncoder);
+//        userRepository.save(user);
     }
 
 }

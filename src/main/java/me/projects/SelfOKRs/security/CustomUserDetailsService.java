@@ -1,4 +1,4 @@
-package me.projects.SelfOKRs.services;
+package me.projects.SelfOKRs.security;
 
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
