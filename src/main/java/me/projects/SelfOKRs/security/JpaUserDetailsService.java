@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.function.Supplier;
+
 @Service
 public class JpaUserDetailsService implements UserDetailsService {
 
@@ -19,16 +21,19 @@ public class JpaUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String emailAddress) {
 
-        final UserEntity fetchedUser = userRepository.findByEmailAddress(username);
+//        final UserEntity fetchedUser = userRepository.findByEmailAddress(username);
+//
+//        if (fetchedUser == null) {
+//            throw new UsernameNotFoundException(username);
+//        }
 
-        if (fetchedUser == null) {
-            throw new UsernameNotFoundException(username);
-        }
+        UserEntity fetchedUser = userRepository
+                .findByEmailAddress(emailAddress)
+                .orElseThrow(() -> new UsernameNotFoundException("Problem during authentication!"));
 
-        final SecurityUser securityUser = new SecurityUser(fetchedUser);
+        return new SecurityUser(fetchedUser);
 
-        return securityUser;
     }
 }
