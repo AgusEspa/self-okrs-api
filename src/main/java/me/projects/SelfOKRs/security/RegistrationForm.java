@@ -2,6 +2,7 @@ package me.projects.SelfOKRs.security;
 
 import me.projects.SelfOKRs.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class RegistrationForm {
@@ -10,8 +11,7 @@ public class RegistrationForm {
     private String emailAddress;
     private String password;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public RegistrationForm() {}
 
