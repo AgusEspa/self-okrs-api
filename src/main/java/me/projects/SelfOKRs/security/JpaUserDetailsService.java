@@ -9,12 +9,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class JpaUserDetailsService implements UserDetailsService {
 
     private final UserEntityRepository userRepository;
 
     @Autowired
-    public CustomUserDetailsService(UserEntityRepository userRepository) {
+    public JpaUserDetailsService(UserEntityRepository userRepository) {
         this.userRepository = userRepository;
     }
 
