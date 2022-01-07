@@ -26,8 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic();
         http.authorizeRequests()
-                .mvcMatchers("/api")
-                .hasRole("USER")
                 .anyRequest().authenticated();
     }
 }
