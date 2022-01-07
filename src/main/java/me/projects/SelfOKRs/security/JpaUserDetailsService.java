@@ -21,17 +21,12 @@ public class JpaUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String emailAddress) {
-
-//        final UserEntity fetchedUser = userRepository.findByEmailAddress(username);
-//
-//        if (fetchedUser == null) {
-//            throw new UsernameNotFoundException(username);
-//        }
+    public UserDetails loadUserByUsername(String emailAddress) throws UsernameNotFoundException {
 
         UserEntity fetchedUser = userRepository
-                .findByEmailAddress(emailAddress)
-                .orElseThrow(() -> new UsernameNotFoundException("Problem during authentication!"));
+                .findByEmailAddress(emailAddress);
+
+        // why .orElseThrow() doesn't work?
 
         return new SecurityUser(fetchedUser);
 
