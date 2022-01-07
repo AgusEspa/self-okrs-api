@@ -17,11 +17,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.authenticationProvider = authenticationProvider;
     }
 
-//    @Bean
-//    public BCryptPasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider);
@@ -32,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic();
         http.authorizeRequests()
                 .mvcMatchers("/api")
-                .hasAuthority("USER")
+                .hasRole("USER")
                 .anyRequest().authenticated();
     }
 }

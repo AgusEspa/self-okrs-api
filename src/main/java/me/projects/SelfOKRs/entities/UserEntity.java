@@ -1,8 +1,5 @@
 package me.projects.SelfOKRs.entities;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -25,8 +22,6 @@ public class UserEntity {
 
     @NotEmpty
     private String password;
-
-    private GrantedAuthority authority = new SimpleGrantedAuthority("USER");
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Goal> goals = new HashSet<>();
@@ -70,14 +65,6 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public GrantedAuthority getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(GrantedAuthority authority) {
-        this.authority = authority;
     }
 
     public Set<Goal> getGoals() {
