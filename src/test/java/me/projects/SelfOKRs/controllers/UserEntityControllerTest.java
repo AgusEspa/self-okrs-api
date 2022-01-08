@@ -1,6 +1,7 @@
 package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.entities.UserEntity;
+import me.projects.SelfOKRs.security.RegistrationForm;
 import me.projects.SelfOKRs.services.UserEntityService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +66,8 @@ public class UserEntityControllerTest {
     // Test POST request
     @Test
     public void shouldCreateNewUser() throws Exception {
-        UserEntity testUser = new UserEntity("test1", "test1@mail.com", "testing_pass1");
-        when(userService.newUser(testUser)).thenReturn(testUser);
+        RegistrationForm testUser = new RegistrationForm("test1", "test1@mail.com", "testing_pass1");
+        when(userService.newUser(testUser)).thenReturn(testUser.toUser());
 
         this.mockMvc
                 .perform(post("/api/users")
