@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Objects;
+
 public class RegistrationForm {
 
     private String username;
@@ -48,5 +50,18 @@ public class RegistrationForm {
 
     public UserEntity toUser() {
         return new UserEntity(username, emailAddress, passwordEncoder.encode(password));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || !(o instanceof RegistrationForm || o instanceof UserEntity)) return false;
+        RegistrationForm that = (RegistrationForm) o;
+        return Objects.equals(username, that.username) && Objects.equals(emailAddress, that.emailAddress) && Objects.equals(password, that.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, emailAddress, password);
     }
 }

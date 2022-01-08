@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 public class UserEntityServiceTest {
 
     @Mock
-    UserEntityRepository userRepository;
+    UserEntityRepository userEntityRepository;
 
     @InjectMocks
     UserEntityService userService;
@@ -28,9 +28,9 @@ public class UserEntityServiceTest {
     @Test
     public void shouldCreateNewUser() {
         RegistrationForm newUser = new RegistrationForm("test1", "test1@mail.com", "testing_pass1");
+        UserEntity userEntity = newUser.toUser();
 
-        when(userRepository.save(newUser.toUser())).thenReturn(newUser.toUser());
-
+        when(userEntityRepository.save(userEntity)).thenReturn(userEntity);
         UserEntity created = userService.newUser(newUser);
 
         assertEquals(created.getEmailAddress(), newUser.getEmailAddress());
