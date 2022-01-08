@@ -2,6 +2,7 @@ package me.projects.SelfOKRs.services;
 
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
+import me.projects.SelfOKRs.security.RegistrationForm;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -26,13 +27,13 @@ public class UserEntityServiceTest {
     // Test POST request
     @Test
     public void shouldCreateNewUser() {
-        UserEntity newUser = new UserEntity("test1", "test1@mail.com", "testing_pass1");
+        RegistrationForm newUser = new RegistrationForm("test1", "test1@mail.com", "testing_pass1");
 
-        when(userRepository.save(newUser)).thenReturn(newUser);
+        when(userRepository.save(newUser.toUser())).thenReturn(newUser.toUser());
 
         UserEntity created = userService.newUser(newUser);
 
-        assertEquals(created.getUsername(), newUser.getUsername());
+        assertEquals(created.getEmailAddress(), newUser.getEmailAddress());
     }
 
     // Test PUT request
