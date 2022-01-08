@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 src/test/java/me/projects/.DS_Store
+src/test/java/me/projects/SelfOKRs/repositories/.DS_Store

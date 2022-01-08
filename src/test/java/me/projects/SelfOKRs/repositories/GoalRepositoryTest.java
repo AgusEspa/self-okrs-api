@@ -18,6 +18,7 @@ public class GoalRepositoryTest {
 
     @Autowired
     GoalRepository goalRepository;
+
     Goal goal1;
     Goal goal2;
 

@@ -28,6 +28,13 @@ public class UserEntityControllerTest {
     @MockBean
     private UserEntityService userService;
 
+    // Test GET request unauthenticated calls
+    @Test
+    public void ShouldBlockUnauthenticatedCalls() throws Exception {
+        mockMvc.perform(get("/api/users"))
+                .andExpect(status().isUnauthorized());
+    }
+
     // Test GET request for all
     @Test
     public void shouldReturnAllUsers() throws Exception {

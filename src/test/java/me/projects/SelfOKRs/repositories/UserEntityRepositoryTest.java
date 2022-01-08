@@ -1,14 +1,17 @@
 package me.projects.SelfOKRs.repositories;
 
 import me.projects.SelfOKRs.entities.UserEntity;
-import org.junit.jupiter.api.*;
+import me.projects.SelfOKRs.security.RegistrationForm;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
@@ -17,13 +20,14 @@ public class UserEntityRepositoryTest {
 
     @Autowired
     UserEntityRepository userRepository;
+
     UserEntity user1;
     UserEntity user2;
 
     @BeforeAll
     public void setUp() {
-        user1 = new UserEntity("test1","test1@t.com","fs9fds9fds09jf!0");
-        user2 = new UserEntity("test2","test2@t.com","fs9fds9fds09jf!0");
+        user1 = new RegistrationForm("test1","test1@t.com","fs9fds9fds09jf!0").toUser();
+        user2 = new RegistrationForm("test2","test2@t.com","fs9fds9fds09jf!0").toUser();
         userRepository.save(user1);
         userRepository.save(user2);
     }
@@ -35,9 +39,10 @@ public class UserEntityRepositoryTest {
     // Test Create operation
     @Test
     public void shouldSaveUser() {
-        UserEntity user = new UserEntity("newTest", "newTest@mail.com", "fasfd8sf8a8sdf");
-        UserEntity savedUser = userRepository.save(user);
-        assertThat(savedUser).usingRecursiveComparison().ignoringFields("id").isEqualTo(user);
+        RegistrationForm newUser = new RegistrationForm("test1", "test1@mail.com", "testing_pass1");
+        UserEntity savedUser = userRepository.save(newUser.toUser());
+
+        assertEquals(savedUser.getEmailAddress(), newUser.getEmailAddress());
     }
 
     // Test Read operation for All
@@ -68,7 +73,6 @@ public class UserEntityRepositoryTest {
         assertEquals(updatedUser.getEmailAddress(), fetchedUser.get().getEmailAddress());
     }
 
-
     // Test Delete operation
     @Test
     public void givenIdShouldDeleteUser() {
@@ -79,4 +83,5 @@ public class UserEntityRepositoryTest {
         List<UserEntity> updatedUserList = userRepository.findAll();
         assertEquals((fullUserList.size() - 1), updatedUserList.size());
     }
+
 }
