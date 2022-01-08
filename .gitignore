@@ -4,32 +4,14 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
 .idea
-*.iws
+.DS_Store
+src/.DS_Store
+.idea/uiDesigner.xml
+*.lst
+target/**
 *.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
-src/test/java/me/projects/.DS_Store
-src/test/java/me/projects/SelfOKRs/repositories/.DS_Store
+mvnw.cmd
+mvnw
+src/main/.DS_Store
+*.DS_Store
