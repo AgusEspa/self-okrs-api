@@ -1,6 +1,7 @@
 package me.projects.SelfOKRs.services;
 
 import me.projects.SelfOKRs.entities.UserEntity;
+import me.projects.SelfOKRs.exceptions.UserAlreadyExistsException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.security.RegistrationForm;
@@ -10,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserEntityService {
@@ -34,7 +34,11 @@ public class UserEntityService {
     }
 
     public UserEntity newUser(RegistrationForm newUser) {
-        return userRepository.save(newUser.toUser());
+        if (userRepository.findByEmailAddress(newUser.getEmailAddress()).equals(null)) {
+            return userRepository.save(newUser.toUser());
+        } else {
+            throw  new UserAlreadyExistsException(newUser.getEmailAddress());
+        }
     }
 
     public UserEntity editUser(Long id, UserEntity editedUser) {
