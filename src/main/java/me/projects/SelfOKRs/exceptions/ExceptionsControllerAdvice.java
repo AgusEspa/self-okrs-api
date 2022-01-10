@@ -27,7 +27,7 @@ public class ExceptionsControllerAdvice {
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     String userAlreadyExistsException(UserAlreadyExistsException ex) {
         return ex.getMessage();
     }
