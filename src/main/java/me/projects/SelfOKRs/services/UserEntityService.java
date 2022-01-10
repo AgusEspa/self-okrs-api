@@ -34,7 +34,7 @@ public class UserEntityService {
     }
 
     public UserEntity newUser(RegistrationForm newUser) {
-        if (userRepository.findByEmailAddress(newUser.getEmailAddress()).equals(null)) {
+        if (userRepository.findByEmailAddress(newUser.getEmailAddress()) == null) {
             return userRepository.save(newUser.toUser());
         } else {
             throw  new UserAlreadyExistsException(newUser.getEmailAddress());
