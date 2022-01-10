@@ -25,4 +25,10 @@ public class ExceptionsControllerAdvice {
     String goalNotFoundHandler(GoalNotFoundException ex) {
         return ex.getMessage();
     }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String userAlreadyExistsException(UserAlreadyExistsException ex) {
+        return ex.getMessage();
+    }
 }
