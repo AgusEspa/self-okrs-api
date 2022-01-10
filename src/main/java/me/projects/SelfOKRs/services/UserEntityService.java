@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserEntityService {
@@ -33,6 +34,7 @@ public class UserEntityService {
     }
 
     public UserEntity newUser(RegistrationForm newUser) {
+        UserEntity userRepository.findByEmailAddress(newUser.getEmailAddress() != null;
         return userRepository.save(newUser.toUser());
     }
 

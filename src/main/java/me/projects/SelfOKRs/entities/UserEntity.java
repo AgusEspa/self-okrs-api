@@ -18,6 +18,7 @@ public class UserEntity {
     private String username;
 
     @Email
+    @Column(unique=true)
     private String emailAddress;
 
     @NotEmpty
