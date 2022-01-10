@@ -40,6 +40,7 @@ public class UserEntityService {
         return userRepository.findById(id)
                 .map(user -> {
                     user.setUsername(editedUser.getUsername());
+                    user.setEmailAddress(editedUser.getEmailAddress());
                     user.setPassword(passwordEncoder.encode(editedUser.getPassword()));
                     return userRepository.save(user);
                 })
