@@ -1,8 +1,7 @@
 package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.entities.Task;
-import me.projects.SelfOKRs.pojos.TaskRequest;
-import me.projects.SelfOKRs.repositories.TaskRepository;
+import me.projects.SelfOKRs.dtos.TaskRequest;
 import me.projects.SelfOKRs.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

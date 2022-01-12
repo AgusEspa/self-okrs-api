@@ -1,4 +1,4 @@
-package me.projects.SelfOKRs.pojos;
+package me.projects.SelfOKRs.dtos;
 
 public class TaskRequest {
 

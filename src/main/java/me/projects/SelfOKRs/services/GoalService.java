@@ -4,7 +4,7 @@ import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
-import me.projects.SelfOKRs.pojos.GoalRequest;
+import me.projects.SelfOKRs.dtos.GoalRequest;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,7 @@ import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.entities.Task;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 import me.projects.SelfOKRs.exceptions.TaskNotFoundException;
-import me.projects.SelfOKRs.pojos.TaskRequest;
+import me.projects.SelfOKRs.dtos.TaskRequest;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
