@@ -1,6 +1,7 @@
 package me.projects.SelfOKRs.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -29,11 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
-
         http.sessionManagement().sessionCreationPolicy(STATELESS);
 
         http.authorizeRequests()
                 .mvcMatchers(HttpMethod.POST, "/api/users").permitAll()
                 .anyRequest().authenticated();
+
+        http.addFilter(new CustomAuthenticationFilter(authenticationProvider));
     }
 }
