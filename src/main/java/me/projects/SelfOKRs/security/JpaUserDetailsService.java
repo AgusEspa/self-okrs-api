@@ -8,8 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.function.Supplier;
-
 @Service
 public class JpaUserDetailsService implements UserDetailsService {
 
@@ -23,12 +21,12 @@ public class JpaUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String emailAddress) throws UsernameNotFoundException {
 
-        UserEntity fetchedUser = userRepository
-                .findByEmailAddress(emailAddress);
+        UserEntity fetchedUser = userRepository.findByEmailAddress(emailAddress);
 
-        // why .orElseThrow() doesn't work?
+        if (fetchedUser == null) throw new UsernameNotFoundException(emailAddress + "not found in the database");
 
         return new SecurityUser(fetchedUser);
+
 
     }
 }
