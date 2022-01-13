@@ -29,9 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
-        http.httpBasic();
 
-//        http.sessionManagement().sessionCreationPolicy(STATELESS);
+        http.sessionManagement().sessionCreationPolicy(STATELESS);
 
         http.authorizeRequests()
                 .mvcMatchers(HttpMethod.POST, "/api/users").permitAll()
