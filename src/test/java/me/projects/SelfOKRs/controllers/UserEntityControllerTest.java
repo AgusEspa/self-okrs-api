@@ -79,7 +79,7 @@ public class UserEntityControllerTest {
         when(userService.newUser(testUser)).thenReturn(user);
 
         this.mockMvc
-                .perform(post("/api/users")
+                .perform(post("/api/users/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"username\": \"test1\",\"emailAddress\": \"test1@mail.com\",\"password\": \"testing_pass1\"}")
                 )

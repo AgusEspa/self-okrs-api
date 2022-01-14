@@ -37,7 +37,7 @@ public class UserEntityController {
         return userService.one(id);
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
     UserEntity createUser(@RequestBody RegistrationForm newUser) {
         return userService.newUser(newUser);

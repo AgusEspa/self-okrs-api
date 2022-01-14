@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(STATELESS);
 
         http.authorizeRequests()
-                .mvcMatchers(HttpMethod.POST, "/api/users").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/users/signup").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/users/token/refresh").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
                 .anyRequest().authenticated();
