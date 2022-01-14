@@ -2,11 +2,15 @@ package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.security.RegistrationForm;
+import me.projects.SelfOKRs.security.TokenService;
 import me.projects.SelfOKRs.services.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -15,10 +19,12 @@ import java.util.List;
 public class UserEntityController {
 
     private final UserEntityService userService;
+    private final TokenService tokenService;
 
     @Autowired
-    public UserEntityController(UserEntityService userService) {
+    public UserEntityController(UserEntityService userService, TokenService tokenService) {
         this.userService = userService;
+        this.tokenService = tokenService;
     }
 
     @GetMapping
@@ -45,5 +51,10 @@ public class UserEntityController {
     @DeleteMapping("/{id}")
     void deleteUser(@PathVariable Long id) {
         userService.deleteOne(id);
+    }
+
+    @GetMapping("/token/refresh")
+    void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        tokenService.refreshToken(request, response);
     }
 }
