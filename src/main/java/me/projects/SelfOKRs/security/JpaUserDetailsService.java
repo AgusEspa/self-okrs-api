@@ -1,6 +1,7 @@
 package me.projects.SelfOKRs.security;
 
 import me.projects.SelfOKRs.entities.UserEntity;
+import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,10 +24,8 @@ public class JpaUserDetailsService implements UserDetailsService {
 
         UserEntity fetchedUser = userRepository.findByEmailAddress(emailAddress);
 
-        if (fetchedUser == null) throw new UsernameNotFoundException(emailAddress + "not found in the database");
+        if (fetchedUser == null) throw new UserEntityNotFoundException(emailAddress);
 
         return new SecurityUser(fetchedUser);
-
-
     }
 }

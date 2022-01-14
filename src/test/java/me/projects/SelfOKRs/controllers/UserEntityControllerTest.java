@@ -32,8 +32,7 @@ public class UserEntityControllerTest {
     @Test
     public void ShouldBlockUnauthenticatedCalls() throws Exception {
         mockMvc.perform(get("/api/users"))
-                .andExpect(status().isUnauthorized())
-        ;
+                .andExpect(status().is(403));
     }
 
     // Test GET request for all
