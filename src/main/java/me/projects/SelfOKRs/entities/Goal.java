@@ -36,6 +36,7 @@ public class Goal {
     private int progressPercentage;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -52,6 +53,10 @@ public class Goal {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -82,13 +87,13 @@ public class Goal {
         this.progressPercentage = progressPercentage;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
 
     public Set<Task> getTasks() {
         return tasks;

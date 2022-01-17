@@ -7,7 +7,9 @@ import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.dtos.GoalRequest;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
+import me.projects.SelfOKRs.security.AuthenticationFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,14 +21,23 @@ public class GoalService {
 
     private final UserEntityRepository userRepository;
 
+    private final AuthenticationFacade authenticationFacade;
+
     @Autowired
-    public GoalService(GoalRepository goalRepository, UserEntityRepository userRepository) {
+    public GoalService(GoalRepository goalRepository, UserEntityRepository userRepository, AuthenticationFacade authenticationFacade) {
         this.goalRepository = goalRepository;
         this.userRepository = userRepository;
+        this.authenticationFacade = authenticationFacade;
     }
 
     public List<Goal> all() {
-        return goalRepository.findAll();
+        String username = authenticationFacade.getAuthentication().getName();
+        try {
+            UserEntity user = userRepository.findByEmailAddress(username);
+            return goalRepository.findByUserId(user.getId());
+        } catch (UserEntityNotFoundException e) {
+            throw new UserEntityNotFoundException(username);
+        }
     }
 
     public Goal one(Long id) {
@@ -34,13 +45,17 @@ public class GoalService {
                 .orElseThrow(() -> new GoalNotFoundException(id));
     }
 
-    public Goal newGoal(GoalRequest goalRequest) {
-        UserEntity user = userRepository.findById(goalRequest.getUserId())
-                .orElseThrow(() -> new UserEntityNotFoundException(goalRequest.getUserId()));
-        return goalRepository.save(new Goal(goalRequest.getName(),
-                goalRequest.getImportance(),
-                goalRequest.getProgressPercentage(),
-                user));
+    public Goal newGoal(Goal goal) {
+        String username = authenticationFacade.getAuthentication().getName();
+        try {
+            UserEntity user = userRepository.findByEmailAddress(goal.getName());
+            return goalRepository.save(new Goal(goal.getName(),
+                    goal.getImportance(),
+                    goal.getProgressPercentage(),
+                    user));
+        } catch (UserEntityNotFoundException e) {
+            throw new UserEntityNotFoundException(username);
+        }
     }
 
     public void deleteOne(Long id) {

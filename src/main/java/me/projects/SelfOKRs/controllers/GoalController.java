@@ -30,8 +30,8 @@ public class GoalController {
     }
 
     @PostMapping
-    Goal createGoal(@RequestBody GoalRequest goalRequest) {
-        return goalService.newGoal(goalRequest);
+    Goal createGoal(@RequestBody Goal goal) {
+        return goalService.newGoal(goal);
     }
 
     @PutMapping("/{id}")

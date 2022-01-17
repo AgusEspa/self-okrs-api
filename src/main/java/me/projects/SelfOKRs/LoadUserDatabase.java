@@ -1,6 +1,8 @@
 package me.projects.SelfOKRs;
 
+import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.entities.UserEntity;
+import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.security.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,14 @@ class LoadUserDatabase implements CommandLineRunner {
 
     private final UserEntityRepository userRepository;
 
+    private final GoalRepository goalRepository;
+
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
-    public LoadUserDatabase(UserEntityRepository userRepository) {
+    public LoadUserDatabase(UserEntityRepository userRepository, GoalRepository goalRepository) {
         this.userRepository = userRepository;
+        this.goalRepository = goalRepository;
     }
 
     @Override
@@ -26,6 +31,10 @@ class LoadUserDatabase implements CommandLineRunner {
 //        RegistrationForm registrationForm = new RegistrationForm("Admin", "admin@mail.com", "5345jg84hgsdfg=M");
 //        UserEntity user = registrationForm.toUser();
 //        userRepository.save(user);
+
+//        UserEntity user = new UserEntity("Admin", "admin@mail.com", "5345jg84hgsdfg=M");
+//        Goal newGoal = new Goal("Be fluent in Swedish", 5, 50, user);
+//        goalRepository.save(newGoal);
     }
 
 }
