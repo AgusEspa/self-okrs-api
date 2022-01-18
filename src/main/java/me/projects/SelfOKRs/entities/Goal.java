@@ -1,8 +1,6 @@
 package me.projects.SelfOKRs.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,9 +11,6 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "goals")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Goal {
 
     @Id
@@ -41,7 +36,8 @@ public class Goal {
     @JsonIgnore
     private UserEntity user;
 
-    @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Embedded
+    @CollectionTable(name = "TASKS")
     private Set<Task> tasks = new HashSet<>();
 
     private Goal() {}

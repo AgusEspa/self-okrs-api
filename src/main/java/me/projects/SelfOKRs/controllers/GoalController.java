@@ -1,7 +1,7 @@
 package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.entities.Goal;
-import me.projects.SelfOKRs.dtos.GoalRequest;
+import me.projects.SelfOKRs.entities.Task;
 import me.projects.SelfOKRs.services.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +42,10 @@ public class GoalController {
     @DeleteMapping("/{id}")
     void deleteGoal(@PathVariable Long id) {
         goalService.deleteOne(id);
+    }
+
+    @PostMapping("/task")
+    Task createTask(@RequestBody Task task) {
+        goalService.newTask(task);
     }
 }

@@ -1,23 +1,16 @@
 package me.projects.SelfOKRs.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Entity
+@Embeddable
 @Table(name = "tasks")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Task {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "task_id")
     private Long id;
 
     @NotEmpty
@@ -25,6 +18,7 @@ public class Task {
 
     private LocalDate dueDate;
 
+    @JsonIgnore
     @ManyToOne
     private Goal goal;
 

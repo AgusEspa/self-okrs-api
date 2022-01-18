@@ -1,5 +1,7 @@
 package me.projects.SelfOKRs.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -21,9 +23,11 @@ public class UserEntity {
     @Column(unique=true)
     private String emailAddress;
 
+    @JsonIgnore
     @NotEmpty
     private String password;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Goal> goals = new HashSet<>();
 
