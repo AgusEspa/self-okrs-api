@@ -4,13 +4,12 @@ import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
-import me.projects.SelfOKRs.dtos.GoalRequest;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.security.AuthenticationFacade;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import java.util.logging.Logger;
 
 import java.util.List;
 
@@ -23,11 +22,14 @@ public class GoalService {
 
     private final AuthenticationFacade authenticationFacade;
 
+    private final Logger logger;
+
     @Autowired
-    public GoalService(GoalRepository goalRepository, UserEntityRepository userRepository, AuthenticationFacade authenticationFacade) {
+    public GoalService(GoalRepository goalRepository, UserEntityRepository userRepository, AuthenticationFacade authenticationFacade, Logger logger) {
         this.goalRepository = goalRepository;
         this.userRepository = userRepository;
         this.authenticationFacade = authenticationFacade;
+        this.logger = Logger.getLogger("logger");
     }
 
     public List<Goal> all() {
@@ -49,6 +51,7 @@ public class GoalService {
         String username = authenticationFacade.getAuthentication().getName();
         try {
             UserEntity user = userRepository.findByEmailAddress(goal.getName());
+            logger.info(user.getId().toString());
             return goalRepository.save(new Goal(goal.getName(),
                     goal.getImportance(),
                     goal.getProgressPercentage(),
