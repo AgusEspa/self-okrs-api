@@ -22,14 +22,11 @@ public class GoalService {
 
     private final AuthenticationFacade authenticationFacade;
 
-    private final Logger logger;
-
     @Autowired
-    public GoalService(GoalRepository goalRepository, UserEntityRepository userRepository, AuthenticationFacade authenticationFacade, Logger logger) {
+    public GoalService(GoalRepository goalRepository, UserEntityRepository userRepository, AuthenticationFacade authenticationFacade) {
         this.goalRepository = goalRepository;
         this.userRepository = userRepository;
         this.authenticationFacade = authenticationFacade;
-        this.logger = Logger.getLogger("logger");
     }
 
     public List<Goal> all() {
@@ -50,8 +47,7 @@ public class GoalService {
     public Goal newGoal(Goal goal) {
         String username = authenticationFacade.getAuthentication().getName();
         try {
-            UserEntity user = userRepository.findByEmailAddress(goal.getName());
-            logger.info(user.getId().toString());
+            UserEntity user = userRepository.findByEmailAddress(username);
             return goalRepository.save(new Goal(goal.getName(),
                     goal.getImportance(),
                     goal.getProgressPercentage(),
