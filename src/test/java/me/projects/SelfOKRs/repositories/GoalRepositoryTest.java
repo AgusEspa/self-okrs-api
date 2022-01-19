@@ -24,8 +24,8 @@ public class GoalRepositoryTest {
 
     @BeforeAll
     public void setUp() {
-        goal1 = new Goal("Testing goal 1",1,100, null);
-        goal2 = new Goal("Testing goal 2",5,1, null);
+        goal1 = new Goal("Testing goal 1",1, null);
+        goal2 = new Goal("Testing goal 2",5, null);
         goalRepository.save(goal1);
         goalRepository.save(goal2);
 
@@ -38,7 +38,7 @@ public class GoalRepositoryTest {
     // Test Create operation
     @Test
     public void shouldSaveGoal() {
-        Goal goal = new Goal("Testing goal 3",3,50, null);
+        Goal goal = new Goal("Testing goal 3",3, null);
         Goal savedGoal = goalRepository.save(goal);
         assertEquals(savedGoal, goal);
     }

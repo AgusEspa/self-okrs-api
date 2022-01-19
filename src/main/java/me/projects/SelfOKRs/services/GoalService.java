@@ -48,7 +48,6 @@ public class GoalService {
             UserEntity user = userRepository.findByEmailAddress(username);
             return goalRepository.save(new Goal(goal.getName(),
                     goal.getImportance(),
-                    goal.getProgressPercentage(),
                     user));
         } catch (UserEntityNotFoundException e) {
             throw new UserEntityNotFoundException(username);
@@ -66,7 +65,6 @@ public class GoalService {
                 .map(goal -> {
                     goal.setName(editedGoal.getName());
                     goal.setImportance(editedGoal.getImportance());
-                    goal.setProgressPercentage(editedGoal.getProgressPercentage());
                     return goalRepository.save(goal);
                 })
                 .orElseThrow(() -> new GoalNotFoundException(id));

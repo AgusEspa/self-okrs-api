@@ -8,12 +8,12 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tasks")
-public class Task {
+@Table(name = "key_results")
+public class KeyResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "task_id")
+    @Column(name = "key_result_id")
     private Long id;
 
     @NotEmpty
@@ -28,14 +28,14 @@ public class Task {
     @JoinColumn(name = "goal_id", nullable = false)
     private Goal goal;
 
-    private Task() {}
+    private KeyResult() {}
 
-    public Task(String name, Goal goal) {
+    public KeyResult(String name, Goal goal) {
         this.name = name;
         this.goal = goal;
     }
 
-    public Task(String name, LocalDate dueDate, Goal goal) {
+    public KeyResult(String name, LocalDate dueDate, Goal goal) {
         this.name = name;
         this.dueDate = dueDate;
         this.goal = goal;
@@ -91,8 +91,8 @@ public class Task {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return Objects.equals(name, task.name) && Objects.equals(id, task.id);
+        KeyResult keyResult = (KeyResult) o;
+        return Objects.equals(name, keyResult.name) && Objects.equals(id, keyResult.id);
     }
 
     @Override

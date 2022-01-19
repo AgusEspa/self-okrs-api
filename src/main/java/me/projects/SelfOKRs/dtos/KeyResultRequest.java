@@ -3,7 +3,7 @@ package me.projects.SelfOKRs.dtos;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class TaskRequest {
+public class KeyResultRequest {
 
     private String name;
 
@@ -11,7 +11,7 @@ public class TaskRequest {
 
     private Long goalId;
 
-    public TaskRequest(String name, LocalDate dueDate, Long goalId) {
+    public KeyResultRequest(String name, LocalDate dueDate, Long goalId) {
         this.name = name;
         this.dueDate = dueDate;
         this.goalId = goalId;
@@ -45,7 +45,7 @@ public class TaskRequest {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TaskRequest that = (TaskRequest) o;
+        KeyResultRequest that = (KeyResultRequest) o;
         return Objects.equals(name, that.name) && Objects.equals(dueDate, that.dueDate) && Objects.equals(goalId, that.goalId);
     }
 

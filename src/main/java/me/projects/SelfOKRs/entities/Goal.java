@@ -27,9 +27,6 @@ public class Goal {
     @Max(5)
     private int importance;
 
-    @Min(1)
-    @Max(100)
-    private int progressPercentage;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -37,14 +34,13 @@ public class Goal {
     private UserEntity user;
 
     @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Task> tasks = new HashSet<>();
+    private Set<KeyResult> keyResults = new HashSet<>();
 
     private Goal() {}
 
-    public Goal(String name, int importance, int progressPercentage, UserEntity user) {
+    public Goal(String name, int importance, UserEntity user) {
         this.name = name;
         this.importance = importance;
-        this.progressPercentage = progressPercentage;
         this.user = user;
     }
 
@@ -76,14 +72,6 @@ public class Goal {
         this.importance = importance;
     }
 
-    public int getProgressPercentage() {
-        return progressPercentage;
-    }
-
-    public void setProgressPercentage(int progressPercentage) {
-        this.progressPercentage = progressPercentage;
-    }
-
     public UserEntity getUser() {
         return user;
     }
@@ -92,17 +80,12 @@ public class Goal {
         this.user = user;
     }
 
-    public Set<Task> getTasks() {
-        return tasks;
+    public Set<KeyResult> getTasks() {
+        return keyResults;
     }
 
-    public void setTasks(Set<Task> tasks) {
-        this.tasks = tasks;
-    }
-
-    @Override
-    public String toString() {
-        return "Goal{" + "id= " + id + ", name= " + name + ", importance= " + importance + ", progress= " + progressPercentage;
+    public void setTasks(Set<KeyResult> keyResults) {
+        this.keyResults = keyResults;
     }
 
     @Override
@@ -110,11 +93,11 @@ public class Goal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Goal goal = (Goal) o;
-        return progressPercentage == goal.progressPercentage && Objects.equals(name, goal.name) && importance == goal.importance;
+        return Objects.equals(id, goal.id) && Objects.equals(name, goal.name) && Objects.equals(createdAt, goal.createdAt) && Objects.equals(user, goal.user) && Objects.equals(importance, goal.importance);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, importance, progressPercentage);
+        return Objects.hash(id, name, createdAt, importance, user);
     }
 }

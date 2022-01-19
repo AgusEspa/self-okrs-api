@@ -6,6 +6,7 @@ import me.projects.SelfOKRs.security.TokenService;
 import me.projects.SelfOKRs.services.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,8 +41,10 @@ public class UserEntityController {
 
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    UserEntity createUser(@RequestBody RegistrationForm newUser) {
-        return userService.newUser(newUser);
+    ResponseEntity<?> createUser(@RequestBody RegistrationForm newUser) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(userService.newUser(newUser));
     }
 
     // Refactor, not secure
@@ -56,6 +59,7 @@ public class UserEntityController {
         userService.deleteOne(id);
     }
 
+    // Refactor, not secure ???
     @GetMapping("/token/refresh")
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         tokenService.refreshToken(request, response);

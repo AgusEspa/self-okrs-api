@@ -1,45 +1,49 @@
 package me.projects.SelfOKRs.controllers;
 
-import me.projects.SelfOKRs.dtos.TaskRequest;
-import me.projects.SelfOKRs.entities.Task;
+import me.projects.SelfOKRs.dtos.KeyResultRequest;
+import me.projects.SelfOKRs.entities.KeyResult;
 import me.projects.SelfOKRs.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasks")
-public class TaskController {
+public class KeyResultController {
 
     private final TaskService taskService;
 
     @Autowired
-    public TaskController(TaskService taskService) {
+    public KeyResultController(TaskService taskService) {
         this.taskService = taskService;
     }
 
     // Refactor, not secure
     @GetMapping
-    List<Task> getAllTasks() {
+    List<KeyResult> getAllTasks() {
         return taskService.all();
     }
 
     // Refactor, not secure
     @GetMapping("/{id}")
-    Task getOneTask(@PathVariable Long id) {
+    KeyResult getOneTask(@PathVariable Long id) {
         return taskService.one(id);
     }
 
     @PostMapping
-    Task addTask(@RequestBody TaskRequest taskRequest) {
-        return taskService.newTask(taskRequest);
+    ResponseEntity<?> addTask(@RequestBody KeyResultRequest taskRequest) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(taskService.newTask(taskRequest));
     }
 
     // Refactor, not secure
     @PutMapping("/{id}")
-    Task updateTask(@PathVariable Long id, @RequestBody Task task) {
-        return taskService.editTask(id, task);
+    KeyResult updateTask(@PathVariable Long id, @RequestBody KeyResult keyResult) {
+        return taskService.editTask(id, keyResult);
     }
 
     // Refactor, not secure
