@@ -21,6 +21,8 @@ public class Task {
 
     private LocalDate dueDate;
 
+    private Boolean isDone;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "goal_id", nullable = false)
@@ -37,10 +39,15 @@ public class Task {
         this.name = name;
         this.dueDate = dueDate;
         this.goal = goal;
+        this.isDone = false;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -65,6 +72,14 @@ public class Task {
 
     public void setGoal(Goal goal) {
         this.goal = goal;
+    }
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
     }
 
     @Override
