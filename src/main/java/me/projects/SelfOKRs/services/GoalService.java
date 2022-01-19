@@ -1,9 +1,11 @@
 package me.projects.SelfOKRs.services;
 
+import me.projects.SelfOKRs.dtos.GoalRequest;
 import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
+import me.projects.SelfOKRs.exceptions.UserNotAuthorized;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.security.AuthenticationFacade;
@@ -32,7 +34,7 @@ public class GoalService {
     public List<Goal> all() {
         String username = authenticationFacade.getAuthentication().getName();
         UserEntity user = userRepository.findByEmailAddress(username);
-        if (user == null) throw new UserEntityNotFoundException(username);
+        if (user == null) throw new UserNotAuthorized(username);
         return goalRepository.findByUserId(user.getId());
     }
 
@@ -42,15 +44,15 @@ public class GoalService {
                 .orElseThrow(() -> new GoalNotFoundException(id));
     }
 
-    public Goal newGoal(Goal goal) {
+    public Goal newGoal(GoalRequest goalRequest) {
         String username = authenticationFacade.getAuthentication().getName();
         try {
             UserEntity user = userRepository.findByEmailAddress(username);
-            return goalRepository.save(new Goal(goal.getName(),
-                    goal.getImportance(),
+            return goalRepository.save(new Goal(goalRequest.getName(),
+                    goalRequest.getImportance(),
                     user));
         } catch (UserEntityNotFoundException e) {
-            throw new UserEntityNotFoundException(username);
+            throw new UserNotAuthorized(username);
         }
     }
 

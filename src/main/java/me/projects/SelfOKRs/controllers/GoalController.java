@@ -1,5 +1,6 @@
 package me.projects.SelfOKRs.controllers;
 
+import me.projects.SelfOKRs.dtos.GoalRequest;
 import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.services.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,10 @@ public class GoalController {
     }
 
     @PostMapping
-    ResponseEntity<?> createGoal(@RequestBody Goal goal) {
+    ResponseEntity<?> createGoal(@RequestBody GoalRequest goalRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(goalService.newGoal(goal));
+                .body(goalService.newGoal(goalRequest));
     }
 
     // Refactor, not secure, ResponseEntity<?>

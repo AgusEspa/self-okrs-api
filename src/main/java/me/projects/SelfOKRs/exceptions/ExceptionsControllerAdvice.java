@@ -32,4 +32,10 @@ public class ExceptionsControllerAdvice {
     String userAlreadyExistsException(UserAlreadyExistsException ex) {
         return ex.getMessage();
     }
+
+    @ExceptionHandler(UserNotAuthorized.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    String userNotAuthorized(UserNotAuthorized ex) {
+        return ex.getMessage();
+    }
 }

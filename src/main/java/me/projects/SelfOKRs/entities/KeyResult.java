@@ -35,9 +35,11 @@ public class KeyResult {
 
     private KeyResult() {}
 
-    public KeyResult(String name, Goal goal) {
+    public KeyResult(String name, Goal goal, UserEntity user) {
         this.name = name;
         this.goal = goal;
+        this.user = user;
+        this.isDone = false;
     }
 
     public KeyResult(String name, LocalDate dueDate, Goal goal) {

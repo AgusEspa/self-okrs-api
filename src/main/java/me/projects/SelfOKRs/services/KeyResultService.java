@@ -7,6 +7,7 @@ import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 import me.projects.SelfOKRs.exceptions.TaskNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
+import me.projects.SelfOKRs.exceptions.UserNotAuthorized;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.KeyResultRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
@@ -52,20 +53,21 @@ public class KeyResultService {
                 .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
-    public KeyResult newTask(KeyResultRequest keyResultRequest) {
+    public KeyResult newKeyResult(KeyResultRequest keyResultRequest) {
         String username = authenticationFacade.getAuthentication().getName();
         UserEntity user = userRepository.findByEmailAddress(username);
 
         Goal goal = goalRepository.findById(keyResultRequest.getGoalId())
                 .orElseThrow(() -> new GoalNotFoundException(keyResultRequest.getGoalId()));
 
-        if (goal.getUser().getEmailAddress() == user.getEmailAddress()) {
-            if (keyResultRequest.getDueDate() == null) {
-                return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal));
-            } else {
-                return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), keyResultRequest.getDueDate(),goal));
-            }
-        } else throw new UserEntityNotFoundException(username);
+        if (goal.getUser().getEmailAddress().equals(user.getEmailAddress())) {
+            return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal, user));
+//            if (keyResultRequest.getDueDate() == null) {
+//                return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal));
+//            } else {
+//                return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), keyResultRequest.getDueDate(),goal));
+//            }
+        } else throw new UserNotAuthorized(username);
 
     }
 

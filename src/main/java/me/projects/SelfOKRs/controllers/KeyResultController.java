@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/tasks")
+@RequestMapping("/api/keyresults")
 public class KeyResultController {
 
     private final KeyResultService taskService;
@@ -31,10 +31,10 @@ public class KeyResultController {
     }
 
     @PostMapping
-    ResponseEntity<?> addTask(@RequestBody KeyResultRequest taskRequest) {
+    ResponseEntity<?> addKeyResult(@RequestBody KeyResultRequest keyResultRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(taskService.newTask(taskRequest));
+                .body(taskService.newKeyResult(keyResultRequest));
     }
 
     // Refactor, not secure, ResponseEntity<?>
