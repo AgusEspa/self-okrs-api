@@ -7,10 +7,13 @@ import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Embeddable
+@Entity
 @Table(name = "tasks")
 public class Task {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "task_id")
     private Long id;
 
     @NotEmpty
@@ -20,6 +23,7 @@ public class Task {
 
     @JsonIgnore
     @ManyToOne
+    @JoinColumn(name = "goal_id", nullable = false)
     private Goal goal;
 
     private Task() {}

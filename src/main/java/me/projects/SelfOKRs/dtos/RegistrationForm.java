@@ -1,4 +1,4 @@
-package me.projects.SelfOKRs.security;
+package me.projects.SelfOKRs.dtos;
 
 import me.projects.SelfOKRs.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,7 @@ import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.UserAlreadyExistsException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
-import me.projects.SelfOKRs.security.RegistrationForm;
+import me.projects.SelfOKRs.dtos.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +28,7 @@ public class UserEntityService {
         return userRepository.findAll();
     }
 
+    // Refactor, not secure
     public UserEntity one(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserEntityNotFoundException(id));
@@ -41,6 +42,7 @@ public class UserEntityService {
         }
     }
 
+    // Refactor, not secure
     public UserEntity editUser(Long id, UserEntity editedUser) {
         return userRepository.findById(id)
                 .map(user -> {
@@ -52,6 +54,7 @@ public class UserEntityService {
                 .orElseThrow(() -> new UserEntityNotFoundException(id));
     }
 
+    // Refactor, not secure
     public void deleteOne(Long id) {
         userRepository.deleteById(id);
     }

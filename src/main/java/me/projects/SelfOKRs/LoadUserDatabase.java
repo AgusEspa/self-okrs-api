@@ -1,10 +1,7 @@
 package me.projects.SelfOKRs;
 
-import me.projects.SelfOKRs.entities.Goal;
-import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
-import me.projects.SelfOKRs.security.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

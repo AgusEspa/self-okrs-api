@@ -1,7 +1,6 @@
 package me.projects.SelfOKRs.services;
 
 import me.projects.SelfOKRs.entities.Goal;
-import me.projects.SelfOKRs.entities.Task;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
@@ -22,6 +21,7 @@ public class GoalService {
 
     private final AuthenticationFacade authenticationFacade;
 
+
     @Autowired
     public GoalService(GoalRepository goalRepository, UserEntityRepository userRepository, AuthenticationFacade authenticationFacade) {
         this.goalRepository = goalRepository;
@@ -36,6 +36,7 @@ public class GoalService {
         return goalRepository.findByUserId(user.getId());
     }
 
+    // Refactor, not secure
     public Goal one(Long id) {
         return goalRepository.findById(id)
                 .orElseThrow(() -> new GoalNotFoundException(id));
@@ -54,10 +55,12 @@ public class GoalService {
         }
     }
 
+    // Refactor, not secure
     public void deleteOne(Long id) {
         goalRepository.deleteById(id);
     }
 
+    // Refactor, not secure
     public Goal editGoal(Long id, Goal editedGoal) {
         return goalRepository.findById(id)
                 .map(goal -> {
@@ -67,9 +70,5 @@ public class GoalService {
                     return goalRepository.save(goal);
                 })
                 .orElseThrow(() -> new GoalNotFoundException(id));
-    }
-
-    public Task newTask(Task task) {
-        return 
     }
 }

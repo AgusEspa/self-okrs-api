@@ -36,8 +36,7 @@ public class Goal {
     @JsonIgnore
     private UserEntity user;
 
-    @Embedded
-    @CollectionTable(name = "TASKS")
+    @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Task> tasks = new HashSet<>();
 
     private Goal() {}

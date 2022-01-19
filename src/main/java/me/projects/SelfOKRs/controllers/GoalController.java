@@ -24,6 +24,7 @@ public class GoalController {
         return goalService.all();
     }
 
+    // Refactor, not secure
     @GetMapping("/{id}")
     Goal getOneGoal(@PathVariable Long id) {
         return goalService.one(id);
@@ -34,18 +35,15 @@ public class GoalController {
         return goalService.newGoal(goal);
     }
 
+    // Refactor, not secure
     @PutMapping("/{id}")
     Goal updateGoal(@PathVariable Long id, @RequestBody Goal goal) {
         return goalService.editGoal(id, goal);
     }
 
+    // Refactor, not secure
     @DeleteMapping("/{id}")
     void deleteGoal(@PathVariable Long id) {
         goalService.deleteOne(id);
-    }
-
-    @PostMapping("/task")
-    Task createTask(@RequestBody Task task) {
-        goalService.newTask(task);
     }
 }
