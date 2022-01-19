@@ -28,6 +28,11 @@ public class KeyResult {
     @JoinColumn(name = "goal_id", nullable = false)
     private Goal goal;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private UserEntity user;
+
     private KeyResult() {}
 
     public KeyResult(String name, Goal goal) {

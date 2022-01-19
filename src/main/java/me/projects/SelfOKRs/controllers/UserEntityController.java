@@ -28,15 +28,16 @@ public class UserEntityController {
         this.tokenService = tokenService;
     }
 
+    // Only with ROLE_ADMIN
     @GetMapping
-    List<UserEntity> getAllUsers() {
-        return userService.all();
+    ResponseEntity<?> getAllUsers() {
+        return ResponseEntity.ok(userService.all());
     }
 
-    // Refactor, not secure
+    // Only with ROLE_ADMIN
     @GetMapping("/{id}")
-    UserEntity getOneUser(@PathVariable Long id) {
-        return userService.one(id);
+    ResponseEntity<?> getOneUser(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.one(id));
     }
 
     @PostMapping("/signup")
@@ -59,7 +60,6 @@ public class UserEntityController {
         userService.deleteOne(id);
     }
 
-    // Refactor, not secure ???
     @GetMapping("/token/refresh")
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         tokenService.refreshToken(request, response);

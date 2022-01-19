@@ -20,12 +20,10 @@ public class GoalController {
 
     @GetMapping
     ResponseEntity<?> getAllGoals() {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(goalService.all());
+        return ResponseEntity.ok(goalService.all());
     }
 
-    // Refactor, not secure
+    // Refactor, not secure, ResponseEntity<?>
     @GetMapping("/{id}")
     Goal getOneGoal(@PathVariable Long id) {
         return goalService.one(id);
@@ -38,13 +36,13 @@ public class GoalController {
                 .body(goalService.newGoal(goal));
     }
 
-    // Refactor, not secure
+    // Refactor, not secure, ResponseEntity<?>
     @PutMapping("/{id}")
     Goal updateGoal(@PathVariable Long id, @RequestBody Goal goal) {
         return goalService.editGoal(id, goal);
     }
 
-    // Refactor, not secure
+    // Refactor, not secure, ResponseEntity<?>
     @DeleteMapping("/{id}")
     void deleteGoal(@PathVariable Long id) {
         goalService.deleteOne(id);

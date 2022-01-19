@@ -27,14 +27,13 @@ public class Goal {
     @Max(5)
     private int importance;
 
+    @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<KeyResult> keyResults = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private UserEntity user;
-
-    @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<KeyResult> keyResults = new HashSet<>();
 
     private Goal() {}
 

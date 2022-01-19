@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TaskService {
+public class KeyResultService {
 
     @Autowired
-    private final KeyResultRepository taskRepository;
+    private final KeyResultRepository keyResultRepository;
 
     private final GoalRepository goalRepository;
 
@@ -29,36 +29,41 @@ public class TaskService {
     private final AuthenticationFacade authenticationFacade;
 
     @Autowired
-    public TaskService(KeyResultRepository repository, GoalRepository goalRepository, UserEntityRepository userRepository, AuthenticationFacade authenticationFacade) {
-        this.taskRepository = repository;
+    public KeyResultService(KeyResultRepository repository, GoalRepository goalRepository, UserEntityRepository userRepository, AuthenticationFacade authenticationFacade) {
+        this.keyResultRepository = repository;
         this.goalRepository = goalRepository;
         this.userRepository = userRepository;
         this.authenticationFacade = authenticationFacade;
     }
 
-    // Refactor, not secure
-    public List<KeyResult> all() {
-        return taskRepository.findAll();
+    public List<KeyResult> allPerGoal(Long goalId) {
+        String username = authenticationFacade.getAuthentication().getName();
+        Goal goal = goalRepository.findById(goalId)
+                .orElseThrow(() -> new GoalNotFoundException(goalId));
+        if (goal.getUser().getEmailAddress().equals(username)) {
+            return keyResultRepository.findAllPerGoal(goalId);
+        } else throw new UserEntityNotFoundException(username);
+
     }
 
     // Refactor, not secure
     public KeyResult one(Long id) {
-        return taskRepository.findById(id)
+        return keyResultRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
-    public KeyResult newTask(KeyResultRequest taskRequest) {
+    public KeyResult newTask(KeyResultRequest keyResultRequest) {
         String username = authenticationFacade.getAuthentication().getName();
         UserEntity user = userRepository.findByEmailAddress(username);
 
-        Goal goal = goalRepository.findById(taskRequest.getGoalId())
-                .orElseThrow(() -> new GoalNotFoundException(taskRequest.getGoalId()));
+        Goal goal = goalRepository.findById(keyResultRequest.getGoalId())
+                .orElseThrow(() -> new GoalNotFoundException(keyResultRequest.getGoalId()));
 
         if (goal.getUser().getEmailAddress() == user.getEmailAddress()) {
-            if (taskRequest.getDueDate() == null) {
-                return taskRepository.save(new KeyResult(taskRequest.getName(), goal));
+            if (keyResultRequest.getDueDate() == null) {
+                return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal));
             } else {
-                return taskRepository.save(new KeyResult(taskRequest.getName(), taskRequest.getDueDate(),goal));
+                return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), keyResultRequest.getDueDate(),goal));
             }
         } else throw new UserEntityNotFoundException(username);
 
@@ -66,16 +71,16 @@ public class TaskService {
 
     // Refactor, not secure
     public void deleteOne(Long id) {
-        taskRepository.deleteById(id);
+        keyResultRepository.deleteById(id);
     }
 
     // Refactor, not secure
     public KeyResult editTask(Long id, KeyResult editedKeyResult) {
-        return taskRepository.findById(id)
+        return keyResultRepository.findById(id)
                 .map(task -> {
                     task.setName(editedKeyResult.getName());
                     task.setDueDate(editedKeyResult.getDueDate());
-                    return taskRepository.save(task);
+                    return keyResultRepository.save(task);
                 })
                 .orElseThrow(() -> new TaskNotFoundException(id));
     }

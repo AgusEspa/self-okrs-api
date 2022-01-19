@@ -2,32 +2,29 @@ package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.dtos.KeyResultRequest;
 import me.projects.SelfOKRs.entities.KeyResult;
-import me.projects.SelfOKRs.services.TaskService;
+import me.projects.SelfOKRs.services.KeyResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/tasks")
 public class KeyResultController {
 
-    private final TaskService taskService;
+    private final KeyResultService taskService;
 
     @Autowired
-    public KeyResultController(TaskService taskService) {
+    public KeyResultController(KeyResultService taskService) {
         this.taskService = taskService;
     }
 
-    // Refactor, not secure
     @GetMapping
-    List<KeyResult> getAllTasks() {
-        return taskService.all();
+    ResponseEntity<?> getAllTasksPerGoal(Long goalId) {
+        return ResponseEntity.ok(taskService.allPerGoal(goalId));
     }
 
-    // Refactor, not secure
+    // Refactor, not secure, ResponseEntity<?>
     @GetMapping("/{id}")
     KeyResult getOneTask(@PathVariable Long id) {
         return taskService.one(id);
@@ -40,13 +37,13 @@ public class KeyResultController {
                 .body(taskService.newTask(taskRequest));
     }
 
-    // Refactor, not secure
+    // Refactor, not secure, ResponseEntity<?>
     @PutMapping("/{id}")
     KeyResult updateTask(@PathVariable Long id, @RequestBody KeyResult keyResult) {
         return taskService.editTask(id, keyResult);
     }
 
-    // Refactor, not secure
+    // Refactor, not secure, ResponseEntity<?>
     @DeleteMapping("/{id}")
     void deleteTask(@PathVariable Long id) {
         taskService.deleteOne(id);
