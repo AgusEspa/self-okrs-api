@@ -1,5 +1,7 @@
 package me.projects.SelfOKRs.dtos;
 
+import org.apache.tomcat.jni.Local;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -7,20 +9,17 @@ public class KeyResultRequest {
 
     private String name;
 
-    //private LocalDate dueDate;
+    private LocalDate dueDate;
 
     private Long goalId;
 
-    public KeyResultRequest(String name, Long goalId) {
+    public KeyResultRequest(String name, String dueDate, Long goalId) {
         this.name = name;
+        if (dueDate != null) {
+            this.dueDate = LocalDate.parse(dueDate);
+        } else this.dueDate = null;
         this.goalId = goalId;
     }
-
-//    public KeyResultRequest(String name, LocalDate dueDate, Long goalId) {
-//        this.name = name;
-//        this.dueDate = dueDate;
-//        this.goalId = goalId;
-//    }
 
     public String getName() {
         return name;
@@ -30,13 +29,13 @@ public class KeyResultRequest {
         this.name = name;
     }
 
-//    public LocalDate getDueDate() {
-//        return dueDate;
-//    }
-//
-//    public void setDueDate(LocalDate dueDate) {
-//        this.dueDate = dueDate;
-//    }
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
 
     public Long getGoalId() {
         return goalId;

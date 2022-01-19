@@ -61,14 +61,8 @@ public class KeyResultService {
                 .orElseThrow(() -> new GoalNotFoundException(keyResultRequest.getGoalId()));
 
         if (goal.getUser().getEmailAddress().equals(user.getEmailAddress())) {
-            return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal, user));
-//            if (keyResultRequest.getDueDate() == null) {
-//                return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal));
-//            } else {
-//                return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), keyResultRequest.getDueDate(),goal));
-//            }
+            return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), keyResultRequest.getDueDate(), goal, user));
         } else throw new UserNotAuthorized(username);
-
     }
 
     // Refactor, not secure

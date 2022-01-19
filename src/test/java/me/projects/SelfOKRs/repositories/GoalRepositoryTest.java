@@ -1,6 +1,8 @@
 package me.projects.SelfOKRs.repositories;
 
+import me.projects.SelfOKRs.dtos.RegistrationForm;
 import me.projects.SelfOKRs.entities.Goal;
+import me.projects.SelfOKRs.entities.UserEntity;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -19,13 +21,18 @@ public class GoalRepositoryTest {
     @Autowired
     GoalRepository goalRepository;
 
+    @Autowired
+    UserEntityRepository userEntityRepository;
+
     Goal goal1;
     Goal goal2;
 
     @BeforeAll
     public void setUp() {
-        goal1 = new Goal("Testing goal 1",1, null);
-        goal2 = new Goal("Testing goal 2",5, null);
+        UserEntity user = new UserEntity("Testing User", "test@mail.com", "pass");
+        userEntityRepository.save(user);
+        goal1 = new Goal("Testing goal 1",1, user);
+        goal2 = new Goal("Testing goal 2",5, user);
         goalRepository.save(goal1);
         goalRepository.save(goal2);
 

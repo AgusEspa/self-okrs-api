@@ -28,6 +28,7 @@ public class Goal {
     private int importance;
 
     @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<KeyResult> keyResults = new HashSet<>();
 
     @ManyToOne

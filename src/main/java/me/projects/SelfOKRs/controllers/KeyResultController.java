@@ -12,40 +12,40 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/keyresults")
 public class KeyResultController {
 
-    private final KeyResultService taskService;
+    private final KeyResultService keyResultService;
 
     @Autowired
     public KeyResultController(KeyResultService taskService) {
-        this.taskService = taskService;
+        this.keyResultService = taskService;
     }
 
     @GetMapping
-    ResponseEntity<?> getAllTasksPerGoal(Long goalId) {
-        return ResponseEntity.ok(taskService.allPerGoal(goalId));
+    ResponseEntity<?> getAllTasksPerGoal(@RequestParam Long goalId) {
+        return ResponseEntity.ok(keyResultService.allPerGoal(goalId));
     }
 
     // Refactor, not secure, ResponseEntity<?>
     @GetMapping("/{id}")
     KeyResult getOneTask(@PathVariable Long id) {
-        return taskService.one(id);
+        return keyResultService.one(id);
     }
 
     @PostMapping
     ResponseEntity<?> addKeyResult(@RequestBody KeyResultRequest keyResultRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(taskService.newKeyResult(keyResultRequest));
+                .body(keyResultService.newKeyResult(keyResultRequest));
     }
 
     // Refactor, not secure, ResponseEntity<?>
     @PutMapping("/{id}")
     KeyResult updateTask(@PathVariable Long id, @RequestBody KeyResult keyResult) {
-        return taskService.editTask(id, keyResult);
+        return keyResultService.editTask(id, keyResult);
     }
 
     // Refactor, not secure, ResponseEntity<?>
     @DeleteMapping("/{id}")
     void deleteTask(@PathVariable Long id) {
-        taskService.deleteOne(id);
+        keyResultService.deleteOne(id);
     }
 }
