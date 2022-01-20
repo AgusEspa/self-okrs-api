@@ -7,7 +7,7 @@ import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 import me.projects.SelfOKRs.exceptions.TaskNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
-import me.projects.SelfOKRs.exceptions.UserNotAuthorized;
+import me.projects.SelfOKRs.exceptions.UserNotAuthorizedException;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.KeyResultRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
@@ -63,7 +63,7 @@ public class KeyResultService {
 
         if (goal.getUser().getEmailAddress().equals(user.getEmailAddress())) {
             return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), keyResultRequest.getDueDate(), goal, user));
-        } else throw new UserNotAuthorized(username);
+        } else throw new UserNotAuthorizedException(username);
     }
 
     // Refactor, not secure

@@ -5,7 +5,6 @@ import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
-import me.projects.SelfOKRs.exceptions.UserNotAuthorized;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.security.AuthenticationFacade;

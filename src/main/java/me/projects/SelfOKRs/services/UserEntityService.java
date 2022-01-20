@@ -2,8 +2,7 @@ package me.projects.SelfOKRs.services;
 
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.UserAlreadyExistsException;
-import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
-import me.projects.SelfOKRs.exceptions.UserNotAuthorized;
+import me.projects.SelfOKRs.exceptions.UserNotAuthorizedException;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.dtos.RegistrationForm;
 import me.projects.SelfOKRs.security.AuthenticationFacade;
@@ -12,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,10 +39,11 @@ public class UserEntityService {
 //    }
 
     public UserEntity newUser(RegistrationForm newUser) {
+
         if (userRepository.findByEmailAddress(newUser.getEmailAddress()).isEmpty()) {
             return userRepository.save(newUser.toUser());
         } else {
-            throw  new UserAlreadyExistsException(newUser.getEmailAddress());
+            throw new UserAlreadyExistsException(newUser.getEmailAddress());
         }
     }
 
@@ -52,7 +51,7 @@ public class UserEntityService {
         String username = authenticationFacade.getAuthentication().getName();
         Optional<UserEntity> fetchedUser = userRepository.findByEmailAddress(username);
         if (fetchedUser.isEmpty() || fetchedUser.get().getEmailAddress() != username) {
-            throw new UserNotAuthorized(username);
+            throw new UserNotAuthorizedException(username);
         } else {
             UserEntity user = fetchedUser.get();
             if (editedUser.getUsername() != null) {

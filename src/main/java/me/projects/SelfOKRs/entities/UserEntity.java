@@ -19,12 +19,11 @@ public class UserEntity {
     @NotEmpty(message = "Username is required")
     private String username;
 
-    @Email
-    @Column(unique=true)
+    @Email(message="Not a valid email address")
     private String emailAddress;
 
     @JsonIgnore
-    @NotEmpty
+    @NotEmpty(message = "Password is required")
     private String password;
 
     @JsonIgnore
