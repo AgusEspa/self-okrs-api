@@ -3,7 +3,6 @@ package me.projects.SelfOKRs.controllers;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.dtos.RegistrationForm;
 import me.projects.SelfOKRs.services.UserEntityService;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
