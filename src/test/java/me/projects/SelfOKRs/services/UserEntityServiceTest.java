@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -34,6 +35,17 @@ public class UserEntityServiceTest {
         UserEntity created = userService.newUser(newUser);
 
         assertEquals(created.getEmailAddress(), newUser.getEmailAddress());
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenCreatingNewUserWithInvalidEmail() {
+        RegistrationForm newUser = new RegistrationForm("test1", "invalid email", "testing_pass1");
+        UserEntity userEntity = newUser.toUser();
+
+        when(userEntityRepository.save(userEntity)).thenReturn(userEntity);
+        UserEntity created = userService.newUser(newUser);
+
+        //assertThrows(RuntimeException);
     }
 
     // Test PUT request

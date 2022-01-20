@@ -48,14 +48,15 @@ public class KeyResultService {
     }
 
     // Refactor, not secure
-    public KeyResult one(Long id) {
-        return keyResultRepository.findById(id)
-                .orElseThrow(() -> new TaskNotFoundException(id));
-    }
+//    public KeyResult one(Long id) {
+//        return keyResultRepository.findById(id)
+//                .orElseThrow(() -> new TaskNotFoundException(id));
+//    }
 
     public KeyResult newKeyResult(KeyResultRequest keyResultRequest) {
         String username = authenticationFacade.getAuthentication().getName();
-        UserEntity user = userRepository.findByEmailAddress(username);
+        UserEntity user = userRepository.findByEmailAddress(username)
+                .orElseThrow(() -> new UserEntityNotFoundException(username));
 
         Goal goal = goalRepository.findById(keyResultRequest.getGoalId())
                 .orElseThrow(() -> new GoalNotFoundException(keyResultRequest.getGoalId()));
@@ -71,7 +72,7 @@ public class KeyResultService {
     }
 
     // Refactor, not secure
-    public KeyResult editTask(Long id, KeyResult editedKeyResult) {
+    public KeyResult editKeyResult(Long id, KeyResult editedKeyResult) {
         return keyResultRepository.findById(id)
                 .map(task -> {
                     task.setName(editedKeyResult.getName());

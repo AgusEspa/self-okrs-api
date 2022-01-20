@@ -25,10 +25,10 @@ public class KeyResultController {
     }
 
     // Refactor, not secure, ResponseEntity<?>
-    @GetMapping("/{id}")
-    KeyResult getOneTask(@PathVariable Long id) {
-        return keyResultService.one(id);
-    }
+//    @GetMapping("/{id}")
+//    KeyResult getOneTask(@PathVariable Long id) {
+//        return keyResultService.one(id);
+//    }
 
     @PostMapping
     ResponseEntity<?> addKeyResult(@RequestBody KeyResultRequest keyResultRequest) {
@@ -39,8 +39,8 @@ public class KeyResultController {
 
     // Refactor, not secure, ResponseEntity<?>
     @PutMapping("/{id}")
-    KeyResult updateTask(@PathVariable Long id, @RequestBody KeyResult keyResult) {
-        return keyResultService.editTask(id, keyResult);
+    KeyResult updateKeyResult(@PathVariable Long id, @RequestBody KeyResult keyResult) {
+        return keyResultService.editKeyResult(id, keyResult);
     }
 
     // Refactor, not secure, ResponseEntity<?>

@@ -27,29 +27,27 @@ public class UserEntityController {
     }
 
     // Only with ROLE_ADMIN
-    @GetMapping
-    ResponseEntity<?> getAllUsers() {
-        return ResponseEntity.ok(userService.all());
-    }
+//    @GetMapping
+//    ResponseEntity<?> getAllUsers() {
+//        return ResponseEntity.ok(userService.all());
+//    }
 
     // Only with ROLE_ADMIN
-    @GetMapping("/{id}")
-    ResponseEntity<?> getOneUser(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.one(id));
-    }
+//    @GetMapping("/{id}")
+//    ResponseEntity<?> getOneUser(@PathVariable Long id) {
+//        return ResponseEntity.ok(userService.one(id));
+//    }
 
     @PostMapping("/signup")
-    @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<?> createUser(@RequestBody RegistrationForm newUser) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(userService.newUser(newUser));
     }
 
-    // Refactor, not secure
-    @PutMapping("/{id}")
-    UserEntity updateUser(@PathVariable Long id, @RequestBody UserEntity user) {
-        return userService.editUser(id, user);
+    @PutMapping
+    ResponseEntity<?> updateUser(@RequestBody UserEntity user) {
+        return ResponseEntity.ok(userService.editUser(user));
     }
 
     // Refactor, not secure

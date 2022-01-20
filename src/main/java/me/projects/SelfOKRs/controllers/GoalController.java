@@ -25,10 +25,10 @@ public class GoalController {
     }
 
     // Refactor, not secure, ResponseEntity<?>
-    @GetMapping("/{id}")
-    Goal getOneGoal(@PathVariable Long id) {
-        return goalService.one(id);
-    }
+//    @GetMapping("/{id}")
+//    Goal getOneGoal(@PathVariable Long id) {
+//        return goalService.one(id);
+//    }
 
     @PostMapping
     ResponseEntity<?> createGoal(@RequestBody GoalRequest goalRequest) {

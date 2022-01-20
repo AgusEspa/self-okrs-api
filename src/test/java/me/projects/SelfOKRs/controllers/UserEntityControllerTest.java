@@ -38,43 +38,41 @@ public class UserEntityControllerTest {
 
     // Test GET request for all
     // ROLE_ADMIN not yet implemented
-    @Disabled
-    @Test
-    @WithMockUser
-    public void shouldReturnAllUsers() throws Exception {
-        when(userService.all())
-                .thenReturn(List.of(
-                        new UserEntity("test1", "test1@mail.com", "testing_pass1"),
-                        new UserEntity("test2", "test2@mail.com", "testing_pass2")
-                ));
-
-        this.mockMvc
-                .perform(get("/api/users").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().json("[{\"username\":\"test1\",\"emailAddress\":\"test1@mail.com\",\"password\":\"testing_pass1\"},{\"username\":\"test2\",\"emailAddress\":\"test2@mail.com\",\"password\":\"testing_pass2\"}]"))
-        ;
-
-        verify(userService, atLeastOnce()).all();
-    }
+//    @Test
+//    @WithMockUser
+//    public void shouldReturnAllUsers() throws Exception {
+//        when(userService.all())
+//                .thenReturn(List.of(
+//                        new UserEntity("test1", "test1@mail.com", "testing_pass1"),
+//                        new UserEntity("test2", "test2@mail.com", "testing_pass2")
+//                ));
+//
+//        this.mockMvc
+//                .perform(get("/api/users").contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(content().json("[{\"username\":\"test1\",\"emailAddress\":\"test1@mail.com\",\"password\":\"testing_pass1\"},{\"username\":\"test2\",\"emailAddress\":\"test2@mail.com\",\"password\":\"testing_pass2\"}]"))
+//        ;
+//
+//        verify(userService, atLeastOnce()).all();
+//    }
 
     // Test GET request for one
     // ROLE_ADMIN not yet implemented
-    @Disabled
-    @Test
-    @WithMockUser
-    public void givenIdShouldReturnUser() throws Exception {
-        UserEntity testUserWithId = new UserEntity("test1", "test1@mail.com", "testing_pass1");
-        testUserWithId.setId(5L);
-        when(userService.one(testUserWithId.getId())).thenReturn(testUserWithId);
-
-        this.mockMvc
-                .perform(get("/api/users/5"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("{\"id\":5,\"username\":\"test1\",\"emailAddress\":\"test1@mail.com\",\"password\":\"testing_pass1\"}"))
-        ;
-
-        verify(userService, atLeastOnce()).one(5L);
-    }
+//    @Test
+//    @WithMockUser
+//    public void givenIdShouldReturnUser() throws Exception {
+//        UserEntity testUserWithId = new UserEntity("test1", "test1@mail.com", "testing_pass1");
+//        testUserWithId.setId(5L);
+//        when(userService.one(testUserWithId.getId())).thenReturn(testUserWithId);
+//
+//        this.mockMvc
+//                .perform(get("/api/users/5"))
+//                .andExpect(status().isOk())
+//                .andExpect(content().json("{\"id\":5,\"username\":\"test1\",\"emailAddress\":\"test1@mail.com\",\"password\":\"testing_pass1\"}"))
+//        ;
+//
+//        verify(userService, atLeastOnce()).one(5L);
+//    }
 
     // Test POST request
     @Test
@@ -101,7 +99,7 @@ public class UserEntityControllerTest {
     @WithMockUser
     public void shouldUpdateExistingUser() throws Exception {
         UserEntity testUser = new UserEntity("test1", "newtest@mail.com", "testing_pass1");
-        when(userService.editUser(1L, testUser)).thenReturn(testUser);
+        when(userService.editUser(testUser)).thenReturn(testUser);
 
         this.mockMvc
                 .perform(put("/api/users/1")
@@ -112,7 +110,7 @@ public class UserEntityControllerTest {
                 .andExpect(jsonPath("$.emailAddress").value(testUser.getEmailAddress()))
         ;
 
-        verify(userService, times(1)).editUser(1L, testUser);
+        verify(userService, times(1)).editUser(testUser);
     }
 
     // Test PUT request exception

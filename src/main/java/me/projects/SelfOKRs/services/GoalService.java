@@ -33,27 +33,26 @@ public class GoalService {
 
     public List<Goal> all() {
         String username = authenticationFacade.getAuthentication().getName();
-        UserEntity user = userRepository.findByEmailAddress(username);
-        if (user == null) throw new UserNotAuthorized(username);
+        UserEntity user = userRepository.findByEmailAddress(username)
+                .orElseThrow(() -> new UserEntityNotFoundException(username));
+
         return goalRepository.findByUserId(user.getId());
     }
 
     // Refactor, not secure
-    public Goal one(Long id) {
-        return goalRepository.findById(id)
-                .orElseThrow(() -> new GoalNotFoundException(id));
-    }
+//    public Goal one(Long id) {
+//        return goalRepository.findById(id)
+//                .orElseThrow(() -> new GoalNotFoundException(id));
+//    }
 
     public Goal newGoal(GoalRequest goalRequest) {
         String username = authenticationFacade.getAuthentication().getName();
-        try {
-            UserEntity user = userRepository.findByEmailAddress(username);
-            return goalRepository.save(new Goal(goalRequest.getName(),
-                    goalRequest.getImportance(),
-                    user));
-        } catch (UserEntityNotFoundException e) {
-            throw new UserNotAuthorized(username);
-        }
+        UserEntity user = userRepository.findByEmailAddress(username)
+                .orElseThrow(() -> new UserEntityNotFoundException(username));
+
+        return goalRepository.save(new Goal(goalRequest.getName(),
+                goalRequest.getImportance(),
+                user));
     }
 
     // Refactor, not secure
