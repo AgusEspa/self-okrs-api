@@ -5,7 +5,7 @@ import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.entities.KeyResult;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
-import me.projects.SelfOKRs.exceptions.TaskNotFoundException;
+import me.projects.SelfOKRs.exceptions.KeyResultNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserNotAuthorizedException;
 import me.projects.SelfOKRs.repositories.GoalRepository;
@@ -79,6 +79,6 @@ public class KeyResultService {
                     task.setDueDate(editedKeyResult.getDueDate());
                     return keyResultRepository.save(task);
                 })
-                .orElseThrow(() -> new TaskNotFoundException(id));
+                .orElseThrow(() -> new KeyResultNotFoundException(id));
     }
 }

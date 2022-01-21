@@ -1,16 +1,17 @@
 package me.projects.SelfOKRs.dtos;
 
-import org.apache.tomcat.jni.Local;
-
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class KeyResultRequest {
 
+    @NotBlank(message = "Key Result name must not be empty")
     private String name;
 
     private LocalDate dueDate;
 
+    @NotBlank
     private Long goalId;
 
     public KeyResultRequest(String name, String dueDate, Long goalId) {

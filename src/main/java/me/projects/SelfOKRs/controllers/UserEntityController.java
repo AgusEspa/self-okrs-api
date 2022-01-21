@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -39,7 +40,7 @@ public class UserEntityController {
 //    }
 
     @PostMapping("/signup")
-    ResponseEntity<?> createUser(@RequestBody RegistrationForm newUser) {
+    ResponseEntity<?> createUser(@Valid @RequestBody RegistrationForm newUser) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(userService.newUser(newUser));

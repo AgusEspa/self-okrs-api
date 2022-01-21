@@ -5,12 +5,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class RegistrationForm {
 
+    @NotNull
+    @Size(
+            min = 3,
+            max = 255,
+            message = "A Name of at least 3 characters is required"
+    )
     private String username;
+
+    @Email(message = "Not a valid email address")
     private String emailAddress;
+
+    @NotNull
+    @Size(
+            min = 8,
+            max = 255,
+            message = "The password must be at least 8 characters long"
+    )
     private String password;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

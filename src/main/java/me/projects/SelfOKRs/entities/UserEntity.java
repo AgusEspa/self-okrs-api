@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
@@ -16,14 +18,15 @@ public class UserEntity {
     @Column(name = "user_id")
     private Long id;
 
-    @NotEmpty(message = "Username is required")
+    @NotNull
+    @Size(min = 3, max = 255)
     private String username;
 
-    @Email(message="Not a valid email address")
+    @Email
     private String emailAddress;
 
     @JsonIgnore
-    @NotEmpty(message = "Password is required")
+    @NotBlank
     private String password;
 
     @JsonIgnore

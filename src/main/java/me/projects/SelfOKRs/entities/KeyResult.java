@@ -3,7 +3,7 @@ package me.projects.SelfOKRs.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -16,18 +16,21 @@ public class KeyResult {
     @Column(name = "key_result_id")
     private Long id;
 
-    @NotEmpty
+    @NotBlank
     private String name;
 
     private LocalDate dueDate;
 
+    @NotNull
     private Boolean isDone;
 
-    @JsonIgnore
+    @NotBlank
     @ManyToOne
     @JoinColumn(name = "goal_id", nullable = false)
+    @JsonIgnore
     private Goal goal;
 
+    @NotBlank
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
