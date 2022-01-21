@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/keyresults")
@@ -22,7 +23,7 @@ public class KeyResultController {
     }
 
     @GetMapping
-    ResponseEntity<?> getAllTasksPerGoal(@RequestParam Long goalId) {
+    ResponseEntity<List> getAllTasksPerGoal(@RequestParam Long goalId) {
         return ResponseEntity.ok(keyResultService.allPerGoal(goalId));
     }
 
@@ -33,7 +34,7 @@ public class KeyResultController {
 //    }
 
     @PostMapping
-    ResponseEntity<?> addKeyResult(@Valid @RequestBody KeyResultRequest keyResultRequest) {
+    ResponseEntity<KeyResult> addKeyResult(@Valid @RequestBody KeyResultRequest keyResultRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(keyResultService.newKeyResult(keyResultRequest));

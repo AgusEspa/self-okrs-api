@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/goals")
@@ -22,7 +23,7 @@ public class GoalController {
     }
 
     @GetMapping
-    ResponseEntity<?> getAllGoals() {
+    ResponseEntity<List> getAllGoals() {
         return ResponseEntity.ok(goalService.all());
     }
 
@@ -33,7 +34,7 @@ public class GoalController {
 //    }
 
     @PostMapping
-    ResponseEntity<?> createGoal(@Valid @RequestBody GoalRequest goalRequest) {
+    ResponseEntity<Goal> createGoal(@Valid @RequestBody GoalRequest goalRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(goalService.newGoal(goalRequest));

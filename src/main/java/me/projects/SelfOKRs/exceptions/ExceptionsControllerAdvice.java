@@ -14,49 +14,49 @@ import java.util.Map;
 public class ExceptionsControllerAdvice {
 
     @ExceptionHandler(UserEntityNotFoundException.class)
-    ResponseEntity<?> handleUserNotFoundException(UserEntityNotFoundException ex) {
+    ResponseEntity<String> handleUserNotFoundException(UserEntityNotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
 
     @ExceptionHandler(KeyResultNotFoundException.class)
-    ResponseEntity<?> handleKeyResultNotFoundException(KeyResultNotFoundException ex) {
+    ResponseEntity<String> handleKeyResultNotFoundException(KeyResultNotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
 
     @ExceptionHandler(GoalNotFoundException.class)
-    ResponseEntity<?> handleGoalNotFoundException(GoalNotFoundException ex) {
+    ResponseEntity<String> handleGoalNotFoundException(GoalNotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
-    ResponseEntity<?> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+    ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
         return ResponseEntity
                 .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .body(ex.getMessage());
     }
 
     @ExceptionHandler(UserNotAuthorizedException.class)
-    ResponseEntity<?> handleUserNotAuthorizedException(UserNotAuthorizedException ex) {
+    ResponseEntity<String> handleUserNotAuthorizedException(UserNotAuthorizedException ex) {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
                 .body(ex.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    ResponseEntity<?> handleConstraintViolationException(MethodArgumentNotValidException ex) {
+    ResponseEntity<Map> handleConstraintViolationException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) ->{
             String fieldName = ((FieldError) error).getField();
             String message = error.getDefaultMessage();
             errors.put(fieldName, message);
         });
-        return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<Map>(errors, HttpStatus.BAD_REQUEST);
 
     }
 }

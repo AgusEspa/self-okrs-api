@@ -29,25 +29,25 @@ public class UserEntityController {
 
     // Only with ROLE_ADMIN
 //    @GetMapping
-//    ResponseEntity<?> getAllUsers() {
+//    ResponseEntity<List> getAllUsers() {
 //        return ResponseEntity.ok(userService.all());
 //    }
 
     // Only with ROLE_ADMIN
 //    @GetMapping("/{id}")
-//    ResponseEntity<?> getOneUser(@PathVariable Long id) {
+//    ResponseEntity<UserEntity> getOneUser(@PathVariable Long id) {
 //        return ResponseEntity.ok(userService.one(id));
 //    }
 
     @PostMapping("/signup")
-    ResponseEntity<?> createUser(@Valid @RequestBody RegistrationForm newUser) {
+    ResponseEntity<UserEntity> createUser(@Valid @RequestBody RegistrationForm newUser) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(userService.newUser(newUser));
     }
 
     @PutMapping
-    ResponseEntity<?> updateUser(@RequestBody UserEntity user) {
+    ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity user) {
         return ResponseEntity.ok(userService.editUser(user));
     }
 
