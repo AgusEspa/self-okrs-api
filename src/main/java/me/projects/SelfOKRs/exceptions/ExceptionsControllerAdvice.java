@@ -7,7 +7,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,42 +14,42 @@ import java.util.Map;
 public class ExceptionsControllerAdvice {
 
     @ExceptionHandler(UserEntityNotFoundException.class)
-    ResponseEntity<?> userNotFoundHandler(UserEntityNotFoundException ex) {
+    ResponseEntity<?> handleUserNotFoundException(UserEntityNotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
 
     @ExceptionHandler(KeyResultNotFoundException.class)
-    ResponseEntity<?> taskNotFoundHandler(KeyResultNotFoundException ex) {
+    ResponseEntity<?> handleKeyResultNotFoundException(KeyResultNotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
 
     @ExceptionHandler(GoalNotFoundException.class)
-    ResponseEntity<?> goalNotFoundHandler(GoalNotFoundException ex) {
+    ResponseEntity<?> handleGoalNotFoundException(GoalNotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
-    ResponseEntity<?> userAlreadyExistsException(UserAlreadyExistsException ex) {
+    ResponseEntity<?> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
         return ResponseEntity
                 .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .body(ex.getMessage());
     }
 
     @ExceptionHandler(UserNotAuthorizedException.class)
-    ResponseEntity<?> userNotAuthorizedException(UserNotAuthorizedException ex) {
+    ResponseEntity<?> handleUserNotAuthorizedException(UserNotAuthorizedException ex) {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
                 .body(ex.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    ResponseEntity<?> constraintViolationException(MethodArgumentNotValidException ex) {
+    ResponseEntity<?> handleConstraintViolationException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) ->{
             String fieldName = ((FieldError) error).getField();
