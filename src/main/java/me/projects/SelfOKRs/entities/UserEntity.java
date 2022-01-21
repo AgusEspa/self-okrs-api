@@ -37,6 +37,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<KeyResult> keyResults = new HashSet<>();
 
+
     private UserEntity() {
     }
 
@@ -45,6 +46,7 @@ public class UserEntity {
         this.emailAddress = emailAddress;
         this.password = password;
     }
+
 
     public Long getId() {
         return id;
@@ -85,6 +87,7 @@ public class UserEntity {
     public void setGoals(Set<Goal> goals) {
         this.goals = goals;
     }
+
 
     @Override
     public String toString() {

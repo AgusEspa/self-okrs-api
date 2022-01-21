@@ -19,6 +19,7 @@ public class KeyResult {
     @NotBlank
     private String name;
 
+    @Temporal(TemporalType.DATE)
     private LocalDate dueDate;
 
     @NotNull
@@ -36,6 +37,7 @@ public class KeyResult {
     @JsonIgnore
     private UserEntity user;
 
+
     private KeyResult() {}
 
     public KeyResult(String name, LocalDate dueDate, Goal goal, UserEntity user) {
@@ -45,6 +47,7 @@ public class KeyResult {
         this.isDone = false;
         this.user = user;
     }
+
 
     public Long getId() {
         return id;
@@ -85,6 +88,7 @@ public class KeyResult {
     public void setDone(Boolean done) {
         isDone = done;
     }
+
 
     @Override
     public String toString() {

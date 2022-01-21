@@ -22,6 +22,7 @@ public class Goal {
     @NotBlank
     private String name;
 
+    @Temporal(TemporalType.DATE)
     private final LocalDate createdAt = LocalDate.now();
 
     @NotNull
@@ -38,6 +39,7 @@ public class Goal {
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private UserEntity user;
+
 
     private Goal() {}
 
@@ -90,6 +92,7 @@ public class Goal {
     public void setTasks(Set<KeyResult> keyResults) {
         this.keyResults = keyResults;
     }
+
 
     @Override
     public boolean equals(Object o) {
