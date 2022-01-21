@@ -50,7 +50,7 @@ public class ExceptionsControllerAdvice {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    ResponseEntity<Object> constraintViolationException(MethodArgumentNotValidException ex) {
+    ResponseEntity<?> constraintViolationException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) ->{
             String fieldName = ((FieldError) error).getField();
