@@ -1,6 +1,6 @@
 package me.projects.SelfOKRs.dtos;
 
-import me.projects.SelfOKRs.exceptions.CustomMethodArgumentNotValidException;
+//import me.projects.SelfOKRs.exceptions.CustomMethodArgumentNotValidException;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -15,17 +15,19 @@ public class KeyResultRequest {
 
     private LocalDate dueDate;
 
-//    @NotNull
-//    @Min(value = 1, message = "Please provide a valid id number (more than 0)")
-//    private Long goalId;
+    @NotNull
+    @Min(value = 1, message = "Please provide a valid id number (more than 0)")
+    private Long goalId;
 
 
-    public KeyResultRequest(String name, String dueDate) {
+    public KeyResultRequest(String name, Long goalId) {
         this.name = name;
+        this.dueDate = null;
+        this.goalId = goalId;
 
-        try { this.dueDate = LocalDate.parse(dueDate); }
-        catch (Exception e) {
-            throw new CustomMethodArgumentNotValidException("Bad date format - must be yyyy-mm-dd"); }
+//        try { this.dueDate = LocalDate.parse(dueDate); }
+//        catch (Exception e) {
+//            throw new CustomMethodArgumentNotValidException("Bad date format - must be yyyy-mm-dd"); }
     }
 
 
@@ -37,21 +39,21 @@ public class KeyResultRequest {
         this.name = name;
     }
 
-//    public LocalDate getDueDate() {
-//        return dueDate;
-//    }
-//
-//    public void setDueDate(LocalDate dueDate) {
-//        this.dueDate = dueDate;
-//    }
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
 
-//    public Long getGoalId() {
-//        return goalId;
-//    }
-//
-//    public void setGoalId(Long goalId) {
-//        this.goalId = goalId;
-//    }
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public Long getGoalId() {
+        return goalId;
+    }
+
+    public void setGoalId(Long goalId) {
+        this.goalId = goalId;
+    }
 
 
     @Override

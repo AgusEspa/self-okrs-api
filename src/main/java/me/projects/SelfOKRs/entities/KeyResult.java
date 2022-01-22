@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -19,26 +18,17 @@ public class KeyResult {
     @NotBlank
     private String name;
 
-    @Column(nullable = true)
-    private LocalDate dueDate;
-
-    @NotNull
-    private Boolean isDone;
-
-    @NotBlank
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
-    private UserEntity user;
+    @ManyToOne
+    @JoinColumn(name = "goal_id")
+    private Goal goal;
 
 
-    private KeyResult() {}
+    KeyResult() {}
 
-    public KeyResult(String name, UserEntity user) {
+    public KeyResult(String name, Goal goal) {
         this.name = name;
-        this.dueDate = null;
-        this.isDone = false;
-        this.user = user;
+        this.goal = goal;
     }
 
 
@@ -57,30 +47,6 @@ public class KeyResult {
     public void setName(String name) {
         this.name = name;
     }
-
-    public LocalDate getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public Boolean getDone() {
-        return isDone;
-    }
-
-    public void setDone(Boolean done) {
-        isDone = done;
-    }
-
-//    public Goal getGoal() {
-//        return goal;
-//    }
-//
-//    public void setGoal(Goal goal) {
-//        this.goal = goal;
-//    }
 
 
     @Override

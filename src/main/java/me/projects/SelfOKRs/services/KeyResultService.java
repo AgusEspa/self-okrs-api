@@ -3,11 +3,8 @@ package me.projects.SelfOKRs.services;
 import me.projects.SelfOKRs.dtos.KeyResultRequest;
 import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.entities.KeyResult;
-import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
-import me.projects.SelfOKRs.exceptions.KeyResultNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
-import me.projects.SelfOKRs.exceptions.UserNotAuthorizedException;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.KeyResultRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
@@ -25,21 +22,22 @@ public class KeyResultService {
     @Autowired
     private final KeyResultRepository keyResultRepository;
 
-    private final GoalRepository goalRepository;
-
     private final UserEntityRepository userRepository;
+
+    private final GoalRepository goalRepository;
 
     private final AuthenticationFacade authenticationFacade;
 
     Logger logger = LoggerFactory.getLogger(KeyResultService.class);
 
     @Autowired
-    public KeyResultService(KeyResultRepository repository, GoalRepository goalRepository, UserEntityRepository userRepository, AuthenticationFacade authenticationFacade) {
+    public KeyResultService(KeyResultRepository repository, UserEntityRepository userRepository, GoalRepository goalRepository, AuthenticationFacade authenticationFacade) {
         this.keyResultRepository = repository;
-        this.goalRepository = goalRepository;
         this.userRepository = userRepository;
+        this.goalRepository = goalRepository;
         this.authenticationFacade = authenticationFacade;
     }
+
 
     public List<KeyResult> allPerGoal(Long goalId) {
         String username = authenticationFacade.getAuthentication().getName();
@@ -51,34 +49,11 @@ public class KeyResultService {
 
     }
 
-    // Refactor, not secure
-//    public KeyResult one(Long id) {
-//        return keyResultRepository.findById(id)
-//                .orElseThrow(() -> new TaskNotFoundException(id));
-//    }
-
     public KeyResult newKeyResult(KeyResultRequest keyResultRequest) {
-        String username = authenticationFacade.getAuthentication().getName();
 
-        UserEntity user = userRepository.findByEmailAddress(username)
-                .orElseThrow(() -> new UserEntityNotFoundException(username));
+        Goal goal = goalRepository.getById(keyResultRequest.getGoalId());
 
-        return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), user));
+        return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal));
     }
 
-    // Refactor, not secure
-    public void deleteOne(Long id) {
-        keyResultRepository.deleteById(id);
-    }
-
-    // Refactor, not secure
-    public KeyResult editKeyResult(Long id, KeyResult editedKeyResult) {
-        return keyResultRepository.findById(id)
-                .map(task -> {
-                    task.setName(editedKeyResult.getName());
-                    task.setDueDate(editedKeyResult.getDueDate());
-                    return keyResultRepository.save(task);
-                })
-                .orElseThrow(() -> new KeyResultNotFoundException(id));
-    }
 }

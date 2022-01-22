@@ -22,7 +22,6 @@ public class Goal {
     @NotBlank
     private String name;
 
-//    @Temporal(TemporalType.DATE)
     private final LocalDate createdAt = LocalDate.now();
 
     @NotNull
@@ -30,18 +29,18 @@ public class Goal {
     @Max(5)
     private int importance;
 
-//    @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JsonIgnore
-//    private Set<KeyResult> keyResults = new HashSet<>();
-
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     @JsonIgnore
     private UserEntity user;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<KeyResult> keyResults = new HashSet<>();
 
-    private Goal() {}
+
+    Goal() {}
 
     public Goal(String name, int importance, UserEntity user) {
         this.name = name;
@@ -85,14 +84,6 @@ public class Goal {
     public void setUser(UserEntity user) {
         this.user = user;
     }
-
-//    public Set<KeyResult> getTasks() {
-//        return keyResults;
-//    }
-//
-//    public void setTasks(Set<KeyResult> keyResults) {
-//        this.keyResults = keyResults;
-//    }
 
 
     @Override

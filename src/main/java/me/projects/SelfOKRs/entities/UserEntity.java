@@ -33,12 +33,8 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Goal> goals = new HashSet<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<KeyResult> keyResults = new HashSet<>();
 
-
-    private UserEntity() {
+    UserEntity() {
     }
 
     public UserEntity(String username, String emailAddress, String password) {
