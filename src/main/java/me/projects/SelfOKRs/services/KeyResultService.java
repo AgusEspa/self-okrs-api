@@ -3,6 +3,7 @@ package me.projects.SelfOKRs.services;
 import me.projects.SelfOKRs.dtos.KeyResultRequest;
 import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.entities.KeyResult;
+import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 import me.projects.SelfOKRs.exceptions.KeyResultNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
@@ -56,10 +57,13 @@ public class KeyResultService {
 //    }
 
     public KeyResult newKeyResult(KeyResultRequest keyResultRequest) {
+        String username = authenticationFacade.getAuthentication().getName();
+        UserEntity user = userRepository.findByEmailAddress(username)
+                .orElseThrow(() -> new UserEntityNotFoundException(username));
 
         Goal goal = goalRepository.getById(keyResultRequest.getGoalId());
 
-        return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal, keyResultRequest.getDueDate(), keyResultRequest.getIsDone()));
+        return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal, keyResultRequest.getDueDate(), keyResultRequest.getIsDone(), user));
     }
 
     // Refactor, not secure
