@@ -12,8 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserEntityService {
 
@@ -65,9 +63,15 @@ public class UserEntityService {
 
     }
 
-    // Refactor, not secure
-    public void deleteOne(Long id) {
-        userRepository.deleteById(id);
-    }
+//    public void deleteOne(String password) {
+//        String username = authenticationFacade.getAuthentication().getName();
+//
+//        UserEntity fetchedUser = userRepository.findByEmailAddress(username)
+//                .orElseThrow(() -> new UserEntityNotFoundException(username));
+//
+//        if (passwordEncoder.matches(password, fetchedUser.getPassword())) {
+//            userRepository.deleteById(fetchedUser.getId());
+//        } else throw new UserNotAuthorizedException(username);
+//    }
 
 }

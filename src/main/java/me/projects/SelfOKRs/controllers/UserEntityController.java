@@ -51,11 +51,10 @@ public class UserEntityController {
         return ResponseEntity.ok(userService.editUser(editedUser));
     }
 
-    // Refactor, not secure
-    @DeleteMapping("/{id}")
-    void deleteUser(@PathVariable Long id) {
-        userService.deleteOne(id);
-    }
+//    @DeleteMapping
+//    void deleteUser(@RequestBody String password) {
+//        userService.deleteOne(password);
+//    }
 
     @GetMapping("/token/refresh")
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
