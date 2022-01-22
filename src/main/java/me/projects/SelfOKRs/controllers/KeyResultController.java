@@ -35,9 +35,10 @@ public class KeyResultController {
 
     @PostMapping
     ResponseEntity<KeyResult> addKeyResult(@Valid @RequestBody KeyResultRequest keyResultRequest) {
+        KeyResult keyResult = keyResultService.newKeyResult(keyResultRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(keyResultService.newKeyResult(keyResultRequest));
+                .body(keyResult);
     }
 
     // Refactor, not secure, ResponseEntity<?>

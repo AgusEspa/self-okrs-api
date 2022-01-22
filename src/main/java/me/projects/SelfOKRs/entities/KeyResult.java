@@ -27,18 +27,18 @@ public class KeyResult {
 
     @NotBlank
     @ManyToOne
-    @JoinColumn(name = "goal_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
-    private Goal goal;
+    private UserEntity user;
 
 
     private KeyResult() {}
 
-    public KeyResult(String name, Goal goal) {
+    public KeyResult(String name, UserEntity user) {
         this.name = name;
         this.dueDate = null;
-        this.goal = goal;
         this.isDone = false;
+        this.user = user;
     }
 
 
@@ -74,13 +74,13 @@ public class KeyResult {
         isDone = done;
     }
 
-    public Goal getGoal() {
-        return goal;
-    }
-
-    public void setGoal(Goal goal) {
-        this.goal = goal;
-    }
+//    public Goal getGoal() {
+//        return goal;
+//    }
+//
+//    public void setGoal(Goal goal) {
+//        this.goal = goal;
+//    }
 
 
     @Override

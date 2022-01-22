@@ -12,6 +12,8 @@ import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.KeyResultRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.security.AuthenticationFacade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,8 @@ public class KeyResultService {
     private final UserEntityRepository userRepository;
 
     private final AuthenticationFacade authenticationFacade;
+
+    Logger logger = LoggerFactory.getLogger(KeyResultService.class);
 
     @Autowired
     public KeyResultService(KeyResultRepository repository, GoalRepository goalRepository, UserEntityRepository userRepository, AuthenticationFacade authenticationFacade) {
@@ -55,16 +59,11 @@ public class KeyResultService {
 
     public KeyResult newKeyResult(KeyResultRequest keyResultRequest) {
         String username = authenticationFacade.getAuthentication().getName();
-//        UserEntity user = userRepository.findByEmailAddress(username)
-//                .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        Goal goal = goalRepository.findById(keyResultRequest.getGoalId())
-                .orElseThrow(() -> new GoalNotFoundException(keyResultRequest.getGoalId()));
+        UserEntity user = userRepository.findByEmailAddress(username)
+                .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal));
-//        if (goal.getUser().getEmailAddress().equals(user.getEmailAddress())) {
-//            return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal, user));
-//        } else throw new UserNotAuthorizedException(username);
+        return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), user));
     }
 
     // Refactor, not secure
@@ -77,7 +76,7 @@ public class KeyResultService {
         return keyResultRepository.findById(id)
                 .map(task -> {
                     task.setName(editedKeyResult.getName());
-//                    task.setDueDate(editedKeyResult.getDueDate());
+                    task.setDueDate(editedKeyResult.getDueDate());
                     return keyResultRepository.save(task);
                 })
                 .orElseThrow(() -> new KeyResultNotFoundException(id));

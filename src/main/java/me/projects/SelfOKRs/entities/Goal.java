@@ -30,9 +30,9 @@ public class Goal {
     @Max(5)
     private int importance;
 
-    @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<KeyResult> keyResults = new HashSet<>();
+//    @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private Set<KeyResult> keyResults = new HashSet<>();
 
     @NotNull
     @ManyToOne
@@ -86,13 +86,13 @@ public class Goal {
         this.user = user;
     }
 
-    public Set<KeyResult> getTasks() {
-        return keyResults;
-    }
-
-    public void setTasks(Set<KeyResult> keyResults) {
-        this.keyResults = keyResults;
-    }
+//    public Set<KeyResult> getTasks() {
+//        return keyResults;
+//    }
+//
+//    public void setTasks(Set<KeyResult> keyResults) {
+//        this.keyResults = keyResults;
+//    }
 
 
     @Override

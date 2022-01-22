@@ -4,6 +4,7 @@ import me.projects.SelfOKRs.exceptions.CustomMethodArgumentNotValidException;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -12,20 +13,19 @@ public class KeyResultRequest {
     @NotBlank(message = "Key Result name must not be empty")
     private String name;
 
-//    private LocalDate dueDate;
+    private LocalDate dueDate;
 
-    @Min(value = 1, message = "Please provide a valid id number (more than 0)")
-    private Long goalId;
+//    @NotNull
+//    @Min(value = 1, message = "Please provide a valid id number (more than 0)")
+//    private Long goalId;
 
 
-    public KeyResultRequest(String name, Long goalId) {
+    public KeyResultRequest(String name, String dueDate) {
         this.name = name;
 
-//        try { this.dueDate = LocalDate.parse(dueDate); }
-//        catch (Exception e) {
-//            throw new CustomMethodArgumentNotValidException("Bad date format - must be yyyy-mm-dd"); }
-
-        this.goalId = goalId;
+        try { this.dueDate = LocalDate.parse(dueDate); }
+        catch (Exception e) {
+            throw new CustomMethodArgumentNotValidException("Bad date format - must be yyyy-mm-dd"); }
     }
 
 
@@ -45,13 +45,13 @@ public class KeyResultRequest {
 //        this.dueDate = dueDate;
 //    }
 
-    public Long getGoalId() {
-        return goalId;
-    }
-
-    public void setGoalId(Long goalId) {
-        this.goalId = goalId;
-    }
+//    public Long getGoalId() {
+//        return goalId;
+//    }
+//
+//    public void setGoalId(Long goalId) {
+//        this.goalId = goalId;
+//    }
 
 
     @Override
@@ -59,11 +59,11 @@ public class KeyResultRequest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         KeyResultRequest that = (KeyResultRequest) o;
-        return Objects.equals(name, that.name) && Objects.equals(goalId, that.goalId);
+        return Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, goalId);
+        return Objects.hash(name);
     }
 }

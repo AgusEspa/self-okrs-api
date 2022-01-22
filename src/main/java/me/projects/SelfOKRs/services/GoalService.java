@@ -50,7 +50,6 @@ public class GoalService {
 
     public Goal newGoal(GoalRequest goalRequest) {
         String username = authenticationFacade.getAuthentication().getName();
-        logger.info("get authentication mail" + username);
         UserEntity user = userRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
