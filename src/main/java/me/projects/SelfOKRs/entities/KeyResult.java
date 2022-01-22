@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +19,11 @@ public class KeyResult {
     @NotBlank
     private String name;
 
+    private LocalDate dueDate;
+
+    @NotNull
+    private Boolean isDone;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "goal_id")
@@ -26,9 +32,11 @@ public class KeyResult {
 
     KeyResult() {}
 
-    public KeyResult(String name, Goal goal) {
+    public KeyResult(String name, Goal goal, LocalDate dueDate, Boolean isDone) {
         this.name = name;
         this.goal = goal;
+        this.dueDate = dueDate;
+        this.isDone = isDone;
     }
 
 
@@ -48,6 +56,21 @@ public class KeyResult {
         this.name = name;
     }
 
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public Boolean getIsDone() {
+        return isDone;
+    }
+
+    public void setIsDone(Boolean isDone) {
+        this.isDone = isDone;
+    }
 
     @Override
     public boolean equals(Object o) {

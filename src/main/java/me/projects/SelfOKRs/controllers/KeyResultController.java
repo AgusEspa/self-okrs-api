@@ -25,9 +25,15 @@ public class KeyResultController {
     }
 
     @GetMapping
-    ResponseEntity<List> getAllTasksPerGoal(@RequestParam Long goalId) {
+    ResponseEntity<List> getAllKeyResultsPerGoal(@RequestParam Long goalId) {
         return ResponseEntity.ok(keyResultService.allPerGoal(goalId));
     }
+
+    // Refactor, not secure, ResponseEntity<?>
+//    @GetMapping("/{id}")
+//    KeyResult getOneTask(@PathVariable Long id) {
+//        return keyResultService.one(id);
+//    }
 
     @PostMapping
     ResponseEntity<KeyResult> addKeyResult(@Valid @RequestBody KeyResultRequest keyResultRequest) {
@@ -35,6 +41,18 @@ public class KeyResultController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(keyResult);
+    }
+
+    // Refactor, not secure, ResponseEntity<?>
+    @PutMapping("/{id}")
+    KeyResult updateKeyResult(@PathVariable Long id, @RequestBody KeyResult keyResult) {
+        return keyResultService.editKeyResult(id, keyResult);
+    }
+
+    // Refactor, not secure, ResponseEntity<?>
+    @DeleteMapping("/{id}")
+    void deleteTask(@PathVariable Long id) {
+        keyResultService.deleteOne(id);
     }
 
 }

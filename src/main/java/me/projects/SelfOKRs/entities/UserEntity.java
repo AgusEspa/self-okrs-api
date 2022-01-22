@@ -34,8 +34,7 @@ public class UserEntity {
     private Set<Goal> goals = new HashSet<>();
 
 
-    UserEntity() {
-    }
+    UserEntity() {}
 
     public UserEntity(String username, String emailAddress, String password) {
         this.username = username;

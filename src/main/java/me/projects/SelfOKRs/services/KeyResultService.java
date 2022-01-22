@@ -4,6 +4,7 @@ import me.projects.SelfOKRs.dtos.KeyResultRequest;
 import me.projects.SelfOKRs.entities.Goal;
 import me.projects.SelfOKRs.entities.KeyResult;
 import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
+import me.projects.SelfOKRs.exceptions.KeyResultNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.KeyResultRepository;
@@ -46,14 +47,35 @@ public class KeyResultService {
         if (goal.getUser().getEmailAddress().equals(username)) {
             return keyResultRepository.findAllPerGoal(goalId);
         } else throw new UserEntityNotFoundException(username);
-
     }
+
+    // Refactor, not secure
+//    public KeyResult one(Long id) {
+//        return keyResultRepository.findById(id)
+//                .orElseThrow(() -> new TaskNotFoundException(id));
+//    }
 
     public KeyResult newKeyResult(KeyResultRequest keyResultRequest) {
 
         Goal goal = goalRepository.getById(keyResultRequest.getGoalId());
 
-        return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal));
+        return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal, keyResultRequest.getDueDate(), keyResultRequest.getIsDone()));
+    }
+
+    // Refactor, not secure
+    public void deleteOne(Long id) {
+        keyResultRepository.deleteById(id);
+    }
+
+    // Refactor, not secure
+    public KeyResult editKeyResult(Long id, KeyResult editedKeyResult) {
+        return keyResultRepository.findById(id)
+                .map(task -> {
+                    task.setName(editedKeyResult.getName());
+                    task.setDueDate(editedKeyResult.getDueDate());
+                    return keyResultRepository.save(task);
+                })
+                .orElseThrow(() -> new KeyResultNotFoundException(id));
     }
 
 }
