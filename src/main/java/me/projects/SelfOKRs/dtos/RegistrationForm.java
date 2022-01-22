@@ -31,16 +31,17 @@ public class RegistrationForm {
     )
     private String password;
 
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
 
-    public RegistrationForm() {}
 
     @Autowired
     public RegistrationForm(String username, String emailAddress, String password) {
         this.username = username;
         this.emailAddress = emailAddress;
         this.password = password;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
+
 
     public String getUsername() {
         return username;
@@ -66,9 +67,11 @@ public class RegistrationForm {
         this.password = password;
     }
 
+
     public UserEntity toUser() {
         return new UserEntity(username, emailAddress, passwordEncoder.encode(password));
     }
+
 
     @Override
     public boolean equals(Object o) {

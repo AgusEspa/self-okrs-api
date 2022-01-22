@@ -1,5 +1,8 @@
 package me.projects.SelfOKRs.dtos;
 
+import me.projects.SelfOKRs.exceptions.CustomMethodArgumentNotValidException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -11,16 +14,20 @@ public class KeyResultRequest {
 
     private LocalDate dueDate;
 
-    @NotBlank
+    @NotBlank(message = "A valid goal Id must be provided")
     private Long goalId;
+
 
     public KeyResultRequest(String name, String dueDate, Long goalId) {
         this.name = name;
-        if (dueDate != null) {
-            this.dueDate = LocalDate.parse(dueDate);
-        } else this.dueDate = null;
+        if (!dueDate.isEmpty()) {
+            try { this.dueDate = LocalDate.parse(dueDate); }
+            catch (Exception e) {
+                throw new CustomMethodArgumentNotValidException("Bad date format - must be yyyy-mm-dd"); }
+        } else { this.dueDate = null; }
         this.goalId = goalId;
     }
+
 
     public String getName() {
         return name;
@@ -45,6 +52,7 @@ public class KeyResultRequest {
     public void setGoalId(Long goalId) {
         this.goalId = goalId;
     }
+
 
     @Override
     public boolean equals(Object o) {

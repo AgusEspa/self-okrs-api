@@ -15,12 +15,14 @@ public class GoalRequest {
     )
     private int importance;
 
+
     private GoalRequest() {}
 
     public GoalRequest(String name, int importance) {
         this.name = name;
         this.importance = importance;
     }
+
 
     public String getName() {
         return name;

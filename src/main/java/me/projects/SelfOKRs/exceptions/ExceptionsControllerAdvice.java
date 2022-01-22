@@ -57,6 +57,12 @@ public class ExceptionsControllerAdvice {
             errors.put(fieldName, message);
         });
         return new ResponseEntity<Map>(errors, HttpStatus.BAD_REQUEST);
+    }
 
+    @ExceptionHandler(CustomMethodArgumentNotValidException.class)
+    ResponseEntity<String> handleCustomMethodArgumentNotValidException(CustomMethodArgumentNotValidException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
     }
 }

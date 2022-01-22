@@ -20,6 +20,7 @@ public class KeyResult {
     private String name;
 
     @Temporal(TemporalType.DATE)
+    @Column(nullable = true)
     private LocalDate dueDate;
 
     @NotNull
