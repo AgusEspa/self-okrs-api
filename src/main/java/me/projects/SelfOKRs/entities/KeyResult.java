@@ -19,7 +19,6 @@ public class KeyResult {
     @NotBlank
     private String name;
 
-    @Temporal(TemporalType.DATE)
     @Column(nullable = true)
     private LocalDate dueDate;
 
@@ -32,21 +31,14 @@ public class KeyResult {
     @JsonIgnore
     private Goal goal;
 
-    @NotBlank
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
-    private UserEntity user;
-
 
     private KeyResult() {}
 
-    public KeyResult(String name, LocalDate dueDate, Goal goal, UserEntity user) {
+    public KeyResult(String name, Goal goal) {
         this.name = name;
-        this.dueDate = dueDate;
+        this.dueDate = null;
         this.goal = goal;
         this.isDone = false;
-        this.user = user;
     }
 
 
@@ -74,14 +66,6 @@ public class KeyResult {
         this.dueDate = dueDate;
     }
 
-    public Goal getGoal() {
-        return goal;
-    }
-
-    public void setGoal(Goal goal) {
-        this.goal = goal;
-    }
-
     public Boolean getDone() {
         return isDone;
     }
@@ -90,11 +74,14 @@ public class KeyResult {
         isDone = done;
     }
 
-
-    @Override
-    public String toString() {
-        return name;
+    public Goal getGoal() {
+        return goal;
     }
+
+    public void setGoal(Goal goal) {
+        this.goal = goal;
+    }
+
 
     @Override
     public boolean equals(Object o) {

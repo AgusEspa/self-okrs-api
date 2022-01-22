@@ -22,7 +22,7 @@ public class Goal {
     @NotBlank
     private String name;
 
-    @Temporal(TemporalType.DATE)
+//    @Temporal(TemporalType.DATE)
     private final LocalDate createdAt = LocalDate.now();
 
     @NotNull
@@ -48,6 +48,7 @@ public class Goal {
         this.importance = importance;
         this.user = user;
     }
+
 
     public Long getId() {
         return id;

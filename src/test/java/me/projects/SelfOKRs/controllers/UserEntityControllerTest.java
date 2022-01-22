@@ -98,8 +98,8 @@ public class UserEntityControllerTest {
     @Test
     @WithMockUser
     public void shouldUpdateExistingUser() throws Exception {
-        UserEntity testUser = new UserEntity("test1", "newtest@mail.com", "testing_pass1");
-        when(userService.editUser(testUser)).thenReturn(testUser);
+        RegistrationForm testUser = new RegistrationForm("test1", "newtest@mail.com", "testing_pass1");
+        when(userService.editUser(testUser)).thenReturn(testUser.toUser());
 
         this.mockMvc
                 .perform(put("/api/users/1")

@@ -40,7 +40,8 @@ public class UserEntityRepositoryTest {
     @Test
     public void shouldSaveUser() {
         RegistrationForm newUser = new RegistrationForm("test1", "test1@mail.com", "testing_pass1");
-        UserEntity savedUser = userRepository.save(newUser.toUser());
+        userRepository.save(newUser.toUser());
+        UserEntity savedUser = userRepository.findByEmailAddress(newUser.getEmailAddress()).get();
 
         assertEquals(savedUser.getEmailAddress(), newUser.getEmailAddress());
     }

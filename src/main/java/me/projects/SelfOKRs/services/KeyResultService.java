@@ -55,15 +55,16 @@ public class KeyResultService {
 
     public KeyResult newKeyResult(KeyResultRequest keyResultRequest) {
         String username = authenticationFacade.getAuthentication().getName();
-        UserEntity user = userRepository.findByEmailAddress(username)
-                .orElseThrow(() -> new UserEntityNotFoundException(username));
+//        UserEntity user = userRepository.findByEmailAddress(username)
+//                .orElseThrow(() -> new UserEntityNotFoundException(username));
 
         Goal goal = goalRepository.findById(keyResultRequest.getGoalId())
                 .orElseThrow(() -> new GoalNotFoundException(keyResultRequest.getGoalId()));
 
-        if (goal.getUser().getEmailAddress().equals(user.getEmailAddress())) {
-            return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), keyResultRequest.getDueDate(), goal, user));
-        } else throw new UserNotAuthorizedException(username);
+        return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal));
+//        if (goal.getUser().getEmailAddress().equals(user.getEmailAddress())) {
+//            return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), goal, user));
+//        } else throw new UserNotAuthorizedException(username);
     }
 
     // Refactor, not secure
@@ -76,7 +77,7 @@ public class KeyResultService {
         return keyResultRepository.findById(id)
                 .map(task -> {
                     task.setName(editedKeyResult.getName());
-                    task.setDueDate(editedKeyResult.getDueDate());
+//                    task.setDueDate(editedKeyResult.getDueDate());
                     return keyResultRepository.save(task);
                 })
                 .orElseThrow(() -> new KeyResultNotFoundException(id));

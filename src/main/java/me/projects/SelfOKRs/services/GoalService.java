@@ -8,6 +8,8 @@ import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.security.AuthenticationFacade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ public class GoalService {
     private final UserEntityRepository userRepository;
 
     private final AuthenticationFacade authenticationFacade;
+
+    Logger logger = LoggerFactory.getLogger(GoalService.class);
 
 
     @Autowired
@@ -46,6 +50,7 @@ public class GoalService {
 
     public Goal newGoal(GoalRequest goalRequest) {
         String username = authenticationFacade.getAuthentication().getName();
+        logger.info("get authentication mail" + username);
         UserEntity user = userRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 

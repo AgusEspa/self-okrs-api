@@ -47,8 +47,8 @@ public class UserEntityController {
     }
 
     @PutMapping
-    ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity user) {
-        return ResponseEntity.ok(userService.editUser(user));
+    ResponseEntity<UserEntity> updateUser(@Valid @RequestBody RegistrationForm editedUser) {
+        return ResponseEntity.ok(userService.editUser(editedUser));
     }
 
     // Refactor, not secure

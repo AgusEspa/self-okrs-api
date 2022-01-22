@@ -2,6 +2,7 @@ package me.projects.SelfOKRs.services;
 
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.UserAlreadyExistsException;
+import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserNotAuthorizedException;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.dtos.RegistrationForm;
@@ -47,26 +48,21 @@ public class UserEntityService {
         }
     }
 
-    public UserEntity editUser(UserEntity editedUser) {
+    // Refactor, not secure and not updating securityContext
+    public UserEntity editUser(RegistrationForm editedUser) {
         String username = authenticationFacade.getAuthentication().getName();
-        Optional<UserEntity> fetchedUser = userRepository.findByEmailAddress(username);
-        if (fetchedUser.isEmpty() || fetchedUser.get().getEmailAddress() != username) {
-            throw new UserNotAuthorizedException(username);
+        UserEntity fetchedUser = userRepository.findByEmailAddress(username)
+                .orElseThrow(() -> new UserEntityNotFoundException(username));
+
+        if (userRepository.findByEmailAddress(editedUser.getEmailAddress()).isEmpty()) {
+            fetchedUser.setUsername(editedUser.getUsername());
+            fetchedUser.setEmailAddress(editedUser.getEmailAddress());
+            fetchedUser.setPassword(passwordEncoder.encode(editedUser.getPassword()));
+            return  userRepository.save(fetchedUser);
         } else {
-            UserEntity user = fetchedUser.get();
-            if (editedUser.getUsername() != null) {
-                user.setUsername(editedUser.getUsername());
-                return  userRepository.save(user);
-            }
-            else if (editedUser.getEmailAddress() != null) {
-                user.setEmailAddress(editedUser.getEmailAddress());
-                return  userRepository.save(user);
-            }
-            else if (editedUser.getPassword() != null) {
-                user.setPassword(passwordEncoder.encode(editedUser.getPassword()));
-                return  userRepository.save(user);
-            } else return user;
+            throw new UserAlreadyExistsException(editedUser.getEmailAddress());
         }
+
     }
 
     // Refactor, not secure

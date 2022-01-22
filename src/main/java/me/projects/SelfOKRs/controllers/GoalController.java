@@ -35,9 +35,10 @@ public class GoalController {
 
     @PostMapping
     ResponseEntity<Goal> createGoal(@Valid @RequestBody GoalRequest goalRequest) {
+        Goal newGoal = goalService.newGoal(goalRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(goalService.newGoal(goalRequest));
+                .body(newGoal);
     }
 
     // Refactor, not secure, ResponseEntity<?>
