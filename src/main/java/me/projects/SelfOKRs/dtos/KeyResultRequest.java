@@ -1,7 +1,6 @@
 package me.projects.SelfOKRs.dtos;
 
 import me.projects.SelfOKRs.exceptions.CustomMethodArgumentNotValidException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
