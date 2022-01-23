@@ -12,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class UserEntityService {
 
@@ -63,15 +65,15 @@ public class UserEntityService {
 
     }
 
-//    public void deleteOne(String password) {
-//        String username = authenticationFacade.getAuthentication().getName();
-//
-//        UserEntity fetchedUser = userRepository.findByEmailAddress(username)
-//                .orElseThrow(() -> new UserEntityNotFoundException(username));
-//
-//        if (passwordEncoder.matches(password, fetchedUser.getPassword())) {
-//            userRepository.deleteById(fetchedUser.getId());
-//        } else throw new UserNotAuthorizedException(username);
-//    }
+    public void deleteOne(Map<String, String> credentials) {
+        String username = authenticationFacade.getAuthentication().getName();
+
+        UserEntity fetchedUser = userRepository.findByEmailAddress(username)
+                .orElseThrow(() -> new UserEntityNotFoundException(username));
+
+        if (passwordEncoder.matches(credentials.get("password"), fetchedUser.getPassword()) && username.equals(credentials.get("emailAddress"))) {
+            userRepository.deleteById(fetchedUser.getId());
+        } else throw new UserNotAuthorizedException(username);
+    }
 
 }
