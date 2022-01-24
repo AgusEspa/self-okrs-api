@@ -1,5 +1,6 @@
 package me.projects.SelfOKRs.services;
 
+import me.projects.SelfOKRs.dtos.UserDetails;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.UserAlreadyExistsException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
@@ -7,6 +8,8 @@ import me.projects.SelfOKRs.exceptions.UserNotAuthorizedException;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.dtos.RegistrationForm;
 import me.projects.SelfOKRs.security.AuthenticationFacade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +25,8 @@ public class UserEntityService {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     private final AuthenticationFacade authenticationFacade;
+
+    Logger logger = LoggerFactory.getLogger(UserEntityService.class);
 
     @Autowired
     public UserEntityService(UserEntityRepository userRepository, AuthenticationFacade authenticationFacade) {
@@ -39,8 +44,14 @@ public class UserEntityService {
 //                .orElseThrow(() -> new UserEntityNotFoundException(id));
 //    }
 
-    public UserEntity newUser(RegistrationForm newUser) {
+    public UserDetails fetchUserDetails() {
+        String username = authenticationFacade.getAuthentication().getName();
+        UserEntity fetchedUser = userRepository.findByEmailAddress(username)
+                .orElseThrow(() -> new UserEntityNotFoundException(username));
+        return new UserDetails(fetchedUser.getUsername(), fetchedUser.getEmailAddress());
+    }
 
+    public UserEntity newUser(RegistrationForm newUser) {
         if (userRepository.findByEmailAddress(newUser.getEmailAddress()).isEmpty()) {
             return userRepository.save(newUser.toUser());
         } else {

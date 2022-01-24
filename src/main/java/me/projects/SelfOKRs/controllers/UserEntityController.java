@@ -1,5 +1,6 @@
 package me.projects.SelfOKRs.controllers;
 
+import me.projects.SelfOKRs.dtos.UserDetails;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.dtos.RegistrationForm;
 import me.projects.SelfOKRs.security.TokenService;
@@ -45,6 +46,11 @@ public class UserEntityController {
 //    ResponseEntity<UserEntity> getOneUser(@PathVariable Long id) {
 //        return ResponseEntity.ok(userService.one(id));
 //    }
+
+    @GetMapping("/authenticated")
+    ResponseEntity<UserDetails> getUserDetails() {
+        return ResponseEntity.ok(userService.fetchUserDetails());
+    }
 
     @PostMapping("/signup")
     ResponseEntity<UserEntity> createUser(@Valid @RequestBody RegistrationForm newUser) {
