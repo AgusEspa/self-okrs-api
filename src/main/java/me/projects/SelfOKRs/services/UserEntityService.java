@@ -62,7 +62,6 @@ public class UserEntityService {
         } else {
             throw new UserAlreadyExistsException(editedUser.getEmailAddress());
         }
-
     }
 
     public void deleteOne(Map<String, String> credentials) {
@@ -75,5 +74,4 @@ public class UserEntityService {
             userRepository.deleteById(fetchedUser.getId());
         } else throw new UserNotAuthorizedException(username);
     }
-
 }
