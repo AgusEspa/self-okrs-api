@@ -10,10 +10,10 @@ import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.KeyResultRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
-import me.projects.SelfOKRs.security.AuthenticationFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,21 +28,18 @@ public class KeyResultService {
 
     private final GoalRepository goalRepository;
 
-    private final AuthenticationFacade authenticationFacade;
-
     Logger logger = LoggerFactory.getLogger(KeyResultService.class);
 
     @Autowired
-    public KeyResultService(KeyResultRepository repository, UserEntityRepository userRepository, GoalRepository goalRepository, AuthenticationFacade authenticationFacade) {
+    public KeyResultService(KeyResultRepository repository, UserEntityRepository userRepository, GoalRepository goalRepository) {
         this.keyResultRepository = repository;
         this.userRepository = userRepository;
         this.goalRepository = goalRepository;
-        this.authenticationFacade = authenticationFacade;
     }
 
 
     public List<KeyResult> allPerGoal(Long goalId) {
-        String username = authenticationFacade.getAuthentication().getName();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Goal goal = goalRepository.findById(goalId)
                 .orElseThrow(() -> new GoalNotFoundException(goalId));
         if (goal.getUser().getEmailAddress().equals(username)) {
@@ -57,7 +54,7 @@ public class KeyResultService {
 //    }
 
     public KeyResult newKeyResult(KeyResultRequest keyResultRequest) {
-        String username = authenticationFacade.getAuthentication().getName();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity user = userRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 

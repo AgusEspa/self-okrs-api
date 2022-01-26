@@ -7,10 +7,10 @@ import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserNotAuthorizedException;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.dtos.RegistrationForm;
-import me.projects.SelfOKRs.security.AuthenticationFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,14 +24,12 @@ public class UserEntityService {
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    private final AuthenticationFacade authenticationFacade;
 
     Logger logger = LoggerFactory.getLogger(UserEntityService.class);
 
     @Autowired
-    public UserEntityService(UserEntityRepository userRepository, AuthenticationFacade authenticationFacade) {
+    public UserEntityService(UserEntityRepository userRepository) {
         this.userRepository = userRepository;
-        this.authenticationFacade = authenticationFacade;
     }
 
 //    public List<UserEntity> all() {
@@ -45,7 +43,7 @@ public class UserEntityService {
 //    }
 
     public UserDetails fetchUserDetails() {
-        String username = authenticationFacade.getAuthentication().getName();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity fetchedUser = userRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
         return new UserDetails(fetchedUser.getUsername(), fetchedUser.getEmailAddress());
@@ -61,7 +59,7 @@ public class UserEntityService {
 
     // Refactor, not secure and not updating securityContext
     public UserEntity editUser(RegistrationForm editedUser) {
-        String username = authenticationFacade.getAuthentication().getName();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity fetchedUser = userRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
@@ -76,7 +74,7 @@ public class UserEntityService {
     }
 
     public void deleteOne(Map<String, String> credentials) {
-        String username = authenticationFacade.getAuthentication().getName();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         UserEntity fetchedUser = userRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));

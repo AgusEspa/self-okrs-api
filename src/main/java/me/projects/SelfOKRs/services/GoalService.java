@@ -7,10 +7,10 @@ import me.projects.SelfOKRs.exceptions.GoalNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.repositories.GoalRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
-import me.projects.SelfOKRs.security.AuthenticationFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,20 +22,17 @@ public class GoalService {
 
     private final UserEntityRepository userRepository;
 
-    private final AuthenticationFacade authenticationFacade;
-
     Logger logger = LoggerFactory.getLogger(GoalService.class);
 
 
     @Autowired
-    public GoalService(GoalRepository goalRepository, UserEntityRepository userRepository, AuthenticationFacade authenticationFacade) {
+    public GoalService(GoalRepository goalRepository, UserEntityRepository userRepository) {
         this.goalRepository = goalRepository;
         this.userRepository = userRepository;
-        this.authenticationFacade = authenticationFacade;
     }
 
     public List<Goal> all() {
-        String username = authenticationFacade.getAuthentication().getName();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity user = userRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
@@ -49,7 +46,7 @@ public class GoalService {
 //    }
 
     public Goal newGoal(GoalRequest goalRequest) {
-        String username = authenticationFacade.getAuthentication().getName();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         UserEntity user = userRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
