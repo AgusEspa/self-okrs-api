@@ -1,6 +1,6 @@
 package me.projects.SelfOKRs.services;
 
-import me.projects.SelfOKRs.dtos.UserDetails;
+import me.projects.SelfOKRs.dtos.UserData;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.UserAlreadyExistsException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
@@ -42,11 +42,11 @@ public class UserEntityService {
 //                .orElseThrow(() -> new UserEntityNotFoundException(id));
 //    }
 
-    public UserDetails fetchUserDetails() {
+    public UserData fetchUserData() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity fetchedUser = userRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
-        return new UserDetails(fetchedUser.getUsername(), fetchedUser.getEmailAddress());
+        return new UserData(fetchedUser.getUsername(), fetchedUser.getEmailAddress());
     }
 
     public UserEntity newUser(RegistrationForm newUser) {
