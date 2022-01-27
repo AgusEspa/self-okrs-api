@@ -1,10 +1,9 @@
 package me.projects.SelfOKRs.controllers;
 
-import me.projects.SelfOKRs.dtos.UserDetails;
+import me.projects.SelfOKRs.dtos.UserData;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.dtos.RegistrationForm;
 import me.projects.SelfOKRs.security.TokenService;
-import me.projects.SelfOKRs.services.KeyResultService;
 import me.projects.SelfOKRs.services.UserEntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,8 +47,8 @@ public class UserEntityController {
 //    }
 
     @GetMapping("/authenticated")
-    ResponseEntity<UserDetails> getUserDetails() {
-        return ResponseEntity.ok(userService.fetchUserDetails());
+    ResponseEntity<UserData> getUserData() {
+        return ResponseEntity.ok(userService.fetchUserData());
     }
 
     @PostMapping("/signup")
