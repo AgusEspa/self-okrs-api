@@ -31,6 +31,10 @@ public class SecurityUser implements UserDetails {
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
+    public UserEntity getUser() {
+        return this.user;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
