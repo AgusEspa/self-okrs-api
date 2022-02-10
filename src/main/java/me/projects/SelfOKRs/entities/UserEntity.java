@@ -31,7 +31,7 @@ public class UserEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Goal> goals = new HashSet<>();
+    private Set<Objective> objectives = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -79,12 +79,12 @@ public class UserEntity {
         this.password = password;
     }
 
-    public Set<Goal> getGoals() {
-        return goals;
+    public Set<Objective> getObjectives() {
+        return objectives;
     }
 
-    public void setGoals(Set<Goal> goals) {
-        this.goals = goals;
+    public void setObjectives(Set<Objective> objectives) {
+        this.objectives = objectives;
     }
 
 

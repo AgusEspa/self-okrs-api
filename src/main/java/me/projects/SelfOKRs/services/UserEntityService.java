@@ -20,7 +20,7 @@ import java.util.Map;
 @Service
 public class UserEntityService {
 
-    private final UserEntityRepository userRepository;
+    private final UserEntityRepository userEntityRepository;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -28,8 +28,8 @@ public class UserEntityService {
     Logger logger = LoggerFactory.getLogger(UserEntityService.class);
 
     @Autowired
-    public UserEntityService(UserEntityRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserEntityService(UserEntityRepository userEntityRepository) {
+        this.userEntityRepository = userEntityRepository;
     }
 
 //    public List<UserEntity> all() {
@@ -44,14 +44,14 @@ public class UserEntityService {
 
     public UserData fetchUserData() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserEntity fetchedUser = userRepository.findByEmailAddress(username)
+        UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
         return new UserData(fetchedUser.getUsername(), fetchedUser.getEmailAddress());
     }
 
     public UserEntity newUser(RegistrationForm newUser) {
-        if (userRepository.findByEmailAddress(newUser.getEmailAddress()).isEmpty()) {
-            return userRepository.save(newUser.toUser());
+        if (userEntityRepository.findByEmailAddress(newUser.getEmailAddress()).isEmpty()) {
+            return userEntityRepository.save(newUser.toUser());
         } else {
             throw new UserAlreadyExistsException(newUser.getEmailAddress());
         }
@@ -60,14 +60,14 @@ public class UserEntityService {
     // Refactor, not secure and not updating securityContext
     public UserEntity editUser(RegistrationForm editedUser) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserEntity fetchedUser = userRepository.findByEmailAddress(username)
+        UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        if (userRepository.findByEmailAddress(editedUser.getEmailAddress()).isEmpty()) {
+        if (userEntityRepository.findByEmailAddress(editedUser.getEmailAddress()).isEmpty()) {
             fetchedUser.setUsername(editedUser.getUsername());
             fetchedUser.setEmailAddress(editedUser.getEmailAddress());
             fetchedUser.setPassword(passwordEncoder.encode(editedUser.getPassword()));
-            return  userRepository.save(fetchedUser);
+            return  userEntityRepository.save(fetchedUser);
         } else {
             throw new UserAlreadyExistsException(editedUser.getEmailAddress());
         }
@@ -76,11 +76,11 @@ public class UserEntityService {
     public void deleteOne(Map<String, String> credentials) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        UserEntity fetchedUser = userRepository.findByEmailAddress(username)
+        UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
         if (passwordEncoder.matches(credentials.get("password"), fetchedUser.getPassword()) && username.equals(credentials.get("emailAddress"))) {
-            userRepository.deleteById(fetchedUser.getId());
+            userEntityRepository.deleteById(fetchedUser.getId());
         } else throw new UserNotAuthorizedException(username);
     }
 }

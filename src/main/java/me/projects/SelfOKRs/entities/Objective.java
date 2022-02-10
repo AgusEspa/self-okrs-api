@@ -11,12 +11,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "goals")
-public class Goal {
+@Table(name = "objectives")
+public class Objective {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "goal_id")
+    @Column(name = "objective_id")
     private Long id;
 
     @NotBlank
@@ -36,13 +36,13 @@ public class Goal {
     private UserEntity user;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "objective", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<KeyResult> keyResults = new HashSet<>();
 
 
-    Goal() {}
+    Objective() {}
 
-    public Goal(String name, int importance, UserEntity user) {
+    public Objective(String name, int importance, UserEntity user) {
         this.name = name;
         this.importance = importance;
         this.user = user;
@@ -90,8 +90,8 @@ public class Goal {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Goal goal = (Goal) o;
-        return Objects.equals(id, goal.id) && Objects.equals(name, goal.name) && Objects.equals(createdAt, goal.createdAt) && Objects.equals(user, goal.user) && Objects.equals(importance, goal.importance);
+        Objective objective = (Objective) o;
+        return Objects.equals(id, objective.id) && Objects.equals(name, objective.name) && Objects.equals(createdAt, objective.createdAt) && Objects.equals(user, objective.user) && Objects.equals(importance, objective.importance);
     }
 
     @Override

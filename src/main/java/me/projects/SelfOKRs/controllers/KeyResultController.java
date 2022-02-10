@@ -25,8 +25,8 @@ public class KeyResultController {
     }
 
     @GetMapping
-    ResponseEntity<List> getAllKeyResultsPerGoal(@RequestParam Long goalId) {
-        return ResponseEntity.ok(keyResultService.allPerGoal(goalId));
+    ResponseEntity<List> getAllKeyResultsPerObjective(@RequestParam Long objectiveId) {
+        return ResponseEntity.ok(keyResultService.allPerObjective(objectiveId));
     }
 
     // Refactor, not secure, ResponseEntity<?>

@@ -26,8 +26,8 @@ public class KeyResult {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "goal_id")
-    private Goal goal;
+    @JoinColumn(name = "objective_id")
+    private Objective objective;
 
     @JsonIgnore
     @ManyToOne
@@ -37,9 +37,9 @@ public class KeyResult {
 
     KeyResult() {}
 
-    public KeyResult(String name, Goal goal, LocalDate dueDate, Boolean isDone, UserEntity user) {
+    public KeyResult(String name, Objective objective, LocalDate dueDate, Boolean isDone, UserEntity user) {
         this.name = name;
-        this.goal = goal;
+        this.objective = objective;
         this.dueDate = dueDate;
         this.isDone = isDone;
         this.user = user;
@@ -78,12 +78,12 @@ public class KeyResult {
         this.isDone = isDone;
     }
 
-    public Goal getGoal() {
-        return goal;
+    public Objective getObjective() {
+        return objective;
     }
 
-    public void setGoal(Goal goal) {
-        this.goal = goal;
+    public void setObjective(Objective objective) {
+        this.objective = objective;
     }
 
     public UserEntity getUser() {

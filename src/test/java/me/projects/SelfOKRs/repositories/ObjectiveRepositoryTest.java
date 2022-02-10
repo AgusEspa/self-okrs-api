@@ -1,7 +1,6 @@
 package me.projects.SelfOKRs.repositories;
 
-import me.projects.SelfOKRs.dtos.RegistrationForm;
-import me.projects.SelfOKRs.entities.Goal;
+import me.projects.SelfOKRs.entities.Objective;
 import me.projects.SelfOKRs.entities.UserEntity;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,46 +15,46 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class GoalRepositoryTest {
+public class ObjectiveRepositoryTest {
 
     @Autowired
-    GoalRepository goalRepository;
+    ObjectiveRepository objectiveRepository;
 
     @Autowired
     UserEntityRepository userEntityRepository;
 
-    Goal goal1;
-    Goal goal2;
+    Objective objective1;
+    Objective objective2;
 
     @BeforeAll
     public void setUp() {
         UserEntity user = new UserEntity("Testing User", "test@mail.com", "pass");
         userEntityRepository.save(user);
-        goal1 = new Goal("Testing goal 1",1, user);
-        goal2 = new Goal("Testing goal 2",5, user);
-        goalRepository.save(goal1);
-        goalRepository.save(goal2);
+        objective1 = new Objective("Testing objective 1",1, user);
+        objective2 = new Objective("Testing objective 2",5, user);
+        objectiveRepository.save(objective1);
+        objectiveRepository.save(objective2);
 
     }
     @AfterAll
     public void tearDown() {
-        goalRepository.deleteAll();
+        objectiveRepository.deleteAll();
     }
 
     // Test Create operation
     @Test
-    public void shouldSaveGoal() {
-        Goal goal = new Goal("Testing goal 3",3, null);
-        Goal savedGoal = goalRepository.save(goal);
-        assertEquals(savedGoal, goal);
+    public void shouldSaveObjective() {
+        Objective objective = new Objective("Testing objective 3",3, null);
+        Objective savedObjective = objectiveRepository.save(objective);
+        assertEquals(savedObjective, objective);
     }
 
     // Test Read operation for All
     @Test
-    public void shouldReturnListOfAllGoals() {
-        List<Goal> goalList = goalRepository.findAll();
-        assertEquals(goal1, goalList.get(0));
-        assertEquals(goal2, goalList.get(1));
+    public void shouldReturnListOfAllObjectives() {
+        List<Objective> objectiveList = objectiveRepository.findAll();
+        assertEquals(objective1, objectiveList.get(0));
+        assertEquals(objective2, objectiveList.get(1));
     }
 
     // Test Update operation

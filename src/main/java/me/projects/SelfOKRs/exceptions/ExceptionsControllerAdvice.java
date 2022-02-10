@@ -27,8 +27,8 @@ public class ExceptionsControllerAdvice {
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler(GoalNotFoundException.class)
-    ResponseEntity<String> handleGoalNotFoundException(GoalNotFoundException ex) {
+    @ExceptionHandler(ObjectiveNotFoundException.class)
+    ResponseEntity<String> handleObjectiveNotFoundException(ObjectiveNotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());

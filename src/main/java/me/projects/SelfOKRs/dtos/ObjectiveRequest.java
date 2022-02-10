@@ -4,9 +4,9 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
-public class GoalRequest {
+public class ObjectiveRequest {
 
-    @NotBlank(message = "Goal name must not be empty")
+    @NotBlank(message = "Name must not be empty")
     private String name;
 
     @Min(value = 1, message = "Number must be more than 0")
@@ -14,9 +14,9 @@ public class GoalRequest {
     private int importance;
 
 
-    private GoalRequest() {}
+    private ObjectiveRequest() {}
 
-    public GoalRequest(String name, int importance) {
+    public ObjectiveRequest(String name, int importance) {
         this.name = name;
         this.importance = importance;
     }

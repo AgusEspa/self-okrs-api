@@ -1,6 +1,6 @@
 package me.projects.SelfOKRs;
 
-import me.projects.SelfOKRs.repositories.GoalRepository;
+import me.projects.SelfOKRs.repositories.ObjectiveRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,14 +13,14 @@ class LoadUserDatabase implements CommandLineRunner {
 
     private final UserEntityRepository userRepository;
 
-    private final GoalRepository goalRepository;
+    private final ObjectiveRepository objectiveRepository;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
-    public LoadUserDatabase(UserEntityRepository userRepository, GoalRepository goalRepository) {
+    public LoadUserDatabase(UserEntityRepository userRepository, ObjectiveRepository objectiveRepository) {
         this.userRepository = userRepository;
-        this.goalRepository = goalRepository;
+        this.objectiveRepository = objectiveRepository;
     }
 
     @Override
