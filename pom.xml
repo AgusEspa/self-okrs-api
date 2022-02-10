@@ -87,15 +87,15 @@
 				<executions>
 					<execution>
 						<id>pre-integration-test</id>
-						<objectives>
-							<objective>start</objective>
-						</objectives>
+						<goals>
+							<goal>start</goal>
+						</goals>
 					</execution>
 					<execution>
 						<id>post-integration-test</id>
-						<objectives>
-							<objective>stop</objective>
-						</objectives>
+						<goals>
+							<goal>stop</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
