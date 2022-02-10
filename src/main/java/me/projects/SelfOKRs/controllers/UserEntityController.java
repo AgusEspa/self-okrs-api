@@ -1,5 +1,6 @@
 package me.projects.SelfOKRs.controllers;
 
+import me.projects.SelfOKRs.dtos.UpdateForm;
 import me.projects.SelfOKRs.dtos.UserData;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.dtos.RegistrationForm;
@@ -23,14 +24,14 @@ import java.util.Map;
 @RequestMapping("/api/users")
 public class UserEntityController {
 
-    private final UserEntityService userService;
+    private final UserEntityService userEntityService;
     private final TokenService tokenService;
 
     Logger logger = LoggerFactory.getLogger(UserEntityController.class);
 
     @Autowired
-    public UserEntityController(UserEntityService userService, TokenService tokenService) {
-        this.userService = userService;
+    public UserEntityController(UserEntityService userEntityService, TokenService tokenService) {
+        this.userEntityService = userEntityService;
         this.tokenService = tokenService;
     }
 
@@ -48,24 +49,24 @@ public class UserEntityController {
 
     @GetMapping("/authenticated")
     ResponseEntity<UserData> getUserData() {
-        return ResponseEntity.ok(userService.fetchUserData());
+        return ResponseEntity.ok(userEntityService.fetchUserData());
     }
 
-    @PostMapping("/signup")
+    @PostMapping(path = "/signup")
     ResponseEntity<UserEntity> createUser(@Valid @RequestBody RegistrationForm newUser) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(userService.newUser(newUser));
+                .body(userEntityService.newUser(newUser));
     }
 
     @PutMapping
-    ResponseEntity<UserEntity> updateUser(@Valid @RequestBody RegistrationForm editedUser) {
-        return ResponseEntity.ok(userService.editUser(editedUser));
+    ResponseEntity<UserEntity> editUser(@Valid @RequestBody UpdateForm editedUser) {
+        return ResponseEntity.ok(userEntityService.updateUser(editedUser));
     }
 
     @DeleteMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     void deleteUser(@RequestParam Map<String,String> credentials) {
-        userService.deleteOne(credentials);
+        userEntityService.removeUser(credentials);
     }
 
     @GetMapping("/token/refresh")

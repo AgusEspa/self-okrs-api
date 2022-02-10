@@ -1,5 +1,6 @@
 package me.projects.SelfOKRs.controllers;
 
+import me.projects.SelfOKRs.dtos.UpdateForm;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.dtos.RegistrationForm;
 import me.projects.SelfOKRs.services.UserEntityService;
@@ -12,8 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -75,7 +74,6 @@ public class UserEntityControllerTest {
 //    }
 
     // Test POST request
-    @Disabled
     @Test
     public void shouldCreateNewUser() throws Exception {
         RegistrationForm testUser = new RegistrationForm("test1", "test1@mail.com", "testing_pass1");
@@ -97,10 +95,11 @@ public class UserEntityControllerTest {
 
     // Test PUT request
     @Test
+    @Disabled
     @WithMockUser
     public void shouldUpdateExistingUser() throws Exception {
-        RegistrationForm testUser = new RegistrationForm("test1", "newtest@mail.com", "testing_pass1");
-        when(userService.editUser(testUser)).thenReturn(testUser.toUser());
+        UpdateForm testUser = new UpdateForm("test1", "newtest@mail.com", "testing_pass1", "old_pass");
+        when(userService.updateUser(testUser)).thenReturn(testUser.toUser());
 
         this.mockMvc
                 .perform(put("/api/users")
@@ -111,7 +110,7 @@ public class UserEntityControllerTest {
                 .andExpect(jsonPath("$.emailAddress").value(testUser.getEmailAddress()))
         ;
 
-        verify(userService, times(1)).editUser(testUser);
+        verify(userService, times(1)).updateUser(testUser);
     }
 
     // Test PUT request exception

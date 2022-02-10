@@ -31,7 +31,7 @@ public class ObjectiveService {
         this.userEntityRepository = userEntityRepository;
     }
 
-    public List<Objective> all() {
+    public List<Objective> fetchObjectives() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
@@ -57,12 +57,12 @@ public class ObjectiveService {
     }
 
     // Refactor, not secure
-    public void deleteOne(Long id) {
+    public void removeObjective(Long id) {
         objectiveRepository.deleteById(id);
     }
 
     // Refactor, not secure
-    public Objective editObjective(Long id, Objective editedObjective) {
+    public Objective updateObjective(Long id, Objective editedObjective) {
         return objectiveRepository.findById(id)
                 .map(objective -> {
                     objective.setName(editedObjective.getName());

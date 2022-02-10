@@ -87,6 +87,13 @@ public class UserEntity {
         this.objectives = objectives;
     }
 
+    public Set<KeyResult> getKeyResults() {
+        return keyResults;
+    }
+
+    public void setKeyResults(Set<KeyResult> keyResults) {
+        this.keyResults = keyResults;
+    }
 
     @Override
     public boolean equals(Object o) {

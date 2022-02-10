@@ -1,10 +1,12 @@
 package me.projects.SelfOKRs.services;
 
+import me.projects.SelfOKRs.dtos.UpdateForm;
 import me.projects.SelfOKRs.dtos.UserData;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.UserAlreadyExistsException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserNotAuthorizedException;
+import me.projects.SelfOKRs.exceptions.WrongPasswordException;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.dtos.RegistrationForm;
 import org.slf4j.Logger;
@@ -57,13 +59,17 @@ public class UserEntityService {
         }
     }
 
-    // Refactor, not secure and not updating securityContext
-    public UserEntity editUser(RegistrationForm editedUser) {
+    // Refactor, not secure, check for empty fields
+    public UserEntity updateUser(UpdateForm editedUser) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        if (userEntityRepository.findByEmailAddress(editedUser.getEmailAddress()).isEmpty()) {
+        if (!(passwordEncoder.matches(editedUser.getOldPassword(), fetchedUser.getPassword()))) {
+            throw new WrongPasswordException();
+        }
+
+        if (userEntityRepository.findByEmailAddress(editedUser.getEmailAddress()).isEmpty() || editedUser.getEmailAddress().equals(username)) {
             fetchedUser.setUsername(editedUser.getUsername());
             fetchedUser.setEmailAddress(editedUser.getEmailAddress());
             fetchedUser.setPassword(passwordEncoder.encode(editedUser.getPassword()));
@@ -73,7 +79,7 @@ public class UserEntityService {
         }
     }
 
-    public void deleteOne(Map<String, String> credentials) {
+    public void removeUser(Map<String, String> credentials) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)

@@ -23,33 +23,33 @@ public class ObjectiveController {
     }
 
     @GetMapping
-    ResponseEntity<List> getAllObjectives() {
-        return ResponseEntity.ok(objectiveService.all());
+    ResponseEntity<List> getObjectives() {
+        return ResponseEntity.ok(objectiveService.fetchObjectives());
     }
 
     // Refactor, not secure, ResponseEntity<?>
 //    @GetMapping("/{id}")
-//    Objective getOneObjective(@PathVariable Long id) {
+//    Objective getObjective(@PathVariable Long id) {
 //        return objectiveService.one(id);
 //    }
 
     @PostMapping
     ResponseEntity<Objective> createObjective(@Valid @RequestBody ObjectiveRequest objectiveRequest) {
-        Objective newObjective = objectiveService.newObjective(objectiveRequest);
+        Objective objective = objectiveService.newObjective(objectiveRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(newObjective);
+                .body(objective);
     }
 
     // Refactor, not secure, ResponseEntity<?>
     @PutMapping("/{id}")
-    Objective updateObjective(@PathVariable Long id, @RequestBody Objective objective) {
-        return objectiveService.editObjective(id, objective);
+    Objective editObjective(@PathVariable Long id, @RequestBody Objective objective) {
+        return objectiveService.updateObjective(id, objective);
     }
 
     // Refactor, not secure, ResponseEntity<?>
     @DeleteMapping("/{id}")
     void deleteObjective(@PathVariable Long id) {
-        objectiveService.deleteOne(id);
+        objectiveService.removeObjective(id);
     }
 }

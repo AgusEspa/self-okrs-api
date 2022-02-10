@@ -65,4 +65,11 @@ public class ExceptionsControllerAdvice {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(ex.getMessage());
     }
+
+    @ExceptionHandler(WrongPasswordException.class)
+    ResponseEntity<String> handleWrongPasswordException (WrongPasswordException ex) {
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(ex.getMessage());
+    }
 }

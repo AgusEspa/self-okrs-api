@@ -38,7 +38,7 @@ public class KeyResultService {
     }
 
 
-    public List<KeyResult> allPerObjective(Long objectiveId) {
+    public List<KeyResult> fetchKeyResultsPerGoal(Long objectiveId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Objective objective = objectiveRepository.findById(objectiveId)
                 .orElseThrow(() -> new ObjectiveNotFoundException(objectiveId));
@@ -64,12 +64,12 @@ public class KeyResultService {
     }
 
     // Refactor, not secure
-    public void deleteOne(Long id) {
+    public void removeKeyResult(Long id) {
         keyResultRepository.deleteById(id);
     }
 
     // Refactor, not secure
-    public KeyResult editKeyResult(Long id, KeyResult editedKeyResult) {
+    public KeyResult updateKeyResult(Long id, KeyResult editedKeyResult) {
         return keyResultRepository.findById(id)
                 .map(task -> {
                     task.setName(editedKeyResult.getName());

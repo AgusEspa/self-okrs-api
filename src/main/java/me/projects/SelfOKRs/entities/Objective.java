@@ -85,6 +85,13 @@ public class Objective {
         this.user = user;
     }
 
+    public Set<KeyResult> getKeyResults() {
+        return keyResults;
+    }
+
+    public void setKeyResults(Set<KeyResult> keyResults) {
+        this.keyResults = keyResults;
+    }
 
     @Override
     public boolean equals(Object o) {
