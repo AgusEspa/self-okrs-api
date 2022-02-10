@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/keyresults")
+@RequestMapping("/api/objectives/keyresults")
 public class KeyResultController {
 
     private final KeyResultService keyResultService;
