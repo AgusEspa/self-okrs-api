@@ -75,6 +75,7 @@ public class UserEntityControllerTest {
 //    }
 
     // Test POST request
+    @Disabled
     @Test
     public void shouldCreateNewUser() throws Exception {
         RegistrationForm testUser = new RegistrationForm("test1", "test1@mail.com", "testing_pass1");
@@ -102,7 +103,7 @@ public class UserEntityControllerTest {
         when(userService.editUser(testUser)).thenReturn(testUser.toUser());
 
         this.mockMvc
-                .perform(put("/api/users/1")
+                .perform(put("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"username\": \"test1\",\"emailAddress\": \"newtest@mail.com\",\"password\": \"testing_pass1\"}")
                 )
