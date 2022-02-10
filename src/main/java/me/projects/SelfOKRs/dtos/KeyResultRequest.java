@@ -27,9 +27,14 @@ public class KeyResultRequest {
 
     public KeyResultRequest(String name, Long goalId, String dueDate, Boolean isDone) {
         this.name = name;
-        try { this.dueDate = LocalDate.parse(dueDate); }
-        catch (Exception e) {
-            throw new CustomMethodArgumentNotValidException("Bad date format - must be yyyy-mm-dd"); }
+        if (dueDate.isEmpty()) {
+            this.dueDate = null;
+        } else {
+            try { this.dueDate = LocalDate.parse(dueDate); }
+            catch (Exception e) {
+                throw new CustomMethodArgumentNotValidException("Bad date format - must be yyyy-mm-dd");
+            }
+        }
         this.goalId = goalId;
         this.isDone = false;
     }

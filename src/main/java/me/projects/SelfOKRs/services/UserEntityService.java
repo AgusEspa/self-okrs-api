@@ -26,7 +26,6 @@ public class UserEntityService {
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-
     Logger logger = LoggerFactory.getLogger(UserEntityService.class);
 
     @Autowired
@@ -59,7 +58,6 @@ public class UserEntityService {
         }
     }
 
-    // Refactor, not secure, check for empty fields
     public UserEntity updateUser(UpdateForm editedUser) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)
