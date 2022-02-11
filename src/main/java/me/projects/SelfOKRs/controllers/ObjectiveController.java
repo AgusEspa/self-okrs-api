@@ -40,7 +40,6 @@ public class ObjectiveController {
         return ResponseEntity.ok(objectiveService.updateObjective(id, editedObjective));
     }
 
-    // Refactor, not secure, ResponseEntity<?>
     @DeleteMapping("/{id}")
     void deleteObjective(@PathVariable Long id) {
         objectiveService.removeObjective(id);
