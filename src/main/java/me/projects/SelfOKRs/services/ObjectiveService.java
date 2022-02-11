@@ -33,7 +33,9 @@ public class ObjectiveService {
     }
 
     public List<Objective> fetchObjectives() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        String username = getUsername();
+
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
@@ -42,7 +44,7 @@ public class ObjectiveService {
 
     public Objective newObjective(ObjectiveRequest objectiveRequest) {
 
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = getUsername();
 
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
@@ -54,31 +56,31 @@ public class ObjectiveService {
 
     public Objective updateObjective(Long id, ObjectiveRequest editedObjective) {
 
-        Objective fetchedObjective = objectiveRepository.findById(id)
-                .orElseThrow(() -> new ObjectiveNotFoundException(id));
+        Objective fetchedObjective = validateUserAndFetchObjective(id);
 
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        if (!fetchedObjective.getUser().getEmailAddress().equals(username)) throw new UserNotAuthorizedException(username);
-
-        else {
-            fetchedObjective.setName(editedObjective.getName());
-            fetchedObjective.setImportance(editedObjective.getImportance());
-            return objectiveRepository.save(fetchedObjective);
-        }
+        fetchedObjective.setName(editedObjective.getName());
+        fetchedObjective.setImportance(editedObjective.getImportance());
+        return objectiveRepository.save(fetchedObjective);
     }
 
     public void removeObjective(Long id) {
 
+        validateUserAndFetchObjective(id);
+        objectiveRepository.deleteById(id);
+    }
+
+    protected Objective validateUserAndFetchObjective(Long id) {
+
+        String username = getUsername();
+
         Objective fetchedObjective = objectiveRepository.findById(id)
                 .orElseThrow(() -> new ObjectiveNotFoundException(id));
 
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
         if (!fetchedObjective.getUser().getEmailAddress().equals(username)) throw new UserNotAuthorizedException(username);
+        else return fetchedObjective;
+    }
 
-        else {
-            objectiveRepository.deleteById(id);
-        }
+    protected String getUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

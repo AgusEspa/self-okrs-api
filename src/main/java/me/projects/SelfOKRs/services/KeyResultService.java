@@ -7,6 +7,7 @@ import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.ObjectiveNotFoundException;
 import me.projects.SelfOKRs.exceptions.KeyResultNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
+import me.projects.SelfOKRs.exceptions.UserNotAuthorizedException;
 import me.projects.SelfOKRs.repositories.ObjectiveRepository;
 import me.projects.SelfOKRs.repositories.KeyResultRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
@@ -39,7 +40,7 @@ public class KeyResultService {
 
 
     public List<KeyResult> fetchKeyResultsPerGoal(Long objectiveId) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = getUsername();
         Objective objective = objectiveRepository.findById(objectiveId)
                 .orElseThrow(() -> new ObjectiveNotFoundException(objectiveId));
         if (objective.getUser().getEmailAddress().equals(username)) {
@@ -47,36 +48,46 @@ public class KeyResultService {
         } else throw new UserEntityNotFoundException(username);
     }
 
-    // Refactor, not secure
-//    public KeyResult one(Long id) {
-//        return keyResultRepository.findById(id)
-//                .orElseThrow(() -> new TaskNotFoundException(id));
-//    }
-
     public KeyResult newKeyResult(KeyResultRequest keyResultRequest) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = getUsername();
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        Objective objective = objectiveRepository.getById(keyResultRequest.getGoalId());
+        Objective objective = objectiveRepository.getById(keyResultRequest.getObjectiveId());
 
         return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), objective, keyResultRequest.getDueDate(), keyResultRequest.getIsDone(), user));
     }
 
-    // Refactor, not secure
-    public void removeKeyResult(Long id) {
-        keyResultRepository.deleteById(id);
+    public KeyResult updateKeyResult(Long id, KeyResultRequest editedKeyResult) {
+
+        KeyResult fetchedKeyResult = validateUserAndFetchKeyResult(id);
+
+        fetchedKeyResult.setName(editedKeyResult.getName());
+        fetchedKeyResult.setDueDate(editedKeyResult.getDueDate());
+
+        return keyResultRepository.save(fetchedKeyResult);
     }
 
-    // Refactor, not secure
-    public KeyResult updateKeyResult(Long id, KeyResult editedKeyResult) {
-        return keyResultRepository.findById(id)
-                .map(task -> {
-                    task.setName(editedKeyResult.getName());
-                    task.setDueDate(editedKeyResult.getDueDate());
-                    return keyResultRepository.save(task);
-                })
+    public void removeKeyResult(Long id) {
+
+        validateUserAndFetchKeyResult(id);
+        keyResultRepository.deleteById(id);
+
+    }
+
+     protected KeyResult validateUserAndFetchKeyResult(Long id) {
+
+        String username = getUsername();
+
+        KeyResult fetchedKeyResult = keyResultRepository.findById(id)
                 .orElseThrow(() -> new KeyResultNotFoundException(id));
+
+        if (!fetchedKeyResult.getUser().getEmailAddress().equals(username)) throw new UserNotAuthorizedException(username);
+        else return fetchedKeyResult;
+    }
+
+    protected String getUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
 }

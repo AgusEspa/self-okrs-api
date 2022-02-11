@@ -33,18 +33,10 @@ public class UserEntityService {
         this.userEntityRepository = userEntityRepository;
     }
 
-//    public List<UserEntity> all() {
-//        return userRepository.findAll();
-//    }
-
-    // Refactor, not secure
-//    public UserEntity one(Long id) {
-//        return userRepository.findById(id)
-//                .orElseThrow(() -> new UserEntityNotFoundException(id));
-//    }
-
     public UserData fetchUserData() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        String username = getUsername();
+
         UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
         return new UserData(fetchedUser.getUsername(), fetchedUser.getEmailAddress());
@@ -59,7 +51,9 @@ public class UserEntityService {
     }
 
     public UserEntity updateUser(UpdateForm editedUser) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        String username = getUsername();
+
         UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
@@ -78,7 +72,8 @@ public class UserEntityService {
     }
 
     public void removeUser(Map<String, String> credentials) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        String username = getUsername();
 
         UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
@@ -86,5 +81,9 @@ public class UserEntityService {
         if (passwordEncoder.matches(credentials.get("password"), fetchedUser.getPassword()) && username.equals(credentials.get("emailAddress"))) {
             userEntityRepository.deleteById(fetchedUser.getId());
         } else throw new UserNotAuthorizedException(username);
+    }
+
+    protected String getUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

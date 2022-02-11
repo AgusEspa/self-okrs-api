@@ -17,7 +17,7 @@ public class KeyResultRequest {
 
     @NotNull
     @Min(value = 1, message = "Please provide a valid id number (more than 0)")
-    private Long goalId;
+    private Long objectiveId;
 
     private LocalDate dueDate;
 
@@ -25,7 +25,7 @@ public class KeyResultRequest {
     private Boolean isDone;
 
 
-    public KeyResultRequest(String name, Long goalId, String dueDate, Boolean isDone) {
+    public KeyResultRequest(String name, Long objectiveId, String dueDate, Boolean isDone) {
         this.name = name;
         if (dueDate.isEmpty()) {
             this.dueDate = null;
@@ -35,7 +35,7 @@ public class KeyResultRequest {
                 throw new CustomMethodArgumentNotValidException("Bad date format - must be yyyy-mm-dd");
             }
         }
-        this.goalId = goalId;
+        this.objectiveId = objectiveId;
         this.isDone = false;
     }
 
@@ -56,12 +56,12 @@ public class KeyResultRequest {
         this.dueDate = dueDate;
     }
 
-    public Long getGoalId() {
-        return goalId;
+    public Long getObjectiveId() {
+        return objectiveId;
     }
 
-    public void setGoalId(Long goalId) {
-        this.goalId = goalId;
+    public void setObjectiveId(Long objectiveId) {
+        this.objectiveId = objectiveId;
     }
 
     public Boolean getIsDone() {
