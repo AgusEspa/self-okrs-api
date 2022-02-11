@@ -25,9 +25,9 @@ public class KeyResultRequest {
     private Boolean isDone;
 
 
-    public KeyResultRequest(String name, Long objectiveId, String dueDate, Boolean isDone) {
+    public KeyResultRequest(String name, Long objectiveId, String dueDate) {
         this.name = name;
-        if (dueDate.isEmpty()) {
+        if (dueDate == null || dueDate.isEmpty()) {
             this.dueDate = null;
         } else {
             try { this.dueDate = LocalDate.parse(dueDate); }
