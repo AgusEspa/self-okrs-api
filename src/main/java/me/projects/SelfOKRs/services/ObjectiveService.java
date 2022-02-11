@@ -68,8 +68,17 @@ public class ObjectiveService {
         }
     }
 
-    // Refactor, not secure
     public void removeObjective(Long id) {
-        objectiveRepository.deleteById(id);
+
+        Objective fetchedObjective = objectiveRepository.findById(id)
+                .orElseThrow(() -> new ObjectiveNotFoundException(id));
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if (!fetchedObjective.getUser().getEmailAddress().equals(username)) throw new UserNotAuthorizedException(username);
+
+        else {
+            objectiveRepository.deleteById(id);
+        }
     }
 }
