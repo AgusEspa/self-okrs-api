@@ -27,12 +27,6 @@ public class ObjectiveController {
         return ResponseEntity.ok(objectiveService.fetchObjectives());
     }
 
-    // Refactor, not secure, ResponseEntity<?>
-//    @GetMapping("/{id}")
-//    Objective getObjective(@PathVariable Long id) {
-//        return objectiveService.one(id);
-//    }
-
     @PostMapping
     ResponseEntity<Objective> createObjective(@Valid @RequestBody ObjectiveRequest objectiveRequest) {
         Objective objective = objectiveService.newObjective(objectiveRequest);
@@ -41,10 +35,9 @@ public class ObjectiveController {
                 .body(objective);
     }
 
-    // Refactor, not secure, ResponseEntity<?>
     @PutMapping("/{id}")
-    Objective editObjective(@PathVariable Long id, @RequestBody Objective objective) {
-        return objectiveService.updateObjective(id, objective);
+    ResponseEntity<Objective> editObjective(@PathVariable Long id, @RequestBody ObjectiveRequest editedObjective) {
+        return ResponseEntity.ok(objectiveService.updateObjective(id, editedObjective));
     }
 
     // Refactor, not secure, ResponseEntity<?>
