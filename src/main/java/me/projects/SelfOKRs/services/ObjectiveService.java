@@ -5,6 +5,7 @@ import me.projects.SelfOKRs.entities.Objective;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.ObjectiveNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
+import me.projects.SelfOKRs.exceptions.UserNotAuthorizedException;
 import me.projects.SelfOKRs.repositories.ObjectiveRepository;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import org.slf4j.Logger;
@@ -39,13 +40,8 @@ public class ObjectiveService {
         return objectiveRepository.findByUserId(user.getId());
     }
 
-    // Refactor, not secure
-//    public Objective one(Long id) {
-//        return objectiveRepository.findById(id)
-//                .orElseThrow(() -> new ObjectiveNotFoundException(id));
-//    }
-
     public Objective newObjective(ObjectiveRequest objectiveRequest) {
+
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         UserEntity user = userEntityRepository.findByEmailAddress(username)
@@ -56,19 +52,24 @@ public class ObjectiveService {
                 user));
     }
 
-    // Refactor, not secure
-    public void removeObjective(Long id) {
-        objectiveRepository.deleteById(id);
+    public Objective updateObjective(Long id, ObjectiveRequest editedObjective) {
+
+        Objective fetchedObjective = objectiveRepository.findById(id)
+                .orElseThrow(() -> new ObjectiveNotFoundException(id));
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if (!fetchedObjective.getUser().getEmailAddress().equals(username)) throw new UserNotAuthorizedException(username);
+
+        else {
+            fetchedObjective.setName(editedObjective.getName());
+            fetchedObjective.setImportance(editedObjective.getImportance());
+            return objectiveRepository.save(fetchedObjective);
+        }
     }
 
     // Refactor, not secure
-    public Objective updateObjective(Long id, Objective editedObjective) {
-        return objectiveRepository.findById(id)
-                .map(objective -> {
-                    objective.setName(editedObjective.getName());
-                    objective.setImportance(editedObjective.getImportance());
-                    return objectiveRepository.save(objective);
-                })
-                .orElseThrow(() -> new ObjectiveNotFoundException(id));
+    public void removeObjective(Long id) {
+        objectiveRepository.deleteById(id);
     }
 }
