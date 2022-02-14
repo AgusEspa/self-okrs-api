@@ -48,21 +48,21 @@ public class KeyResultService {
         } else throw new UserEntityNotFoundException(username);
     }
 
-    public KeyResult newKeyResult(KeyResultRequest keyResultRequest) {
+    public KeyResult newKeyResult(Long objectiveId, KeyResultRequest keyResultRequest) {
         String username = getUsername();
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        Objective objective = objectiveRepository.getById(keyResultRequest.getObjectiveId());
+        Objective objective = objectiveRepository.getById(objectiveId);
 
-        return keyResultRepository.save(new KeyResult(keyResultRequest.getName(), objective, keyResultRequest.getDueDate(), keyResultRequest.getIsDone(), user));
+        return keyResultRepository.save(new KeyResult(keyResultRequest.getTitle(), objective, keyResultRequest.getDueDate(), keyResultRequest.getIsDone(), user));
     }
 
     public KeyResult updateKeyResult(Long id, KeyResultRequest editedKeyResult) {
 
         KeyResult fetchedKeyResult = validateUserAndFetchKeyResult(id);
 
-        fetchedKeyResult.setName(editedKeyResult.getName());
+        fetchedKeyResult.setTitle(editedKeyResult.getTitle());
         fetchedKeyResult.setDueDate(editedKeyResult.getDueDate());
 
         return keyResultRepository.save(fetchedKeyResult);

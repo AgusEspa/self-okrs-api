@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/objectives/keyresults")
+@RequestMapping("/api/objectives")
 public class KeyResultController {
 
     private final KeyResultService keyResultService;
@@ -24,25 +24,25 @@ public class KeyResultController {
         this.keyResultService = taskService;
     }
 
-    @GetMapping
-    ResponseEntity<List> getKeyResultsPerObjective(@RequestParam Long objectiveId) {
+    @GetMapping("/{objectiveId}/keyresults")
+    ResponseEntity<List> getKeyResultsPerObjective(@PathVariable Long objectiveId) {
         return ResponseEntity.ok(keyResultService.fetchKeyResultsPerGoal(objectiveId));
     }
 
-    @PostMapping
-    ResponseEntity<KeyResult> createKeyResult(@Valid @RequestBody KeyResultRequest keyResultRequest) {
-        KeyResult keyResult = keyResultService.newKeyResult(keyResultRequest);
+    @PostMapping("/{objectiveId}/keyresults")
+    ResponseEntity<KeyResult> createKeyResult(@PathVariable Long objectiveId, @Valid @RequestBody KeyResultRequest keyResultRequest) {
+        KeyResult keyResult = keyResultService.newKeyResult(objectiveId, keyResultRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(keyResult);
     }
 
-    @PutMapping("/{id}")
-    ResponseEntity<KeyResult> editKeyResult(@PathVariable Long id, @RequestBody KeyResultRequest editedKeyResult) {
+    @PutMapping("/{objectiveId}/keyresults/{id}")
+    ResponseEntity<KeyResult> editKeyResult(@PathVariable Long objectiveId, @PathVariable Long id, @RequestBody KeyResultRequest editedKeyResult) {
         return ResponseEntity.ok(keyResultService.updateKeyResult(id, editedKeyResult));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/keyresults/{id}")
     void deleteTask(@PathVariable Long id) {
         keyResultService.removeKeyResult(id);
     }

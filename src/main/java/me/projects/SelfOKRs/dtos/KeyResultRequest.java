@@ -1,10 +1,7 @@
 package me.projects.SelfOKRs.dtos;
 
-//import me.projects.SelfOKRs.exceptions.CustomMethodArgumentNotValidException;
-
 import me.projects.SelfOKRs.exceptions.CustomMethodArgumentNotValidException;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -12,12 +9,8 @@ import java.util.Objects;
 
 public class KeyResultRequest {
 
-    @NotBlank(message = "Key Result name must not be empty")
-    private String name;
-
-    @NotNull
-    @Min(value = 1, message = "Please provide a valid id number (more than 0)")
-    private Long objectiveId;
+    @NotBlank(message = "Title must not be empty")
+    private String title;
 
     private LocalDate dueDate;
 
@@ -25,8 +18,8 @@ public class KeyResultRequest {
     private Boolean isDone;
 
 
-    public KeyResultRequest(String name, Long objectiveId, String dueDate) {
-        this.name = name;
+    public KeyResultRequest(String title, String dueDate) {
+        this.title = title;
         if (dueDate == null || dueDate.isEmpty()) {
             this.dueDate = null;
         } else {
@@ -35,17 +28,16 @@ public class KeyResultRequest {
                 throw new CustomMethodArgumentNotValidException("Bad date format - must be yyyy-mm-dd");
             }
         }
-        this.objectiveId = objectiveId;
         this.isDone = false;
     }
 
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public LocalDate getDueDate() {
@@ -54,14 +46,6 @@ public class KeyResultRequest {
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
-    }
-
-    public Long getObjectiveId() {
-        return objectiveId;
-    }
-
-    public void setObjectiveId(Long objectiveId) {
-        this.objectiveId = objectiveId;
     }
 
     public Boolean getIsDone() {
@@ -78,11 +62,11 @@ public class KeyResultRequest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         KeyResultRequest that = (KeyResultRequest) o;
-        return Objects.equals(name, that.name);
+        return Objects.equals(title, that.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(title);
     }
 }

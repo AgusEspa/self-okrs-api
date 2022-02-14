@@ -17,7 +17,7 @@ public class KeyResult {
     private Long id;
 
     @NotBlank
-    private String name;
+    private String title;
 
     private LocalDate dueDate;
 
@@ -37,8 +37,8 @@ public class KeyResult {
 
     KeyResult() {}
 
-    public KeyResult(String name, Objective objective, LocalDate dueDate, Boolean isDone, UserEntity user) {
-        this.name = name;
+    public KeyResult(String title, Objective objective, LocalDate dueDate, Boolean isDone, UserEntity user) {
+        this.title = title;
         this.objective = objective;
         this.dueDate = dueDate;
         this.isDone = isDone;
@@ -54,12 +54,12 @@ public class KeyResult {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public LocalDate getDueDate() {
@@ -99,11 +99,11 @@ public class KeyResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         KeyResult keyResult = (KeyResult) o;
-        return Objects.equals(name, keyResult.name) && Objects.equals(id, keyResult.id);
+        return Objects.equals(title, keyResult.title) && Objects.equals(id, keyResult.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, id);
+        return Objects.hash(title, id);
     }
 }
