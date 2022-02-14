@@ -6,8 +6,8 @@ import javax.validation.constraints.NotBlank;
 
 public class ObjectiveRequest {
 
-    @NotBlank(message = "Name must not be empty")
-    private String name;
+    @NotBlank(message = "Title must not be empty")
+    private String title;
 
     @Min(value = 1, message = "Number must be more than 0")
     @Max(value = 5, message = "Number must be less than 6")
@@ -16,18 +16,18 @@ public class ObjectiveRequest {
 
     private ObjectiveRequest() {}
 
-    public ObjectiveRequest(String name, int importance) {
-        this.name = name;
+    public ObjectiveRequest(String title, int importance) {
+        this.title = title;
         this.importance = importance;
     }
 
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getImportance() {

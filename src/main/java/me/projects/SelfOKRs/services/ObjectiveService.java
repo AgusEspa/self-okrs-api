@@ -49,7 +49,7 @@ public class ObjectiveService {
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        return objectiveRepository.save(new Objective(objectiveRequest.getName(),
+        return objectiveRepository.save(new Objective(objectiveRequest.getTitle(),
                 objectiveRequest.getImportance(),
                 user));
     }
@@ -58,7 +58,7 @@ public class ObjectiveService {
 
         Objective fetchedObjective = validateUserAndFetchObjective(id);
 
-        fetchedObjective.setName(editedObjective.getName());
+        fetchedObjective.setTitle(editedObjective.getTitle());
         fetchedObjective.setImportance(editedObjective.getImportance());
         return objectiveRepository.save(fetchedObjective);
     }

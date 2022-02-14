@@ -20,7 +20,7 @@ public class Objective {
     private Long id;
 
     @NotBlank
-    private String name;
+    private String title;
 
     private final LocalDate createdAt = LocalDate.now();
 
@@ -42,8 +42,8 @@ public class Objective {
 
     Objective() {}
 
-    public Objective(String name, int importance, UserEntity user) {
-        this.name = name;
+    public Objective(String title, int importance, UserEntity user) {
+        this.title = title;
         this.importance = importance;
         this.user = user;
     }
@@ -57,12 +57,12 @@ public class Objective {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public LocalDate getCreatedAt() {
@@ -98,11 +98,11 @@ public class Objective {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Objective objective = (Objective) o;
-        return Objects.equals(id, objective.id) && Objects.equals(name, objective.name) && Objects.equals(createdAt, objective.createdAt) && Objects.equals(user, objective.user) && Objects.equals(importance, objective.importance);
+        return Objects.equals(id, objective.id) && Objects.equals(title, objective.title) && Objects.equals(createdAt, objective.createdAt) && Objects.equals(user, objective.user) && Objects.equals(importance, objective.importance);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, createdAt, importance, user);
+        return Objects.hash(id, title, createdAt, importance, user);
     }
 }
