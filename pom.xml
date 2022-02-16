@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>me.projects</groupId>
 	<artifactId>self-okrs-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>Self.OKRs</name>
 	<description>Self.OKRs API</description>
 	<properties>
@@ -87,7 +87,7 @@
 
 				<configuration>
 					<image>
-						<name>self-okrs/${project.artifactId}:${project.version}</name>
+						<name>agusespa/${project.artifactId}:${project.version}</name>
 					</image>
 				</configuration>
 
