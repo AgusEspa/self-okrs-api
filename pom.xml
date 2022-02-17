@@ -85,6 +85,12 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 
+				<configuration>
+				<image>
+					<name>agusespa/${project.artifactId}:${project.version}</name>
+				</image>
+				</configuration>
+
 <!--				<executions>-->
 <!--					<execution>-->
 <!--						<id>pre-integration-test</id>-->
