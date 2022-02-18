@@ -18,7 +18,7 @@ public class KeyResultRequest {
     private Boolean isDone;
 
 
-    public KeyResultRequest(String title, String dueDate) {
+    public KeyResultRequest(String title, String dueDate, Boolean isDone) {
         this.title = title;
         if (dueDate == null || dueDate.isEmpty()) {
             this.dueDate = null;
@@ -28,7 +28,7 @@ public class KeyResultRequest {
                 throw new CustomMethodArgumentNotValidException("Bad date format - must be yyyy-mm-dd");
             }
         }
-        this.isDone = false;
+        this.isDone = isDone;
     }
 
 
