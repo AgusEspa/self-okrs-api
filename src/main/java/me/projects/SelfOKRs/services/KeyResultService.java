@@ -64,6 +64,7 @@ public class KeyResultService {
 
         fetchedKeyResult.setTitle(editedKeyResult.getTitle());
         fetchedKeyResult.setDueDate(editedKeyResult.getDueDate());
+        fetchedKeyResult.setIsDone(editedKeyResult.getIsDone());
 
         return keyResultRepository.save(fetchedKeyResult);
     }
