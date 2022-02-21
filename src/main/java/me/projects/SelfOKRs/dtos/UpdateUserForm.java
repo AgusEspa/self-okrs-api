@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
-public class UpdateForm {
+public class UpdateUserForm {
 
     @NotNull
     @Size(
@@ -35,7 +35,7 @@ public class UpdateForm {
 
     private final PasswordEncoder passwordEncoder;
 
-    public UpdateForm(String username, String emailAddress, String password, String oldPassword) {
+    public UpdateUserForm(String username, String emailAddress, String password, String oldPassword) {
         this.username = username;
         this.emailAddress = emailAddress;
         this.password = password;
@@ -84,7 +84,7 @@ public class UpdateForm {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateForm that = (UpdateForm) o;
+        UpdateUserForm that = (UpdateUserForm) o;
         return Objects.equals(username, that.username) && Objects.equals(emailAddress, that.emailAddress) && Objects.equals(password, that.password) && Objects.equals(oldPassword, that.oldPassword);
     }
 

@@ -1,5 +1,6 @@
 package me.projects.SelfOKRs.services;
 
+import me.projects.SelfOKRs.dtos.UserResponse;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.dtos.RegistrationForm;
@@ -32,7 +33,7 @@ public class UserEntityServiceTest {
         UserEntity userEntity = newUser.toUser();
 
         when(userEntityRepository.save(userEntity)).thenReturn(userEntity);
-        UserEntity created = userService.newUser(newUser);
+        UserResponse created = userService.newUser(newUser);
 
         assertEquals(created.getEmailAddress(), newUser.getEmailAddress());
     }
@@ -43,7 +44,7 @@ public class UserEntityServiceTest {
         UserEntity userEntity = newUser.toUser();
 
         when(userEntityRepository.save(userEntity)).thenReturn(userEntity);
-        UserEntity created = userService.newUser(newUser);
+        UserResponse created = userService.newUser(newUser);
 
         //assertThrows(RuntimeException);
     }

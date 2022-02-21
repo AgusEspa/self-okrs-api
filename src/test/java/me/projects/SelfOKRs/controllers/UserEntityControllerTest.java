@@ -1,6 +1,7 @@
 package me.projects.SelfOKRs.controllers;
 
-import me.projects.SelfOKRs.dtos.UpdateForm;
+import me.projects.SelfOKRs.dtos.UpdateUserForm;
+import me.projects.SelfOKRs.dtos.UserResponse;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.dtos.RegistrationForm;
 import me.projects.SelfOKRs.services.UserEntityService;
@@ -78,7 +79,8 @@ public class UserEntityControllerTest {
     public void shouldCreateNewUser() throws Exception {
         RegistrationForm testUser = new RegistrationForm("test1", "test1@mail.com", "testing_pass1");
         UserEntity user = testUser.toUser();
-        when(userService.newUser(testUser)).thenReturn(user);
+        UserResponse userResponse = new UserResponse(1L, user.getUsername(), user.getEmailAddress());
+        when(userService.newUser(testUser)).thenReturn(userResponse);
 
         this.mockMvc
                 .perform(post("/api/users/signup")
@@ -98,7 +100,7 @@ public class UserEntityControllerTest {
     @Disabled
     @WithMockUser
     public void shouldUpdateExistingUser() throws Exception {
-        UpdateForm testUser = new UpdateForm("test1", "newtest@mail.com", "testing_pass1", "old_pass");
+        UpdateUserForm testUser = new UpdateUserForm("test1", "newtest@mail.com", "testing_pass1", "old_pass");
         when(userService.updateUser(testUser)).thenReturn(testUser.toUser());
 
         this.mockMvc

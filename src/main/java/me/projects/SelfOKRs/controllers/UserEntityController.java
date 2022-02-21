@@ -1,7 +1,8 @@
 package me.projects.SelfOKRs.controllers;
 
-import me.projects.SelfOKRs.dtos.UpdateForm;
-import me.projects.SelfOKRs.dtos.UserData;
+import me.projects.SelfOKRs.dtos.UpdateUserForm;
+import me.projects.SelfOKRs.dtos.UserCredentialsResponse;
+import me.projects.SelfOKRs.dtos.UserResponse;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.dtos.RegistrationForm;
 import me.projects.SelfOKRs.security.TokenService;
@@ -48,19 +49,19 @@ public class UserEntityController {
 //    }
 
     @GetMapping("/authenticated")
-    ResponseEntity<UserData> getUserData() {
+    ResponseEntity<UserCredentialsResponse> getUserData() {
         return ResponseEntity.ok(userEntityService.fetchUserData());
     }
 
     @PostMapping(path = "/signup")
-    ResponseEntity<UserEntity> createUser(@Valid @RequestBody RegistrationForm newUser) {
+    ResponseEntity<UserResponse> createUser(@Valid @RequestBody RegistrationForm newUser) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(userEntityService.newUser(newUser));
     }
 
     @PutMapping
-    ResponseEntity<UserEntity> editUser(@Valid @RequestBody UpdateForm editedUser) {
+    ResponseEntity<UserEntity> editUser(@Valid @RequestBody UpdateUserForm editedUser) {
         return ResponseEntity.ok(userEntityService.updateUser(editedUser));
     }
 

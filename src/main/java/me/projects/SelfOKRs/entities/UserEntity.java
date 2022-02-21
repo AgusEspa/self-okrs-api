@@ -25,15 +25,12 @@ public class UserEntity {
     @Email
     private String emailAddress;
 
-    @JsonIgnore
     @NotBlank
     private String password;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Objective> objectives = new HashSet<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<KeyResult> keyResults = new HashSet<>();
 

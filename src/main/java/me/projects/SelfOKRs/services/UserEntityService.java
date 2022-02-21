@@ -1,7 +1,8 @@
 package me.projects.SelfOKRs.services;
 
-import me.projects.SelfOKRs.dtos.UpdateForm;
-import me.projects.SelfOKRs.dtos.UserData;
+import me.projects.SelfOKRs.dtos.UpdateUserForm;
+import me.projects.SelfOKRs.dtos.UserCredentialsResponse;
+import me.projects.SelfOKRs.dtos.UserResponse;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.UserAlreadyExistsException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
@@ -33,24 +34,27 @@ public class UserEntityService {
         this.userEntityRepository = userEntityRepository;
     }
 
-    public UserData fetchUserData() {
+    public UserCredentialsResponse fetchUserData() {
 
         String username = getUsername();
 
         UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
-        return new UserData(fetchedUser.getUsername(), fetchedUser.getEmailAddress());
+        return new UserCredentialsResponse(fetchedUser.getUsername(), fetchedUser.getEmailAddress());
     }
 
-    public UserEntity newUser(RegistrationForm newUser) {
+    public UserResponse newUser(RegistrationForm newUser) {
         if (userEntityRepository.findByEmailAddress(newUser.getEmailAddress()).isEmpty()) {
-            return userEntityRepository.save(newUser.toUser());
+            userEntityRepository.save(newUser.toUser());
+            UserEntity fetchedUser = userEntityRepository.findByEmailAddress(newUser.getEmailAddress()).get();
+            UserResponse userResponse = new UserResponse(fetchedUser.getId(), fetchedUser.getUsername(), fetchedUser.getEmailAddress());
+            return userResponse;
         } else {
             throw new UserAlreadyExistsException(newUser.getEmailAddress());
         }
     }
 
-    public UserEntity updateUser(UpdateForm editedUser) {
+    public UserEntity updateUser(UpdateUserForm editedUser) {
 
         String username = getUsername();
 
