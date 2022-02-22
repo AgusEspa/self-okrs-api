@@ -11,7 +11,8 @@ public class ObjectiveResponse {
 
     ObjectiveResponse() {}
 
-    public ObjectiveResponse(String title, int importance) {
+    public ObjectiveResponse(Long id, String title, int importance) {
+        this.id = id;
         this.title = title;
         this.importance = importance;
     }
@@ -32,7 +33,6 @@ public class ObjectiveResponse {
     public void setTitle(String title) {
         this.title = title;
     }
-
 
     public int getImportance() {
         return importance;

@@ -3,7 +3,6 @@ package me.projects.SelfOKRs.controllers;
 import me.projects.SelfOKRs.dtos.requests.UpdateUserForm;
 import me.projects.SelfOKRs.dtos.responses.UserCredentialsResponse;
 import me.projects.SelfOKRs.dtos.responses.UserResponse;
-import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.dtos.requests.RegistrationForm;
 import me.projects.SelfOKRs.security.TokenService;
 import me.projects.SelfOKRs.services.UserEntityService;

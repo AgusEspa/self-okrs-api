@@ -1,6 +1,7 @@
 package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.dtos.requests.KeyResultRequest;
+import me.projects.SelfOKRs.dtos.responses.KeyResultResponse;
 import me.projects.SelfOKRs.entities.KeyResult;
 
 import me.projects.SelfOKRs.services.KeyResultService;
@@ -30,15 +31,15 @@ public class KeyResultController {
     }
 
     @PostMapping("/{objectiveId}/keyresults")
-    ResponseEntity<KeyResult> createKeyResult(@PathVariable Long objectiveId, @Valid @RequestBody KeyResultRequest keyResultRequest) {
-        KeyResult keyResult = keyResultService.newKeyResult(objectiveId, keyResultRequest);
+    ResponseEntity<KeyResultResponse> createKeyResult(@PathVariable Long objectiveId, @Valid @RequestBody KeyResultRequest keyResultRequest) {
+        KeyResultResponse keyResult = keyResultService.newKeyResult(objectiveId, keyResultRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(keyResult);
     }
 
     @PutMapping("/{objectiveId}/keyresults/{id}")
-    ResponseEntity<KeyResult> editKeyResult(@PathVariable Long objectiveId, @PathVariable Long id, @RequestBody KeyResultRequest editedKeyResult) {
+    ResponseEntity<KeyResultResponse> editKeyResult(@PathVariable Long objectiveId, @PathVariable Long id, @RequestBody KeyResultRequest editedKeyResult) {
         return ResponseEntity.ok(keyResultService.updateKeyResult(id, editedKeyResult));
     }
 

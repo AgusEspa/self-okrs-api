@@ -42,7 +42,7 @@ public class ObjectiveService {
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
         List<ObjectiveResponse> objectiveResponseList = objectiveRepository.findByUserId(user.getId()).stream()
-                .map(objective -> new ObjectiveResponse(objective.getTitle(), objective.getImportance()))
+                .map(objective -> new ObjectiveResponse(objective.getId(), objective.getTitle(), objective.getImportance()))
                 .collect(Collectors.toList());
 
         return objectiveResponseList;
@@ -55,11 +55,10 @@ public class ObjectiveService {
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        objectiveRepository.save(new Objective(objectiveRequest.getTitle(),
-                objectiveRequest.getImportance(),
-                user));
+        Objective newObjective = new Objective(objectiveRequest.getTitle(), objectiveRequest.getImportance(), user);
+        objectiveRepository.save(newObjective);
 
-        ObjectiveResponse objectiveResponse = new ObjectiveResponse(objectiveRequest.getTitle(), objectiveRequest.getImportance());
+        ObjectiveResponse objectiveResponse = new ObjectiveResponse(newObjective.getId(), newObjective.getTitle(), newObjective.getImportance());
         return objectiveResponse;
     }
 
@@ -71,7 +70,7 @@ public class ObjectiveService {
         fetchedObjective.setImportance(editedObjective.getImportance());
         objectiveRepository.save(fetchedObjective);
 
-        ObjectiveResponse objectiveResponse = new ObjectiveResponse(editedObjective.getTitle(), editedObjective.getImportance());
+        ObjectiveResponse objectiveResponse = new ObjectiveResponse(fetchedObjective.getId(),fetchedObjective.getTitle(), fetchedObjective.getImportance());
         return objectiveResponse;
     }
 
