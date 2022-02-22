@@ -45,9 +45,9 @@ public class UserEntityService {
 
     public UserResponse newUser(RegistrationForm newUser) {
         if (userEntityRepository.findByEmailAddress(newUser.getEmailAddress()).isEmpty()) {
-            userEntityRepository.save(newUser.toUser());
-            UserEntity fetchedUser = userEntityRepository.findByEmailAddress(newUser.getEmailAddress()).get();
-            UserResponse userResponse = new UserResponse(fetchedUser.getId(), fetchedUser.getUsername(), fetchedUser.getEmailAddress());
+            UserEntity userEntity = newUser.toUser();
+            userEntityRepository.save(userEntity);
+            UserResponse userResponse = new UserResponse(userEntity.getId(), userEntity.getUsername(), userEntity.getEmailAddress());
             return userResponse;
         } else {
             throw new UserAlreadyExistsException(newUser.getEmailAddress());
