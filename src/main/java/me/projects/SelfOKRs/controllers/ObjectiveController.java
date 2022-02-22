@@ -1,6 +1,7 @@
 package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.dtos.requests.ObjectiveRequest;
+import me.projects.SelfOKRs.dtos.responses.ObjectiveResponse;
 import me.projects.SelfOKRs.entities.Objective;
 import me.projects.SelfOKRs.services.ObjectiveService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +29,15 @@ public class ObjectiveController {
     }
 
     @PostMapping
-    ResponseEntity<Objective> createObjective(@Valid @RequestBody ObjectiveRequest objectiveRequest) {
-        Objective objective = objectiveService.newObjective(objectiveRequest);
+    ResponseEntity<ObjectiveResponse> createObjective(@Valid @RequestBody ObjectiveRequest objectiveRequest) {
+        ObjectiveResponse objective = objectiveService.newObjective(objectiveRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(objective);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<Objective> editObjective(@PathVariable Long id, @RequestBody ObjectiveRequest editedObjective) {
+    ResponseEntity<ObjectiveResponse> editObjective(@PathVariable Long id, @RequestBody ObjectiveRequest editedObjective) {
         return ResponseEntity.ok(objectiveService.updateObjective(id, editedObjective));
     }
 

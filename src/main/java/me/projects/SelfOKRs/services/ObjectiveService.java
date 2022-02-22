@@ -1,6 +1,7 @@
 package me.projects.SelfOKRs.services;
 
 import me.projects.SelfOKRs.dtos.requests.ObjectiveRequest;
+import me.projects.SelfOKRs.dtos.responses.ObjectiveResponse;
 import me.projects.SelfOKRs.entities.Objective;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.ObjectiveNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ObjectiveService {
@@ -32,35 +34,45 @@ public class ObjectiveService {
         this.userEntityRepository = userEntityRepository;
     }
 
-    public List<Objective> fetchObjectives() {
+    public List<ObjectiveResponse> fetchObjectives() {
 
         String username = getUsername();
 
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        return objectiveRepository.findByUserId(user.getId());
+        List<ObjectiveResponse> objectiveResponseList = objectiveRepository.findByUserId(user.getId()).stream()
+                .map(objective -> new ObjectiveResponse(objective.getTitle(), objective.getImportance()))
+                .collect(Collectors.toList());
+
+        return objectiveResponseList;
     }
 
-    public Objective newObjective(ObjectiveRequest objectiveRequest) {
+    public ObjectiveResponse newObjective(ObjectiveRequest objectiveRequest) {
 
         String username = getUsername();
 
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        return objectiveRepository.save(new Objective(objectiveRequest.getTitle(),
+        objectiveRepository.save(new Objective(objectiveRequest.getTitle(),
                 objectiveRequest.getImportance(),
                 user));
+
+        ObjectiveResponse objectiveResponse = new ObjectiveResponse(objectiveRequest.getTitle(), objectiveRequest.getImportance());
+        return objectiveResponse;
     }
 
-    public Objective updateObjective(Long id, ObjectiveRequest editedObjective) {
+    public ObjectiveResponse updateObjective(Long id, ObjectiveRequest editedObjective) {
 
         Objective fetchedObjective = validateUserAndFetchObjective(id);
 
         fetchedObjective.setTitle(editedObjective.getTitle());
         fetchedObjective.setImportance(editedObjective.getImportance());
-        return objectiveRepository.save(fetchedObjective);
+        objectiveRepository.save(fetchedObjective);
+
+        ObjectiveResponse objectiveResponse = new ObjectiveResponse(editedObjective.getTitle(), editedObjective.getImportance());
+        return objectiveResponse;
     }
 
     public void removeObjective(Long id) {
