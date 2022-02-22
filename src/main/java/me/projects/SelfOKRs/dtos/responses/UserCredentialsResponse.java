@@ -1,4 +1,4 @@
-package me.projects.SelfOKRs.dtos;
+package me.projects.SelfOKRs.dtos.responses;
 
 public class UserCredentialsResponse {
 

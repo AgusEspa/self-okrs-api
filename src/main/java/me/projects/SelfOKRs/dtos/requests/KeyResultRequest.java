@@ -1,4 +1,4 @@
-package me.projects.SelfOKRs.dtos;
+package me.projects.SelfOKRs.dtos.requests;
 
 import me.projects.SelfOKRs.exceptions.CustomMethodArgumentNotValidException;
 

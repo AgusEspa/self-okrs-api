@@ -1,15 +1,15 @@
 package me.projects.SelfOKRs.services;
 
-import me.projects.SelfOKRs.dtos.UpdateUserForm;
-import me.projects.SelfOKRs.dtos.UserCredentialsResponse;
-import me.projects.SelfOKRs.dtos.UserResponse;
+import me.projects.SelfOKRs.dtos.requests.UpdateUserForm;
+import me.projects.SelfOKRs.dtos.responses.UserCredentialsResponse;
+import me.projects.SelfOKRs.dtos.responses.UserResponse;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.UserAlreadyExistsException;
 import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
 import me.projects.SelfOKRs.exceptions.UserNotAuthorizedException;
 import me.projects.SelfOKRs.exceptions.WrongPasswordException;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
-import me.projects.SelfOKRs.dtos.RegistrationForm;
+import me.projects.SelfOKRs.dtos.requests.RegistrationForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class UserEntityService {
         }
     }
 
-    public UserEntity updateUser(UpdateUserForm editedUser) {
+    public UserResponse updateUser(UpdateUserForm editedUser) {
 
         String username = getUsername();
 
@@ -69,7 +69,9 @@ public class UserEntityService {
             fetchedUser.setUsername(editedUser.getUsername());
             fetchedUser.setEmailAddress(editedUser.getEmailAddress());
             fetchedUser.setPassword(passwordEncoder.encode(editedUser.getPassword()));
-            return  userEntityRepository.save(fetchedUser);
+            userEntityRepository.save(fetchedUser);
+            UserResponse userResponse = new UserResponse(fetchedUser.getId(), fetchedUser.getUsername(), fetchedUser.getEmailAddress());
+            return userResponse;
         } else {
             throw new UserAlreadyExistsException(editedUser.getEmailAddress());
         }

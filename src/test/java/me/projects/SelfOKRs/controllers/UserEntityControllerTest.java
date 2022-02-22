@@ -1,9 +1,9 @@
 package me.projects.SelfOKRs.controllers;
 
-import me.projects.SelfOKRs.dtos.UpdateUserForm;
-import me.projects.SelfOKRs.dtos.UserResponse;
+import me.projects.SelfOKRs.dtos.requests.UpdateUserForm;
+import me.projects.SelfOKRs.dtos.responses.UserResponse;
 import me.projects.SelfOKRs.entities.UserEntity;
-import me.projects.SelfOKRs.dtos.RegistrationForm;
+import me.projects.SelfOKRs.dtos.requests.RegistrationForm;
 import me.projects.SelfOKRs.services.UserEntityService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -88,7 +88,7 @@ public class UserEntityControllerTest {
                         .content("{\"username\": \"test1\",\"emailAddress\": \"test1@mail.com\",\"password\": \"testing_pass1\"}")
                 )
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.emailAddress").value(testUser.getEmailAddress()))
+                .andExpect(jsonPath("$.emailAddress").value(userResponse.getEmailAddress()))
         ;
 
         verify(userService, times(1)).newUser(any());
@@ -101,7 +101,9 @@ public class UserEntityControllerTest {
     @WithMockUser
     public void shouldUpdateExistingUser() throws Exception {
         UpdateUserForm testUser = new UpdateUserForm("test1", "newtest@mail.com", "testing_pass1", "old_pass");
-        when(userService.updateUser(testUser)).thenReturn(testUser.toUser());
+        UserEntity user = testUser.toUser();
+        UserResponse userResponse = new UserResponse(1L, user.getUsername(), user.getEmailAddress());
+        when(userService.updateUser(testUser)).thenReturn(userResponse);
 
         this.mockMvc
                 .perform(put("/api/users")
@@ -109,7 +111,7 @@ public class UserEntityControllerTest {
                         .content("{\"username\": \"test1\",\"emailAddress\": \"newtest@mail.com\",\"password\": \"testing_pass1\"}")
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.emailAddress").value(testUser.getEmailAddress()))
+                .andExpect(jsonPath("$.emailAddress").value(userResponse.getEmailAddress()))
         ;
 
         verify(userService, times(1)).updateUser(testUser);

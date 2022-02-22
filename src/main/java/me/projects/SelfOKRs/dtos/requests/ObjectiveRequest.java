@@ -1,4 +1,4 @@
-package me.projects.SelfOKRs.dtos;
+package me.projects.SelfOKRs.dtos.requests;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

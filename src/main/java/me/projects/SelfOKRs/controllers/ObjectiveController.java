@@ -1,6 +1,6 @@
 package me.projects.SelfOKRs.controllers;
 
-import me.projects.SelfOKRs.dtos.ObjectiveRequest;
+import me.projects.SelfOKRs.dtos.requests.ObjectiveRequest;
 import me.projects.SelfOKRs.entities.Objective;
 import me.projects.SelfOKRs.services.ObjectiveService;
 import org.springframework.beans.factory.annotation.Autowired;

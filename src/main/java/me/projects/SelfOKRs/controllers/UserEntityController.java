@@ -1,10 +1,10 @@
 package me.projects.SelfOKRs.controllers;
 
-import me.projects.SelfOKRs.dtos.UpdateUserForm;
-import me.projects.SelfOKRs.dtos.UserCredentialsResponse;
-import me.projects.SelfOKRs.dtos.UserResponse;
+import me.projects.SelfOKRs.dtos.requests.UpdateUserForm;
+import me.projects.SelfOKRs.dtos.responses.UserCredentialsResponse;
+import me.projects.SelfOKRs.dtos.responses.UserResponse;
 import me.projects.SelfOKRs.entities.UserEntity;
-import me.projects.SelfOKRs.dtos.RegistrationForm;
+import me.projects.SelfOKRs.dtos.requests.RegistrationForm;
 import me.projects.SelfOKRs.security.TokenService;
 import me.projects.SelfOKRs.services.UserEntityService;
 import org.slf4j.Logger;
@@ -61,7 +61,7 @@ public class UserEntityController {
     }
 
     @PutMapping
-    ResponseEntity<UserEntity> editUser(@Valid @RequestBody UpdateUserForm editedUser) {
+    ResponseEntity<UserResponse> editUser(@Valid @RequestBody UpdateUserForm editedUser) {
         return ResponseEntity.ok(userEntityService.updateUser(editedUser));
     }
 

@@ -1,4 +1,4 @@
-package me.projects.SelfOKRs.dtos;
+package me.projects.SelfOKRs.dtos.requests;
 
 import me.projects.SelfOKRs.entities.UserEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

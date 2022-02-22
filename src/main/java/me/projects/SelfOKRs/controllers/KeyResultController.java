@@ -1,6 +1,6 @@
 package me.projects.SelfOKRs.controllers;
 
-import me.projects.SelfOKRs.dtos.KeyResultRequest;
+import me.projects.SelfOKRs.dtos.requests.KeyResultRequest;
 import me.projects.SelfOKRs.entities.KeyResult;
 
 import me.projects.SelfOKRs.services.KeyResultService;

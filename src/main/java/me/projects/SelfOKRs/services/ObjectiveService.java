@@ -1,6 +1,6 @@
 package me.projects.SelfOKRs.services;
 
-import me.projects.SelfOKRs.dtos.ObjectiveRequest;
+import me.projects.SelfOKRs.dtos.requests.ObjectiveRequest;
 import me.projects.SelfOKRs.entities.Objective;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.exceptions.ObjectiveNotFoundException;

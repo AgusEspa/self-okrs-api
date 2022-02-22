@@ -1,9 +1,9 @@
 package me.projects.SelfOKRs.services;
 
-import me.projects.SelfOKRs.dtos.UserResponse;
+import me.projects.SelfOKRs.dtos.responses.UserResponse;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
-import me.projects.SelfOKRs.dtos.RegistrationForm;
+import me.projects.SelfOKRs.dtos.requests.RegistrationForm;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
