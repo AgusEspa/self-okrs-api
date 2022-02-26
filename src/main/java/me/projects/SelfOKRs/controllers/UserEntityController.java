@@ -1,6 +1,6 @@
 package me.projects.SelfOKRs.controllers;
 
-import me.projects.SelfOKRs.dtos.requests.UpdateUserForm;
+import me.projects.SelfOKRs.dtos.requests.EditUserForm;
 import me.projects.SelfOKRs.dtos.responses.UserCredentialsResponse;
 import me.projects.SelfOKRs.dtos.responses.UserResponse;
 import me.projects.SelfOKRs.dtos.requests.RegistrationForm;
@@ -60,7 +60,7 @@ public class UserEntityController {
     }
 
     @PutMapping
-    ResponseEntity<UserResponse> editUser(@Valid @RequestBody UpdateUserForm editedUser) {
+    ResponseEntity<UserResponse> editUser(@Valid @RequestBody EditUserForm editedUser) {
         return ResponseEntity.ok(userEntityService.updateUser(editedUser));
     }
 

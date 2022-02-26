@@ -1,6 +1,7 @@
 package me.projects.SelfOKRs.dtos.requests;
 
 import me.projects.SelfOKRs.entities.UserEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -9,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
-public class UpdateUserForm {
+public class EditUserForm {
 
     @NotNull
     @Size(
@@ -35,9 +36,10 @@ public class UpdateUserForm {
 
     private final PasswordEncoder passwordEncoder;
 
-    public UpdateUserForm(String username, String emailAddress, String password, String oldPassword) {
+    public EditUserForm(String username, String emailAddress, String password, String oldPassword) {
         this.username = username;
-        this.emailAddress = emailAddress;
+        if (emailAddress.isEmpty()) this.emailAddress = SecurityContextHolder.getContext().getAuthentication().getName();
+        else this.emailAddress = emailAddress;
         this.password = password;
         this.oldPassword = oldPassword;
         this.passwordEncoder = new BCryptPasswordEncoder();
@@ -84,7 +86,7 @@ public class UpdateUserForm {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateUserForm that = (UpdateUserForm) o;
+        EditUserForm that = (EditUserForm) o;
         return Objects.equals(username, that.username) && Objects.equals(emailAddress, that.emailAddress) && Objects.equals(password, that.password) && Objects.equals(oldPassword, that.oldPassword);
     }
 

@@ -1,6 +1,6 @@
 package me.projects.SelfOKRs.services;
 
-import me.projects.SelfOKRs.dtos.requests.UpdateUserForm;
+import me.projects.SelfOKRs.dtos.requests.EditUserForm;
 import me.projects.SelfOKRs.dtos.responses.UserCredentialsResponse;
 import me.projects.SelfOKRs.dtos.responses.UserResponse;
 import me.projects.SelfOKRs.entities.UserEntity;
@@ -54,7 +54,7 @@ public class UserEntityService {
         }
     }
 
-    public UserResponse updateUser(UpdateUserForm editedUser) {
+    public UserResponse updateUser(EditUserForm editedUser) {
 
         String username = getUsername();
 
