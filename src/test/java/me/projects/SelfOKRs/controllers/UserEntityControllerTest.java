@@ -1,6 +1,6 @@
 package me.projects.SelfOKRs.controllers;
 
-import me.projects.SelfOKRs.dtos.requests.UpdateUserForm;
+import me.projects.SelfOKRs.dtos.requests.EditUserForm;
 import me.projects.SelfOKRs.dtos.responses.UserResponse;
 import me.projects.SelfOKRs.entities.UserEntity;
 import me.projects.SelfOKRs.dtos.requests.RegistrationForm;
@@ -100,7 +100,7 @@ public class UserEntityControllerTest {
     @Disabled
     @WithMockUser
     public void shouldUpdateExistingUser() throws Exception {
-        UpdateUserForm testUser = new UpdateUserForm("test1", "newtest@mail.com", "testing_pass1", "old_pass");
+        EditUserForm testUser = new EditUserForm("test1", "newtest@mail.com", "testing_pass1", "old_pass");
         UserEntity user = testUser.toUser();
         UserResponse userResponse = new UserResponse(1L, user.getUsername(), user.getEmailAddress());
         when(userService.updateUser(testUser)).thenReturn(userResponse);
