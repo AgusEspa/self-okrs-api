@@ -64,9 +64,9 @@ public class UserEntityController {
         return ResponseEntity.ok(userEntityService.updateUser(editedUser));
     }
 
-    @DeleteMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    void deleteUser(@RequestParam Map<String,String> credentials) {
-        userEntityService.removeUser(credentials);
+    @DeleteMapping
+    void deleteUser(@Valid @RequestBody EditUserForm editedUser) {
+        userEntityService.removeUser(editedUser);
     }
 
     @GetMapping("/token/refresh")

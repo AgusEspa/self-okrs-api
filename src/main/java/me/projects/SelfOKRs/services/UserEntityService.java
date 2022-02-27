@@ -81,14 +81,14 @@ public class UserEntityService {
         }
     }
 
-    public void removeUser(Map<String, String> credentials) {
+    public void removeUser(EditUserForm editedUser) {
 
         String username = getUsername();
 
         UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        if (passwordEncoder.matches(credentials.get("password"), fetchedUser.getPassword()) && username.equals(credentials.get("emailAddress"))) {
+        if (passwordEncoder.matches(editedUser.getOldPassword(), fetchedUser.getPassword()) && username.equals(editedUser.getEmailAddress())) {
             userEntityRepository.deleteById(fetchedUser.getId());
         } else throw new UserNotAuthorizedException(username);
     }
