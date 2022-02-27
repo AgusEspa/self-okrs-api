@@ -16,7 +16,7 @@ public class RegistrationForm {
     @Size(
             min = 3,
             max = 255,
-            message = "Name must be longer than 2 characters"
+            message = "Username must be at least 3 characters"
     )
     private String username;
 
