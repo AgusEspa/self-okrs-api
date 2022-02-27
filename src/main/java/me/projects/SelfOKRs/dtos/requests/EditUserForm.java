@@ -12,7 +12,6 @@ import java.util.Objects;
 
 public class EditUserForm {
 
-    @NotNull
     @Size(
             min = 3,
             max = 255,
@@ -24,24 +23,24 @@ public class EditUserForm {
     private String emailAddress;
 
     @NotNull
+    private String oldPassword;
+
     @Size(
             min = 8,
             max = 255,
             message = "Password must be at least 8 characters long"
     )
-    private String password;
-
-    @NotNull
-    private String oldPassword;
+    private String newPassword;
 
     private final PasswordEncoder passwordEncoder;
 
-    public EditUserForm(String username, String emailAddress, String password, String oldPassword) {
+    public EditUserForm(String username, String emailAddress, String oldPassword, String newPassword) {
         this.username = username;
         if (emailAddress.isEmpty()) this.emailAddress = SecurityContextHolder.getContext().getAuthentication().getName();
         else this.emailAddress = emailAddress;
-        this.password = password;
         this.oldPassword = oldPassword;
+        if (newPassword.isEmpty()) this.newPassword = oldPassword;
+        else this.newPassword = newPassword;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -61,14 +60,6 @@ public class EditUserForm {
         this.emailAddress = emailAddress;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getOldPassword() {
         return oldPassword;
     }
@@ -77,8 +68,16 @@ public class EditUserForm {
         this.oldPassword = oldPassword;
     }
 
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
     public UserEntity toUser() {
-        return new UserEntity(username, emailAddress, passwordEncoder.encode(password));
+        return new UserEntity(username, emailAddress, passwordEncoder.encode(newPassword));
     }
 
 
@@ -87,11 +86,11 @@ public class EditUserForm {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EditUserForm that = (EditUserForm) o;
-        return Objects.equals(username, that.username) && Objects.equals(emailAddress, that.emailAddress) && Objects.equals(password, that.password) && Objects.equals(oldPassword, that.oldPassword);
+        return Objects.equals(username, that.username) && Objects.equals(emailAddress, that.emailAddress) && Objects.equals(newPassword, that.newPassword) && Objects.equals(oldPassword, that.oldPassword);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, emailAddress, password, oldPassword);
+        return Objects.hash(username, emailAddress, oldPassword, newPassword);
     }
 }

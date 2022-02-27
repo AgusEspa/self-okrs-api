@@ -65,10 +65,14 @@ public class UserEntityService {
             throw new WrongPasswordException();
         }
 
-        if (userEntityRepository.findByEmailAddress(editedUser.getEmailAddress()).isEmpty() || editedUser.getEmailAddress().equals(username)) {
+        if (editedUser.getEmailAddress().equals(fetchedUser.getEmailAddress()) || userEntityRepository.findByEmailAddress(editedUser.getEmailAddress()).isEmpty()) {
+
             fetchedUser.setUsername(editedUser.getUsername());
+
             fetchedUser.setEmailAddress(editedUser.getEmailAddress());
-            fetchedUser.setPassword(passwordEncoder.encode(editedUser.getPassword()));
+
+            fetchedUser.setPassword(passwordEncoder.encode(editedUser.getNewPassword()));
+
             userEntityRepository.save(fetchedUser);
             UserResponse userResponse = new UserResponse(fetchedUser.getId(), fetchedUser.getUsername(), fetchedUser.getEmailAddress());
             return userResponse;
