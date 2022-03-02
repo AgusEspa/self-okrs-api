@@ -88,9 +88,13 @@ public class UserEntityService {
         UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        if (passwordEncoder.matches(editedUser.getOldPassword(), fetchedUser.getPassword()) && username.equals(editedUser.getEmailAddress())) {
-            userEntityRepository.deleteById(fetchedUser.getId());
+        if (username.equals(editedUser.getEmailAddress())) {
+            if (passwordEncoder.matches(editedUser.getOldPassword(), fetchedUser.getPassword())) {
+
+            } else throw new WrongPasswordException();
+
         } else throw new UserNotAuthorizedException(username);
+        
     }
 
     protected String getUsername() {
