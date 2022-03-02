@@ -94,7 +94,7 @@ public class UserEntityService {
             } else throw new WrongPasswordException();
 
         } else throw new UserNotAuthorizedException(username);
-        
+
     }
 
     protected String getUsername() {
