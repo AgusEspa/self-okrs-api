@@ -1,13 +1,16 @@
 package me.projects.SelfOKRs.services;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import me.projects.SelfOKRs.dtos.requests.EditUserForm;
+import me.projects.SelfOKRs.dtos.requests.ResetPasswordRequest;
 import me.projects.SelfOKRs.dtos.responses.UserCredentialsResponse;
 import me.projects.SelfOKRs.dtos.responses.UserResponse;
 import me.projects.SelfOKRs.entities.UserEntity;
-import me.projects.SelfOKRs.exceptions.UserAlreadyExistsException;
-import me.projects.SelfOKRs.exceptions.UserEntityNotFoundException;
-import me.projects.SelfOKRs.exceptions.UserNotAuthorizedException;
-import me.projects.SelfOKRs.exceptions.WrongPasswordException;
+import me.projects.SelfOKRs.exceptions.*;
 import me.projects.SelfOKRs.repositories.UserEntityRepository;
 import me.projects.SelfOKRs.dtos.requests.RegistrationForm;
 import org.slf4j.Logger;
@@ -17,6 +20,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Service
 public class UserEntityService {
@@ -99,9 +108,35 @@ public class UserEntityService {
     }
 
     public void sendPasswordToken(String passwordToken, String emailAddress) {
-        String resetLink = "http://localhost:3000/reset_password/" + passwordToken;
+        String resetLink = "To set a new password, please follow this link: " + "http://localhost:3000/reset_password/" + passwordToken;
         emailService.sendEmail(emailAddress, "knowd.help@gmail.com", "Password reset", resetLink);
         logger.info("Sending reset password token to " + emailAddress);
+    }
+
+    public UserResponse setNewPassword(ResetPasswordRequest resetPasswordRequest) {
+
+        try {
+            String token = resetPasswordRequest.getPasswordToken();
+            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            String username = decodedJWT.getSubject();
+
+            UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)
+                    .orElseThrow(() -> new UserEntityNotFoundException(username));
+
+            fetchedUser.setUsername(fetchedUser.getUsername());
+            fetchedUser.setEmailAddress(fetchedUser.getEmailAddress());
+            fetchedUser.setPassword(passwordEncoder.encode(resetPasswordRequest.getNewPassword()));
+
+            userEntityRepository.save(fetchedUser);
+
+            UserResponse userResponse = new UserResponse(fetchedUser.getId(), fetchedUser.getUsername(), fetchedUser.getEmailAddress());
+            return userResponse;
+
+        } catch (Exception e) {
+            throw new InvalidTokenException(e.getMessage());
+        }
     }
 
     protected String getUsername() {

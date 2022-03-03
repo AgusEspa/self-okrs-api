@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers(HttpMethod.POST, "/api/users/signup").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/users/token/refresh").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/users/forgot_password").permitAll()
+                .mvcMatchers(HttpMethod.PUT, "/api/users/reset_password").permitAll()
                 .anyRequest().authenticated()
                         .and()
                 .addFilter(new CustomAuthenticationFilter(authenticationManagerBean()))

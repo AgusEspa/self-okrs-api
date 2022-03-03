@@ -72,4 +72,11 @@ public class ExceptionsControllerAdvice {
                 .status(HttpStatus.FORBIDDEN)
                 .body(ex.getMessage());
     }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    ResponseEntity<String> handleInvalidTokenException (InvalidTokenException ex) {
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(ex.getMessage());
+    }
 }

@@ -80,8 +80,8 @@ public class UserEntityController {
         userEntityService.sendPasswordToken(passwordToken, forgotPasswordRequest.getEmailAddress());
     }
 
-//    @PutMapping("reset_password")
-//    ResponseEntity<UserResponse> resetPassword(String token, @Valid @RequestBody ResetPasswordRequest editedUser) {
-//
-//    }
+    @PutMapping("reset_password")
+    ResponseEntity<UserResponse> resetPassword(@Valid @RequestBody ResetPasswordRequest resetPasswordRequest) {
+        return ResponseEntity.ok(userEntityService.setNewPassword(resetPasswordRequest));
+    }
 }

@@ -1,5 +1,6 @@
 package me.projects.SelfOKRs.dtos.requests;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class ResetPasswordRequest {
@@ -11,11 +12,15 @@ public class ResetPasswordRequest {
     )
     private String newPassword;
 
+    @NotNull
+    String passwordToken;
+
     public ResetPasswordRequest() {
     }
 
-    public ResetPasswordRequest(String newPassword) {
+    public ResetPasswordRequest(String newPassword, String passwordToken) {
         this.newPassword = newPassword;
+        this.passwordToken = passwordToken;
     }
 
     public String getNewPassword() {
@@ -24,5 +29,13 @@ public class ResetPasswordRequest {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public String getPasswordToken() {
+        return passwordToken;
+    }
+
+    public void setPasswordToken(String passwordToken) {
+        this.passwordToken = passwordToken;
     }
 }
