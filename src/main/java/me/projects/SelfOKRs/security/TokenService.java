@@ -68,4 +68,20 @@ public class TokenService {
             throw new RuntimeException("Refresh token is missing");
         }
     }
+
+    public String generatePasswordToken(String username) {
+
+        UserDetails user = userDetailsService.loadUserByUsername(username);
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+
+        String passwordToken = JWT.create()
+                .withSubject(user.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .withClaim("roles", user.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toList()))
+                .sign(algorithm);
+
+        return passwordToken;
+    }
 }

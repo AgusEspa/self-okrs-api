@@ -18,20 +18,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 @Service
 public class UserEntityService {
 
     private final UserEntityRepository userEntityRepository;
+
+    private final EmailService emailService;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     Logger logger = LoggerFactory.getLogger(UserEntityService.class);
 
     @Autowired
-    public UserEntityService(UserEntityRepository userEntityRepository) {
+    public UserEntityService(UserEntityRepository userEntityRepository, EmailService emailService) {
         this.userEntityRepository = userEntityRepository;
+        this.emailService = emailService;
     }
 
     public UserCredentialsResponse fetchUserData() {
@@ -95,6 +96,12 @@ public class UserEntityService {
 
         } else throw new UserNotAuthorizedException(username);
 
+    }
+
+    public void sendPasswordToken(String passwordToken, String emailAddress) {
+        String resetLink = "http://localhost:3000/reset_password/" + passwordToken;
+        emailService.sendEmail(emailAddress, "knowd.help@gmail.com", "Password reset", resetLink);
+        logger.info("Sending reset password token to " + emailAddress);
     }
 
     protected String getUsername() {

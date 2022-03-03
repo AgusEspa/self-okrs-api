@@ -1,6 +1,8 @@
 package me.projects.SelfOKRs.controllers;
 
 import me.projects.SelfOKRs.dtos.requests.EditUserForm;
+import me.projects.SelfOKRs.dtos.requests.ForgotPasswordRequest;
+import me.projects.SelfOKRs.dtos.requests.ResetPasswordRequest;
 import me.projects.SelfOKRs.dtos.responses.UserCredentialsResponse;
 import me.projects.SelfOKRs.dtos.responses.UserResponse;
 import me.projects.SelfOKRs.dtos.requests.RegistrationForm;
@@ -10,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -73,4 +73,15 @@ public class UserEntityController {
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         tokenService.refreshToken(request, response);
     }
+
+    @PostMapping("forgot_password")
+    void getPasswordToken(@Valid @RequestBody ForgotPasswordRequest forgotPasswordRequest) {
+        String passwordToken = tokenService.generatePasswordToken(forgotPasswordRequest.getEmailAddress());
+        userEntityService.sendPasswordToken(passwordToken, forgotPasswordRequest.getEmailAddress());
+    }
+
+//    @PutMapping("reset_password")
+//    ResponseEntity<UserResponse> resetPassword(String token, @Valid @RequestBody ResetPasswordRequest editedUser) {
+//
+//    }
 }

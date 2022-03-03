@@ -60,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .mvcMatchers(HttpMethod.POST, "/api/users/signup").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/users/token/refresh").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/users/forgot_password").permitAll()
                 .anyRequest().authenticated()
                         .and()
                 .addFilter(new CustomAuthenticationFilter(authenticationManagerBean()))

@@ -7,6 +7,6 @@ public class UserEntityNotFoundException extends RuntimeException {
     }
 
     public UserEntityNotFoundException(String username) {
-        super("Could not find User " + username);
+        super("Could not find user with " + username + " email");
     }
 }

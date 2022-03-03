@@ -6,6 +6,9 @@ public class UserCredentialsResponse {
 
     private String emailAddress;
 
+    public UserCredentialsResponse() {
+    }
+
     public UserCredentialsResponse(String username, String emailAddress) {
         this.username = username;
         this.emailAddress = emailAddress;

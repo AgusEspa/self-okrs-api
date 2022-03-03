@@ -17,6 +17,8 @@ public class KeyResultRequest {
     @NotNull
     private Boolean isDone;
 
+    public KeyResultRequest() {
+    }
 
     public KeyResultRequest(String title, String dueDate, Boolean isDone) {
         this.title = title;
