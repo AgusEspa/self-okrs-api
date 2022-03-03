@@ -24,12 +24,10 @@ public class KeyResult {
     @NotNull
     private Boolean isDone;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "objective_id")
     private Objective objective;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;

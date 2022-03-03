@@ -32,10 +32,8 @@ public class Objective {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private UserEntity user;
-
-    @JsonIgnore
+    
     @OneToMany(mappedBy = "objective", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<KeyResult> keyResults = new HashSet<>();
 
