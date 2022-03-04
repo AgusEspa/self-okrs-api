@@ -1,11 +1,8 @@
 package me.projects.SelfOKRs.controllers;
 
-import me.projects.SelfOKRs.dtos.requests.EditUserForm;
-import me.projects.SelfOKRs.dtos.requests.ForgotPasswordRequest;
-import me.projects.SelfOKRs.dtos.requests.ResetPasswordRequest;
+import me.projects.SelfOKRs.dtos.requests.*;
 import me.projects.SelfOKRs.dtos.responses.UserCredentialsResponse;
 import me.projects.SelfOKRs.dtos.responses.UserResponse;
-import me.projects.SelfOKRs.dtos.requests.RegistrationForm;
 import me.projects.SelfOKRs.security.TokenService;
 import me.projects.SelfOKRs.services.UserEntityService;
 import org.slf4j.Logger;
@@ -65,8 +62,8 @@ public class UserEntityController {
     }
 
     @DeleteMapping
-    void deleteUser(@Valid @RequestBody EditUserForm editedUser) {
-        userEntityService.removeUser(editedUser);
+    void deleteUser(@Valid @RequestBody DeleteUserForm deleteUserForm) {
+        userEntityService.removeUser(deleteUserForm);
     }
 
     @GetMapping("/token/refresh")

@@ -33,7 +33,7 @@ public class Objective {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
-    
+
     @OneToMany(mappedBy = "objective", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<KeyResult> keyResults = new HashSet<>();
 

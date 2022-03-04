@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.projects.SelfOKRs.dtos.requests.DeleteUserForm;
 import me.projects.SelfOKRs.dtos.requests.EditUserForm;
 import me.projects.SelfOKRs.dtos.requests.ResetPasswordRequest;
 import me.projects.SelfOKRs.dtos.responses.UserCredentialsResponse;
@@ -91,15 +92,16 @@ public class UserEntityService {
         }
     }
 
-    public void removeUser(EditUserForm editedUser) {
+    public void removeUser(DeleteUserForm deleteUserForm) {
 
         String username = getUsername();
 
         UserEntity fetchedUser = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        if (username.equals(editedUser.getEmailAddress())) {
-            if (passwordEncoder.matches(editedUser.getOldPassword(), fetchedUser.getPassword())) {
+        if (username.equals(deleteUserForm.getEmailAddress())) {
+            if (passwordEncoder.matches(deleteUserForm.getOldPassword(), fetchedUser.getPassword())) {
+                userEntityRepository.deleteById(fetchedUser.getId());
 
             } else throw new WrongPasswordException();
 
